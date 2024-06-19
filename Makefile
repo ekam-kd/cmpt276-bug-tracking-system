@@ -1,6 +1,6 @@
 CC = g++
 CFLAGS = -Wall -Wextra -pedantic
-SRC = main.cpp 
+SRC = main.cpp helper_funcs.cpp
 OBJ = $(SRC:.cpp=.o)
 EXECUTABLE = prototype.o
 

@@ -7,74 +7,44 @@
 
 #include <iostream>
 #include <string>
+#include "helper_funcs.hpp"
 using namespace std;
 int main()
 {   
     int selection_one = -1;
-    long int phone_number;
-    string cus_fname, cus_lname, cus_email, emp_department;
     bool sys_run = true;
-    bool employee = false;
     while(sys_run){ 
+        cout << "\n\n-----------------------------------\n";
         cout << "Welcome to the Bug Tracking System!" << endl;
-        cout << "Please select one of the following to get started: " << endl;
+        cout << "Please select one of the following to get started:\n " << endl;
+        cout << "-----------------------------------\n";
         cout << "-> New Customer (1)" << endl;
         cout << "-> Existing Customer (2)" << endl;
         cout << "-> Exit (3)" << endl;
+        cout << "-----------------------------------\n\n";
         cout << "Selection: ";
         cin >> selection_one;
         if(selection_one == 1){
-            cout << "New Customer Menu:" << endl;
-            cout << "Note that this is a placeholder for the registration process." << endl;
-            cout << "Are you an employee of AAA Inc.? (Y/N): ";
-            char emp;
-            cin >> emp;
-            if(emp == 'Y' || emp == 'y'){
-                employee = true;
-            }
-            
-            cout << "Please Enter Your Name:" << endl;
-            cout << "Note that customer name must be in the format of Firstname Lastname" << endl;
-            cout << "\nFirst Name: ";
-            cin >> cus_fname;
-            cout << "Last Name: ";
-            cin >> cus_lname;
-            cout << "\nPlease enter your email address" << endl;
-            cout << "Email: ";
-            cin >> cus_email;
-            cout << "\nPlease enter your phone number" << endl;
-            cout << "Note that phone number must be in the format of +1(234)-567-8910 -> 12345678910" << endl;
-            cout << "Phone: ";
-            cin >> phone_number;
-            if(employee){
-                cout << "\nPlease enter your department: ";
-                cin >> emp_department;
-            } 
-            cout << "\nPlease confirm the following information:" << endl;
-            cout << "\nName: " << cus_fname << " " << cus_lname << endl;
-            cout << "Email: " << cus_email << endl;
-            cout << "Phone: " << phone_number << endl;
-            if(employee){
-                cout << "Department: " << emp_department << endl;
-            }
-            cout << "\nIs this information correct? (Y/N): ";
-            char confirm;
-            cin >> confirm;
-            if(confirm == 'Y' || confirm == 'y'){
-                cout << "\nThank you for registering with us!" << endl;
-                cout << "You will be returned to main menu" << endl;
-            } else{
-                cout << "\nUnable to register new Customer, please try again" << endl;
-            }
+            register_customer();
         } else if(selection_one == 2){
-            cout << "\nAre you an employee of AAA Inc.? (Y/N): ";
-            char emp1;
-            cin >> emp1;
-            if(emp1 == 'Y' || emp1 == 'y'){
-                employee = true;
+            bool employee = false;
+            
+            while(1){
+                cout << "\nAre you an employee of AAA Inc.? (Y/N): ";
+                string emp1;
+                cin >> emp1;  
+                if(emp1[0] == 'Y' || emp1[0] == 'y'){
+                    employee = true;
+                    break;
+                } else if(emp1[0] == 'N' || emp1[0] == 'n'){
+                    employee = false;
+                    break;
+                } else{
+                    cout << "Invalid selection, please try again" << endl;
+                }
             }
             cout << "\nPlease Select one of the following actions:" << endl;
-            cout << "-> Exit (0)" << endl;
+            cout << "-> Return (0)" << endl;
             cout << "-> Report a Bug (1)" << endl;
             cout << "-> Check Bug Status (2)" << endl;
             if(employee){
@@ -86,6 +56,47 @@ int main()
                 cout << "-> Edit Change Item Priority (8)" << endl;
                 cout << "-> Make Feature Request (9)" << endl;
                 cout << "-> Send out new Product Release (10)" << endl;
+            }
+            int selection_two = -1;
+            cout << "Selection: ";
+            cin >> selection_two;
+            if(employee){
+                if(selection_two == 0){
+                    cout << "Returning to main menu..." << endl;
+                } else if(selection_two == 1){
+                    report_bug();
+                } else if(selection_two == 2){
+                    check_bug_status();
+                } else if(selection_two == 3){
+                    register_product();
+                } else if(selection_two == 4){
+                    check_product_release();
+                } else if(selection_two == 5){
+                    confirm_change_request();
+                } else if(selection_two == 6){
+                    resolve_change_request();
+                } else if(selection_two == 7){
+                    check_change_request_status();
+                } else if(selection_two == 8){
+                    edit_change_request_priority();
+                } else if(selection_two == 9){
+                    make_feature_request();
+                } else if(selection_two == 10){
+                    send_new_product_release();
+                } else{
+                    cout << "Invalid selection, please try again" << endl;
+                }
+            } else{
+                if(selection_two == 0){
+                    cout << "Thank you for using the Bug Tracking System!" << endl;
+                    sys_run = false;
+                } else if(selection_two == 1){
+                    report_bug();
+                } else if(selection_two == 2){
+                    check_bug_status();
+                } else{
+                    cout << "Invalid selection, please try again" << endl;
+                }
             }
         } else if(selection_one == 3){
             cout << "Thank you for using the Bug Tracking System!" << endl;
