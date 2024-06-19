@@ -55,8 +55,8 @@ int main()
                 cout << "-> Check current Product Release (4)" << endl;
                 cout << "-> Confirm Change Request (5)" << endl;
                 cout << "-> Resolve Change Item (6)" << endl;
-                cout << "-> Check Change Status (7)" << endl;
-                cout << "-> Edit Change Item Priority (8)" << endl;
+                cout << "-> Check Change Item Status (7)" << endl;
+                cout << "-> Edit Change Item (8)" << endl;
                 cout << "-> Make Feature Request (9)" << endl;
                 cout << "-> Send out new Product Release (10)" << endl;
                 cout << "-> See all Pending Change Items (11)" << endl;

@@ -288,12 +288,11 @@ void resolve_change_request(){
 }
 // edit change request priority
 void edit_change_request_priority(){
-    long int change_id;
-    int priority;
+    char product_name[MAX_NAME], product_version[MAX_NAME];
     system("clear");
     cout << "-----------------------------------\n";
-    cout << "Change Request Priority Edit Menu:" << endl;
-    cout << "Note that this is a placeholder for the change request priority editing process." << endl;
+    cout << "Edit Change Items Menu:" << endl;
+    cout << "Note that this is a placeholder for the search change items process." << endl;
     cout << "Please enter (0) to return to Main Menu, or (1) to Continue: ";
     string return_m;
     cin >> return_m;
@@ -305,19 +304,93 @@ void edit_change_request_priority(){
         sleep(2);
         return;
     }
-    cout << "\nPlease enter the change request ID: ";
+    cout << "\nPlease enter the product name: ";
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    cin >> change_id;
-    cout << "\nPlease enter the new priority level (1-5) for this change request: ";
+    cin.get(product_name, MAX_NAME-1);
+    cout << "\nPlease enter the product version: ";
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    cin >> priority;
-    cout << "\nChange Request ID " << change_id << " has been updated with new priority level " << priority << "." << endl;
-    cout << "Please enter (0) to return to Main Menu: ";
-    string return_main;
-    cin >> return_main;
-    if(return_main[0] == '0'){
-        sleep(1);
-        return;
+    cin.get(product_version, MAX_NAME-1);
+    cout << "\n\nThe following change requests are pending for " << product_name << " Version " << product_version << ":" << endl;
+    cout << "-----------------------------------\n";
+    cout << "Change Request ID: XXXXX, Description {...}" << endl;
+    cout << "Change Request ID: YXXXX, Description {...}" << endl;
+    cout << "Change Request ID: YYXXX, Description {...}" << endl;
+    cout << "Change Request ID: YYYXX, Description {...}" << endl;
+    cout << "Change Request ID: YYYYY, Description {...}" << endl;
+    cout << "-----------------------------------\n";
+
+    while(1){
+        cout << "Enter (N) to see more change requests, or (P) to see previous, or enter the \nchange item id of the item you wish to query: ";
+        string change_id;
+        cin >> change_id;
+        if(change_id[0] == 'N' || change_id[0] == 'n'){
+            // flip to next page
+            system("clear");
+            cout << "\n\nThe following change requests are pending for " << product_name << ":" << endl;
+            cout << "-----------------------------------\n";
+            cout << "this is the next page i promise" << endl;
+            cout << "-----------------------------------\n";
+            cout << "Change Request ID: XXXXX, Description {...}" << endl;
+            cout << "Change Request ID: YXXXX, Description {...}" << endl;
+            cout << "Change Request ID: YYXXX, Description {...}" << endl;
+            cout << "Change Request ID: YYYXX, Description {...}" << endl;
+            cout << "Change Request ID: YYYYY, Description {...}" << endl;
+            cout << "-----------------------------------\n";
+        } else if(change_id[0] == 'P' || change_id[0] == 'p'){
+            // flip to previous page
+            system("clear");
+            cout << "\n\nThe following change requests are pending for " << product_name << ":" << endl;
+            cout << "-----------------------------------\n";
+            cout << "this is the previous page i promise" << endl;
+            cout << "-----------------------------------\n";
+            cout << "Change Request ID: XXXXX, Description {...}" << endl;
+            cout << "Change Request ID: YXXXX, Description {...}" << endl;
+            cout << "Change Request ID: YYXXX, Description {...}" << endl;
+            cout << "Change Request ID: YYYXX, Description {...}" << endl;
+            cout << "Change Request ID: YYYYY, Description {...}" << endl;
+            cout << "-----------------------------------\n";
+        } else{
+            // query change item id
+            while(1){
+                cout << "-----------------------------------\n";
+                cout << "Change Item: " << change_id << " has the following details:" << endl;
+                cout << "Description: {...}" << endl;
+                cout << "Enter the field you would like to modify: " << endl;
+                cout << "-----------------------------------\n";
+                cout << "0. Exit" << endl;
+                cout << "1. Priority" << endl;
+                cout << "2. Description" << endl;
+                cout << "3. Status" << endl;
+                cout << "-----------------------------------\n";
+                cout << "Selection: ";
+                string selection;
+                cin >> selection;
+                if(selection[0] == '1'){
+                    cout << "Enter the new priority level (1-5): ";
+                    int new_priority;
+                    cin >> new_priority;
+                    cout << "Priority level has been updated to " << new_priority << endl;
+                } else if(selection[0] == '2'){
+                    cout << "Enter the new description: ";
+                    char new_description[MAX_DESCRIPTION];
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    cin.get(new_description, MAX_DESCRIPTION-1);
+                    cout << "Description has been updated to " << new_description << endl;
+                } else if(selection[0] == '3'){
+                    cout << "Enter the new status: ";
+                    char new_status[MAX_NAME];
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    cin.get(new_status, MAX_NAME-1);
+                    cout << "Status has been updated to " << new_status << endl;
+                } else if(selection[0] == '0'){
+                    break;
+                }
+                else{
+                    cout << "Invalid selection, please try again" << endl;
+                }
+            }
+            break;
+        }
     }
 }
 // make feature request
