@@ -38,7 +38,6 @@ void register_customer(){
 
     cout << "-----------------------------------\n";
     cout << "New Customer Menu:" << endl;
-    cout << "Note that this is a placeholder for the registration process." << endl;
     cout << "Continue New Customer Registration? (Y/N): ";
     string confirm_register;
     cin >> confirm_register;
@@ -59,7 +58,6 @@ void register_customer(){
     }
     
     cout << "\n\nPlease Enter Your Name:" << endl;
-    cout << "Note that customer name must be in the format of Firstname Lastname" << endl;
     cout << "\nFirst Name: ";
     cin >> cus_fname;
     cout << "Last Name: ";
@@ -104,7 +102,6 @@ void report_bug(){
     system("clear");
     cout << "-----------------------------------\n";
     cout << "Bug Report Menu:" << endl;
-    cout << "Note that this is a placeholder for the bug reporting process." << endl;
     cout << "Please enter (0) to return to Main Menu, or (1) to Continue: ";
     string return_m;
     cin >> return_m;
@@ -138,7 +135,6 @@ void check_bug_status(){
     system("clear");
     cout << "-----------------------------------\n";
     cout << "Bug Status Menu:" << endl;
-    cout << "Note that this is a placeholder for the bug status checking process." << endl;
     cout << "Please enter (0) to return to Main Menu, or (1) to Continue: ";
     string return_m;
     cin >> return_m;
@@ -168,7 +164,6 @@ void check_product_release(){
     system("clear");
     cout << "-----------------------------------\n";
     cout << "Product Release Menu:" << endl;
-    cout << "Note that this is a placeholder for the product release checking process." << endl;
     cout << "Please enter (0) to return to Main Menu, or (1) to Continue: ";
     string return_m;
     cin >> return_m;
@@ -199,7 +194,6 @@ void confirm_change_request(){
     system("clear");
     cout << "-----------------------------------\n";
     cout << "Change Request Confirmation Menu:" << endl;
-    cout << "Note that this is a placeholder for the change request confirmation process." << endl;
     cout << "Please enter (0) to return to Main Menu, or (1) to Continue: ";
     string return_m;
     cin >> return_m;
@@ -232,7 +226,6 @@ void check_change_request_status(){
     system("clear");
     cout << "-----------------------------------\n";
     cout << "Change Request Status Menu:" << endl;
-    cout << "Note that this is a placeholder for the change request status checking process." << endl;
     cout << "Please enter (0) to return to Main Menu, or (1) to Continue: ";
     string return_m;
     cin >> return_m;
@@ -262,7 +255,6 @@ void resolve_change_request(){
     system("clear");
     cout << "-----------------------------------\n";
     cout << "Change Request Resolution Menu:" << endl;
-    cout << "Note that this is a placeholder for the change request resolution process." << endl;
     cout << "Please enter (0) to return to Main Menu, or (1) to Continue: ";
     string return_m;
     cin >> return_m;
@@ -292,7 +284,6 @@ void edit_change_request_priority(){
     system("clear");
     cout << "-----------------------------------\n";
     cout << "Edit Change Items Menu:" << endl;
-    cout << "Note that this is a placeholder for the search change items process." << endl;
     cout << "Please enter (0) to return to Main Menu, or (1) to Continue: ";
     string return_m;
     cin >> return_m;
@@ -399,7 +390,6 @@ void make_feature_request(){
     system("clear");
     cout << "-----------------------------------\n";
     cout << "Feature Request Menu:" << endl;
-    cout << "Note that this is a placeholder for the feature request process." << endl;
     cout << "Please enter (0) to return to Main Menu, or (1) to Continue: ";
     string return_m;
     cin >> return_m;
@@ -433,7 +423,6 @@ void send_new_product_release(){
     system("clear");
     cout << "-----------------------------------\n";
     cout << "Product Release Menu:" << endl;
-    cout << "Note that this is a placeholder for the product release process." << endl;
     cout << "Please enter (0) to return to Main Menu, or (1) to Continue: ";
     string return_m;
     cin >> return_m;
@@ -467,7 +456,6 @@ void see_all_pending_change_items(){
     system("clear");
     cout << "-----------------------------------\n";
     cout << "Pending Change Items Menu:" << endl;
-    cout << "Note that this is a placeholder for the pending change items process." << endl;
     cout << "Please enter (0) to return to Main Menu, or (1) to Continue: ";
     string return_m;
     cin >> return_m;
@@ -506,7 +494,6 @@ void search_all_change_items(){
     system("clear");
     cout << "-----------------------------------\n";
     cout << "Search Change Items Menu:" << endl;
-    cout << "Note that this is a placeholder for the search change items process." << endl;
     cout << "Please enter (0) to return to Main Menu, or (1) to Continue: ";
     string return_m;
     cin >> return_m;
