@@ -14,7 +14,8 @@ int main()
     int selection_one = -1;
     bool sys_run = true;
     while(sys_run){ 
-        cout << "\n\n-----------------------------------\n";
+        system("clear");
+        cout << "-----------------------------------\n";
         cout << "Welcome to the Bug Tracking System!" << endl;
         cout << "Please select one of the following to get started:\n " << endl;
         cout << "-----------------------------------\n";
@@ -44,6 +45,7 @@ int main()
                 }
             }
             cout << "\nPlease Select one of the following actions:" << endl;
+            cout << "-----------------------------------\n\n";
             cout << "-> Return (0)" << endl;
             cout << "-> Report a Bug (1)" << endl;
             cout << "-> Check Bug Status (2)" << endl;
@@ -57,6 +59,7 @@ int main()
                 cout << "-> Make Feature Request (9)" << endl;
                 cout << "-> Send out new Product Release (10)" << endl;
             }
+            cout << "-----------------------------------\n\n";
             int selection_two = -1;
             cout << "Selection: ";
             cin >> selection_two;
@@ -88,7 +91,10 @@ int main()
                 }
             } else{
                 if(selection_two == 0){
+                    system("clear");
+                    cout << "-----------------------------------\n";
                     cout << "Thank you for using the Bug Tracking System!" << endl;
+                    cout << "-----------------------------------\n\n";
                     sys_run = false;
                 } else if(selection_two == 1){
                     report_bug();
@@ -99,7 +105,10 @@ int main()
                 }
             }
         } else if(selection_one == 3){
+            system("clear");
+            cout << "-----------------------------------\n";
             cout << "Thank you for using the Bug Tracking System!" << endl;
+            cout << "-----------------------------------\n\n";
             sys_run = false;
         } else{
             cout << "Invalid selection, please try again" << endl;
