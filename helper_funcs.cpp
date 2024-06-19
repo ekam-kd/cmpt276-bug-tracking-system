@@ -39,7 +39,6 @@ void register_customer(){
     cout << "-----------------------------------\n";
     cout << "New Customer Menu:" << endl;
     cout << "Note that this is a placeholder for the registration process." << endl;
-    //confirm register??
     cout << "Continue New Customer Registration? (Y/N): ";
     string confirm_register;
     cin >> confirm_register;
@@ -106,6 +105,17 @@ void report_bug(){
     cout << "-----------------------------------\n";
     cout << "Bug Report Menu:" << endl;
     cout << "Note that this is a placeholder for the bug reporting process." << endl;
+    cout << "Please enter (0) to return to Main Menu, or (1) to Continue: ";
+    string return_m;
+    cin >> return_m;
+    if(return_m[0] == '0'){
+        sleep(1);
+        return;
+    } else if(return_m[0] != '1'){
+        cout << "Invalid selection, please try again" << endl;
+        sleep(2);
+        return;
+    }
     cout << "Please enter your name:\n";
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
     cin.get(cus_name, MAX_NAME-1);
@@ -115,12 +125,12 @@ void report_bug(){
     cout << "\n\nBug has been reported." << endl;
     cout << "Thank you for reporting the bug! This bug request ID is XXXXX" << endl;  
     cout << "Please enter (0) to return to Main Menu: ";
-        string return_main;
-        cin >> return_main;
-        if(return_main[0] == '0'){
-            sleep(1);
-            return;
-        }
+    string return_main;
+    cin >> return_main;
+    if(return_main[0] == '0'){
+        sleep(1);
+        return;
+    }
 }
 // check bug status
 void check_bug_status(){
@@ -129,6 +139,17 @@ void check_bug_status(){
     cout << "-----------------------------------\n";
     cout << "Bug Status Menu:" << endl;
     cout << "Note that this is a placeholder for the bug status checking process." << endl;
+    cout << "Please enter (0) to return to Main Menu, or (1) to Continue: ";
+    string return_m;
+    cin >> return_m;
+    if(return_m[0] == '0'){
+        sleep(1);
+        return;
+    } else if(return_m[0] != '1'){
+        cout << "Invalid selection, please try again" << endl;
+        sleep(2);
+        return;
+    }
     cout << "\nPlease enter the bug ID: ";
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
     cin >> bug_id;
@@ -148,6 +169,17 @@ void check_product_release(){
     cout << "-----------------------------------\n";
     cout << "Product Release Menu:" << endl;
     cout << "Note that this is a placeholder for the product release checking process." << endl;
+    cout << "Please enter (0) to return to Main Menu, or (1) to Continue: ";
+    string return_m;
+    cin >> return_m;
+    if(return_m[0] == '0'){
+        sleep(1);
+        return;
+    } else if(return_m[0] != '1'){
+        cout << "Invalid selection, please try again" << endl;
+        sleep(2);
+        return;
+    }
     cout << "\nPlease enter the product name: ";
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
     cin >> product_name;
@@ -168,6 +200,17 @@ void confirm_change_request(){
     cout << "-----------------------------------\n";
     cout << "Change Request Confirmation Menu:" << endl;
     cout << "Note that this is a placeholder for the change request confirmation process." << endl;
+    cout << "Please enter (0) to return to Main Menu, or (1) to Continue: ";
+    string return_m;
+    cin >> return_m;
+    if(return_m[0] == '0'){
+        sleep(1);
+        return;
+    } else if(return_m[0] != '1'){
+        cout << "Invalid selection, please try again" << endl;
+        sleep(2);
+        return;
+    }
     cout << "\nPlease enter the change request ID: ";
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
     cin >> change_id;
@@ -190,6 +233,17 @@ void check_change_request_status(){
     cout << "-----------------------------------\n";
     cout << "Change Request Status Menu:" << endl;
     cout << "Note that this is a placeholder for the change request status checking process." << endl;
+    cout << "Please enter (0) to return to Main Menu, or (1) to Continue: ";
+    string return_m;
+    cin >> return_m;
+    if(return_m[0] == '0'){
+        sleep(1);
+        return;
+    } else if(return_m[0] != '1'){
+        cout << "Invalid selection, please try again" << endl;
+        sleep(2);
+        return;
+    }
     cout << "\nPlease enter the change request ID: ";
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
     cin >> change_id;
@@ -209,6 +263,17 @@ void resolve_change_request(){
     cout << "-----------------------------------\n";
     cout << "Change Request Resolution Menu:" << endl;
     cout << "Note that this is a placeholder for the change request resolution process." << endl;
+    cout << "Please enter (0) to return to Main Menu, or (1) to Continue: ";
+    string return_m;
+    cin >> return_m;
+    if(return_m[0] == '0'){
+        sleep(1);
+        return;
+    } else if(return_m[0] != '1'){
+        cout << "Invalid selection, please try again" << endl;
+        sleep(2);
+        return;
+    }
     cout << "\nPlease enter the change request ID: ";
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
     cin >> change_id;
@@ -229,6 +294,17 @@ void edit_change_request_priority(){
     cout << "-----------------------------------\n";
     cout << "Change Request Priority Edit Menu:" << endl;
     cout << "Note that this is a placeholder for the change request priority editing process." << endl;
+    cout << "Please enter (0) to return to Main Menu, or (1) to Continue: ";
+    string return_m;
+    cin >> return_m;
+    if(return_m[0] == '0'){
+        sleep(1);
+        return;
+    } else if(return_m[0] != '1'){
+        cout << "Invalid selection, please try again" << endl;
+        sleep(2);
+        return;
+    }
     cout << "\nPlease enter the change request ID: ";
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
     cin >> change_id;
@@ -251,6 +327,17 @@ void make_feature_request(){
     cout << "-----------------------------------\n";
     cout << "Feature Request Menu:" << endl;
     cout << "Note that this is a placeholder for the feature request process." << endl;
+    cout << "Please enter (0) to return to Main Menu, or (1) to Continue: ";
+    string return_m;
+    cin >> return_m;
+    if(return_m[0] == '0'){
+        sleep(1);
+        return;
+    } else if(return_m[0] != '1'){
+        cout << "Invalid selection, please try again" << endl;
+        sleep(2);
+        return;
+    }
     cout << "\nPlease enter the feature name: ";
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
     cin.get(feature_name, MAX_NAME-1);
@@ -274,6 +361,17 @@ void send_new_product_release(){
     cout << "-----------------------------------\n";
     cout << "Product Release Menu:" << endl;
     cout << "Note that this is a placeholder for the product release process." << endl;
+    cout << "Please enter (0) to return to Main Menu, or (1) to Continue: ";
+    string return_m;
+    cin >> return_m;
+    if(return_m[0] == '0'){
+        sleep(1);
+        return;
+    } else if(return_m[0] != '1'){
+        cout << "Invalid selection, please try again" << endl;
+        sleep(2);
+        return;
+    }
     cout << "\nPlease enter the product name: ";
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
     cin.get(product_name, MAX_NAME-1);
