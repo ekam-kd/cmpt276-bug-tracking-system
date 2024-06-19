@@ -29,5 +29,7 @@ void edit_change_request_priority();
 void make_feature_request();
 // send out new product release
 void send_new_product_release();
-
+void see_all_pending_change_items();
+void see_all_customers_per_change_item();
+void search_all_change_items();
 #endif

@@ -59,6 +59,9 @@ int main()
                 cout << "-> Edit Change Item Priority (8)" << endl;
                 cout << "-> Make Feature Request (9)" << endl;
                 cout << "-> Send out new Product Release (10)" << endl;
+                cout << "-> See all Pending Change Items (11)" << endl;
+                cout << "-> Search from all Change Items (12)" << endl;
+                // cout << "-> See all customers per Change Item ()" << endl;
             }
             cout << "-----------------------------------\n\n";
             int selection_two = -1;
@@ -87,7 +90,12 @@ int main()
                     make_feature_request();
                 } else if(selection_two == 10){
                     send_new_product_release();
-                } else{
+                } else if(selection_two == 11){
+                    see_all_pending_change_items();
+                } else if(selection_two == 12){
+                    search_all_change_items();
+                } 
+                else{
                     cout << "Invalid selection, please try again" << endl;
                 }
             } else{

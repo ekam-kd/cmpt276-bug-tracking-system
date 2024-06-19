@@ -388,3 +388,125 @@ void send_new_product_release(){
         return;
     }
 }
+
+void see_all_pending_change_items(){
+    char product_name[MAX_NAME];
+    system("clear");
+    cout << "-----------------------------------\n";
+    cout << "Pending Change Items Menu:" << endl;
+    cout << "Note that this is a placeholder for the pending change items process." << endl;
+    cout << "Please enter (0) to return to Main Menu, or (1) to Continue: ";
+    string return_m;
+    cin >> return_m;
+    if(return_m[0] == '0'){
+        sleep(1);
+        return;
+    } else if(return_m[0] != '1'){
+        cout << "Invalid selection, please try again" << endl;
+        sleep(2);
+        return;
+    }
+    cout << "\nPlease enter the product name: ";
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    cin.get(product_name, MAX_NAME-1);
+    cout << "\n\nThe following change requests are pending for " << product_name << ":" << endl;
+    cout << "Change Request ID: XXXXX" << endl;
+    cout << "{...}" << endl;
+    cout << "Change Request ID: YYYYY" << endl;
+
+    cout << "\n\nPlease enter (0) to return to Main Menu: ";
+    string return_main;
+    cin >> return_main;
+    if(return_main[0] == '0'){
+        sleep(1);
+        return;
+    }
+
+}
+
+void see_all_customers_per_change_item(){
+
+}
+
+void search_all_change_items(){
+    char product_name[MAX_NAME], product_version[MAX_NAME];
+    system("clear");
+    cout << "-----------------------------------\n";
+    cout << "Search Change Items Menu:" << endl;
+    cout << "Note that this is a placeholder for the search change items process." << endl;
+    cout << "Please enter (0) to return to Main Menu, or (1) to Continue: ";
+    string return_m;
+    cin >> return_m;
+    if(return_m[0] == '0'){
+        sleep(1);
+        return;
+    } else if(return_m[0] != '1'){
+        cout << "Invalid selection, please try again" << endl;
+        sleep(2);
+        return;
+    }
+    cout << "\nPlease enter the product name: ";
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    cin.get(product_name, MAX_NAME-1);
+    cout << "\nPlease enter the product version: ";
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    cin.get(product_version, MAX_NAME-1);
+    cout << "\n\nThe following change requests are pending for " << product_name << " Version " << product_version << ":" << endl;
+    cout << "-----------------------------------\n";
+    cout << "Change Request ID: XXXXX, Description {...}" << endl;
+    cout << "Change Request ID: YXXXX, Description {...}" << endl;
+    cout << "Change Request ID: YYXXX, Description {...}" << endl;
+    cout << "Change Request ID: YYYXX, Description {...}" << endl;
+    cout << "Change Request ID: YYYYY, Description {...}" << endl;
+    cout << "-----------------------------------\n";
+
+    // flip through pages?
+    // enter change item id to see more details?
+    while(1){
+        cout << "Enter (N) to see more change requests, or (P) to see previous, or enter the \nchange item id of the item you wish to query: ";
+        string change_id;
+        cin >> change_id;
+        if(change_id[0] == 'N' || change_id[0] == 'n'){
+            // flip to next page
+            system("clear");
+            cout << "\n\nThe following change requests are pending for " << product_name << ":" << endl;
+            cout << "-----------------------------------\n";
+            cout << "this is the next page i promise" << endl;
+            cout << "-----------------------------------\n";
+            cout << "Change Request ID: XXXXX, Description {...}" << endl;
+            cout << "Change Request ID: YXXXX, Description {...}" << endl;
+            cout << "Change Request ID: YYXXX, Description {...}" << endl;
+            cout << "Change Request ID: YYYXX, Description {...}" << endl;
+            cout << "Change Request ID: YYYYY, Description {...}" << endl;
+            cout << "-----------------------------------\n";
+        } else if(change_id[0] == 'P' || change_id[0] == 'p'){
+            // flip to previous page
+            system("clear");
+            cout << "\n\nThe following change requests are pending for " << product_name << ":" << endl;
+            cout << "-----------------------------------\n";
+            cout << "this is the previous page i promise" << endl;
+            cout << "-----------------------------------\n";
+            cout << "Change Request ID: XXXXX, Description {...}" << endl;
+            cout << "Change Request ID: YXXXX, Description {...}" << endl;
+            cout << "Change Request ID: YYXXX, Description {...}" << endl;
+            cout << "Change Request ID: YYYXX, Description {...}" << endl;
+            cout << "Change Request ID: YYYYY, Description {...}" << endl;
+            cout << "-----------------------------------\n";
+        } else{
+            // query change item id
+            cout << "-----------------------------------\n";
+            cout << "Change Item: " << change_id << " has the following details:" << endl;
+            cout << "Description: {...}" << endl;
+            break;
+        }
+    }
+
+    cout << "\n\nPlease enter (0) to return to Main Menu: ";
+    string return_main;
+    cin >> return_main;
+    if(return_main[0] == '0'){
+        sleep(1);
+        return;
+    }
+
+}
