@@ -39,10 +39,23 @@ void register_customer(){
     cout << "-----------------------------------\n";
     cout << "New Customer Menu:" << endl;
     cout << "Note that this is a placeholder for the registration process." << endl;
+    //confirm register??
+    cout << "Continue New Customer Registration? (Y/N): ";
+    string confirm_register;
+    cin >> confirm_register;
+    if(confirm_register[0] == 'N' || confirm_register[0] == 'n'){
+        cout << "\nYou will be returned to main menu" << endl;
+        sleep(2);
+        return;
+    } else if (confirm_register[0] != 'Y' && confirm_register[0] != 'y'){
+        cout << "\nInvalid selection, please try again" << endl;
+        sleep(2);
+        return;
+    }
     cout << "\n\nAre you an employee of AAA Inc.? (Y/N): ";
-    char emp;
+    string emp;
     cin >> emp;
-    if(emp == 'Y' || emp == 'y'){
+    if(emp[0] == 'Y' || emp[0] == 'y'){
         employee = true;
     }
     
@@ -75,8 +88,13 @@ void register_customer(){
     cin >> confirm;
     if(confirm == 'Y' || confirm == 'y'){
         cout << "\nThank you for registering with us!" << endl;
-        cout << "You will be returned to main menu" << endl;
-        sleep(2);
+        cout << "Please enter (0) to return to Main Menu: ";
+        string return_main;
+        cin >> return_main;
+        if(return_main[0] == '0'){
+            sleep(1);
+            return;
+        }
     } else{
         cout << "\nUnable to register new Customer, please try again" << endl;
     }
@@ -96,8 +114,13 @@ void report_bug(){
     cin.get(bug_description, MAX_DESCRIPTION-1);
     cout << "\n\nBug has been reported." << endl;
     cout << "Thank you for reporting the bug! This bug request ID is XXXXX" << endl;  
-    cout << "\nYou will be returned to main menu" << endl;
-    sleep(2);
+    cout << "Please enter (0) to return to Main Menu: ";
+        string return_main;
+        cin >> return_main;
+        if(return_main[0] == '0'){
+            sleep(1);
+            return;
+        }
 }
 // check bug status
 void check_bug_status(){
@@ -110,8 +133,13 @@ void check_bug_status(){
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
     cin >> bug_id;
     cout << "\n\nBug ID " << bug_id << " is currently in <STATE> state." << endl;
-    cout << "\nYou will be returned to main menu" << endl;
-    sleep(2);
+    cout << "Please enter (0) to return to Main Menu: ";
+    string return_main;
+    cin >> return_main;
+    if(return_main[0] == '0'){
+        sleep(1);
+        return;
+    }
 }
 // check product release
 void check_product_release(){
@@ -124,8 +152,13 @@ void check_product_release(){
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
     cin >> product_name;
     cout << "\nThe latest release of " << product_name << " is version <VERSION>." << endl;
-    cout << "\nYou will be returned to main menu" << endl;
-    sleep(2);
+    cout << "Please enter (0) to return to Main Menu: ";
+    string return_main;
+    cin >> return_main;
+    if(return_main[0] == '0'){
+        sleep(1);
+        return;
+    }
 }
 // confirm change request
 void confirm_change_request(){
@@ -142,8 +175,13 @@ void confirm_change_request(){
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
     cin >> priority;
     cout << "\n\nChange Request ID " << change_id << " has been confirmed with priority level " << priority << "." << endl;   
-    cout << "\nYou will be returned to main menu" << endl;
-    sleep(2); 
+    cout << "Please enter (0) to return to Main Menu: ";
+    string return_main;
+    cin >> return_main;
+    if(return_main[0] == '0'){
+        sleep(1);
+        return;
+    } 
 }
 // check change request status
 void check_change_request_status(){
@@ -156,8 +194,13 @@ void check_change_request_status(){
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
     cin >> change_id;
     cout << "\nChange Request ID " << change_id << " is currently in <STATE> state." << endl;
-    cout << "\nYou will be returned to main menu" << endl;
-    sleep(2);
+    cout << "Please enter (0) to return to Main Menu: ";
+    string return_main;
+    cin >> return_main;
+    if(return_main[0] == '0'){
+        sleep(1);
+        return;
+    }
 }
 // resolve change request
 void resolve_change_request(){
@@ -170,8 +213,13 @@ void resolve_change_request(){
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
     cin >> change_id;
     cout << "\nChange Request ID " << change_id << " has been resolved." << endl;
-    cout << "\nYou will be returned to main menu" << endl;
-    sleep(2);
+    cout << "Please enter (0) to return to Main Menu: ";
+    string return_main;
+    cin >> return_main;
+    if(return_main[0] == '0'){
+        sleep(1);
+        return;
+    }
 }
 // edit change request priority
 void edit_change_request_priority(){
@@ -188,8 +236,13 @@ void edit_change_request_priority(){
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
     cin >> priority;
     cout << "\nChange Request ID " << change_id << " has been updated with new priority level " << priority << "." << endl;
-    cout << "\nYou will be returned to main menu" << endl;
-    sleep(2);
+    cout << "Please enter (0) to return to Main Menu: ";
+    string return_main;
+    cin >> return_main;
+    if(return_main[0] == '0'){
+        sleep(1);
+        return;
+    }
 }
 // make feature request
 void make_feature_request(){
@@ -206,8 +259,13 @@ void make_feature_request(){
     cin.get(feature_description, MAX_DESCRIPTION-1);
     cout << "\nFeature " << feature_name << " has been requested." << endl;
     cout << "\nThank you for requesting the feature! This feature request ID is XXXXX" << endl;
-    cout << "\nYou will be returned to main menu" << endl;
-    sleep(2);
+    cout << "Please enter (0) to return to Main Menu: ";
+    string return_main;
+    cin >> return_main;
+    if(return_main[0] == '0'){
+        sleep(1);
+        return;
+    }
 }
 // send out new product release
 void send_new_product_release(){
@@ -224,6 +282,11 @@ void send_new_product_release(){
     cin.get(product_version, MAX_NAME-1);
     cout << "\nProduct " << product_name << " version " << product_version << " has been released." << endl;
     cout << "\nThank you for releasing the product!" << endl;
-    cout << "\nYou will be returned to main menu" << endl;
-    sleep(2);
+    cout << "Please enter (0) to return to Main Menu: ";
+    string return_main;
+    cin >> return_main;
+    if(return_main[0] == '0'){
+        sleep(1);
+        return;
+    }
 }

@@ -31,6 +31,7 @@ int main()
             bool employee = false;
             
             while(1){
+                system("clear");
                 cout << "\nAre you an employee of AAA Inc.? (Y/N): ";
                 string emp1;
                 cin >> emp1;  
