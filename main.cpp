@@ -48,19 +48,15 @@ int main()
             cout << "\nPlease Select one of the following actions:" << endl;
             cout << "-----------------------------------\n\n";
             cout << "-> Return (0)" << endl;
-            cout << "-> Report a Bug (1)" << endl;
-            cout << "-> Check Bug Status (2)" << endl;
+            cout << "-> Create a Change Request (1)" << endl;
+            cout << "-> Check Change Item Status (2)" << endl;
             if(employee){
                 cout << "-> Register a New Product (3)" << endl;
-                cout << "-> Check current Product Release (4)" << endl;
-                cout << "-> Confirm Change Request (5)" << endl;
-                cout << "-> Resolve Change Item (6)" << endl;
-                cout << "-> Check Change Item Status (7)" << endl;
-                cout << "-> Edit Change Item (8)" << endl;
-                cout << "-> Make Feature Request (9)" << endl;
-                cout << "-> Send out new Product Release (10)" << endl;
-                cout << "-> See all Pending Change Items (11)" << endl;
-                cout << "-> Search from all Change Items (12)" << endl;
+                cout << "-> Check Current Product Release (4)" << endl;
+                cout << "-> Edit Change Item (5)" << endl;  //actually 8
+                cout << "-> Send out new Product Release (6)" << endl; //actually 10
+                cout << "-> See all Pending Change Items (7)" << endl; //actually 11
+                cout << "-> Search from all Change Items (8)" << endl; //actually 12
                 // cout << "-> See all customers per Change Item ()" << endl;
             }
             cout << "-----------------------------------\n\n";

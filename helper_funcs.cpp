@@ -101,7 +101,7 @@ void report_bug(){
     char cus_name[MAX_NAME], bug_description[MAX_DESCRIPTION]; // [1000] and [100] are arbitrary values, can be changed to [10000] or [1000000
     system("clear");
     cout << "-----------------------------------\n";
-    cout << "Bug Report Menu:" << endl;
+    cout << "Change Request Menu:" << endl;
     cout << "Please enter (0) to return to Main Menu, or (1) to Continue: ";
     string return_m;
     cin >> return_m;
@@ -117,10 +117,10 @@ void report_bug(){
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
     cin.get(cus_name, MAX_NAME-1);
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    cout << "\n\nHello " << cus_name << ", please enter the bug description:\n";
+    cout << "\n\nHello " << cus_name << ", please enter the change description:\n";
     cin.get(bug_description, MAX_DESCRIPTION-1);
-    cout << "\n\nBug has been reported." << endl;
-    cout << "Thank you for reporting the bug! This bug request ID is XXXXX" << endl;  
+    cout << "\n\nChange has been reported." << endl;
+    cout << "Thank you for reporting the change! This change ID is XXXXX" << endl;  
     cout << "Please enter (0) to return to Main Menu: ";
     string return_main;
     cin >> return_main;
@@ -134,7 +134,7 @@ void check_bug_status(){
     long int bug_id;
     system("clear");
     cout << "-----------------------------------\n";
-    cout << "Bug Status Menu:" << endl;
+    cout << "Change Item Status Menu:" << endl;
     cout << "Please enter (0) to return to Main Menu, or (1) to Continue: ";
     string return_m;
     cin >> return_m;
@@ -146,10 +146,10 @@ void check_bug_status(){
         sleep(2);
         return;
     }
-    cout << "\nPlease enter the bug ID: ";
+    cout << "\nPlease enter the change ID: ";
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
     cin >> bug_id;
-    cout << "\n\nBug ID " << bug_id << " is currently in <STATE> state." << endl;
+    cout << "\n\nChange ID " << bug_id << " is currently in <STATE> state." << endl;
     cout << "Please enter (0) to return to Main Menu: ";
     string return_main;
     cin >> return_main;
@@ -278,7 +278,7 @@ void resolve_change_request(){
         return;
     }
 }
-// edit change request priority
+// edit change item
 void edit_change_request_priority(){
     char product_name[MAX_NAME], product_version[MAX_NAME];
     system("clear");
@@ -301,31 +301,31 @@ void edit_change_request_priority(){
     cout << "\nPlease enter the product version: ";
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
     cin.get(product_version, MAX_NAME-1);
-    cout << "\n\nThe following change requests are pending for " << product_name << " Version " << product_version << ":" << endl;
+    cout << "\n\nThe following change items are pending for " << product_name << " Version " << product_version << ":" << endl;
     cout << "-----------------------------------\n";
-    cout << "Change Request ID: XXXXX, Description {...}" << endl;
-    cout << "Change Request ID: YXXXX, Description {...}" << endl;
-    cout << "Change Request ID: YYXXX, Description {...}" << endl;
-    cout << "Change Request ID: YYYXX, Description {...}" << endl;
-    cout << "Change Request ID: YYYYY, Description {...}" << endl;
+    cout << "Change Item ID: XXXXX, Description {...}" << endl;
+    cout << "Change Item ID: YXXXX, Description {...}" << endl;
+    cout << "Change Item ID: YYXXX, Description {...}" << endl;
+    cout << "Change Item ID: YYYXX, Description {...}" << endl;
+    cout << "Change Item ID: YYYYY, Description {...}" << endl;
     cout << "-----------------------------------\n";
 
     while(1){
-        cout << "Enter (N) to see more change requests, or (P) to see previous, or enter the \nchange item id of the item you wish to query: ";
+        cout << "Enter (N) to see more change items, or (P) to see previous, or enter the \nchange id of the item you wish to query: ";
         string change_id;
         cin >> change_id;
         if(change_id[0] == 'N' || change_id[0] == 'n'){
             // flip to next page
             system("clear");
-            cout << "\n\nThe following change requests are pending for " << product_name << ":" << endl;
+            cout << "\n\nThe following change items are pending for " << product_name << ":" << endl;
             cout << "-----------------------------------\n";
             cout << "this is the next page i promise" << endl;
             cout << "-----------------------------------\n";
-            cout << "Change Request ID: XXXXX, Description {...}" << endl;
-            cout << "Change Request ID: YXXXX, Description {...}" << endl;
-            cout << "Change Request ID: YYXXX, Description {...}" << endl;
-            cout << "Change Request ID: YYYXX, Description {...}" << endl;
-            cout << "Change Request ID: YYYYY, Description {...}" << endl;
+            cout << "Change Item ID: XXXXX, Description {...}" << endl;
+            cout << "Change Item ID: YXXXX, Description {...}" << endl;
+            cout << "Change Item ID: YYXXX, Description {...}" << endl;
+            cout << "Change Item ID: YYYXX, Description {...}" << endl;
+            cout << "Change Item ID: YYYYY, Description {...}" << endl;
             cout << "-----------------------------------\n";
         } else if(change_id[0] == 'P' || change_id[0] == 'p'){
             // flip to previous page
@@ -334,11 +334,11 @@ void edit_change_request_priority(){
             cout << "-----------------------------------\n";
             cout << "this is the previous page i promise" << endl;
             cout << "-----------------------------------\n";
-            cout << "Change Request ID: XXXXX, Description {...}" << endl;
-            cout << "Change Request ID: YXXXX, Description {...}" << endl;
-            cout << "Change Request ID: YYXXX, Description {...}" << endl;
-            cout << "Change Request ID: YYYXX, Description {...}" << endl;
-            cout << "Change Request ID: YYYYY, Description {...}" << endl;
+            cout << "Change Item ID: XXXXX, Description {...}" << endl;
+            cout << "Change Item ID: YXXXX, Description {...}" << endl;
+            cout << "Change Item ID: YYXXX, Description {...}" << endl;
+            cout << "Change Item ID: YYYXX, Description {...}" << endl;
+            cout << "Change Item ID: YYYYY, Description {...}" << endl;
             cout << "-----------------------------------\n";
         } else{
             // query change item id
@@ -511,19 +511,19 @@ void search_all_change_items(){
     cout << "\nPlease enter the product version: ";
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
     cin.get(product_version, MAX_NAME-1);
-    cout << "\n\nThe following change requests are pending for " << product_name << " Version " << product_version << ":" << endl;
+    cout << "\n\nThe following change items are pending for " << product_name << " Version " << product_version << ":" << endl;
     cout << "-----------------------------------\n";
-    cout << "Change Request ID: XXXXX, Description {...}" << endl;
-    cout << "Change Request ID: YXXXX, Description {...}" << endl;
-    cout << "Change Request ID: YYXXX, Description {...}" << endl;
-    cout << "Change Request ID: YYYXX, Description {...}" << endl;
-    cout << "Change Request ID: YYYYY, Description {...}" << endl;
+    cout << "Change Item ID: XXXXX, Description {...}" << endl;
+    cout << "Change Item ID: YXXXX, Description {...}" << endl;
+    cout << "Change Item ID: YYXXX, Description {...}" << endl;
+    cout << "Change Item ID: YYYXX, Description {...}" << endl;
+    cout << "Change Item ID: YYYYY, Description {...}" << endl;
     cout << "-----------------------------------\n";
 
     // flip through pages?
     // enter change item id to see more details?
     while(1){
-        cout << "Enter (N) to see more change requests, or (P) to see previous, or enter the \nchange item id of the item you wish to query: ";
+        cout << "Enter (N) to see more change items, or (P) to see previous, or enter the \nchange id of the item you wish to query: ";
         string change_id;
         cin >> change_id;
         if(change_id[0] == 'N' || change_id[0] == 'n'){
@@ -533,24 +533,24 @@ void search_all_change_items(){
             cout << "-----------------------------------\n";
             cout << "this is the next page i promise" << endl;
             cout << "-----------------------------------\n";
-            cout << "Change Request ID: XXXXX, Description {...}" << endl;
-            cout << "Change Request ID: YXXXX, Description {...}" << endl;
-            cout << "Change Request ID: YYXXX, Description {...}" << endl;
-            cout << "Change Request ID: YYYXX, Description {...}" << endl;
-            cout << "Change Request ID: YYYYY, Description {...}" << endl;
+            cout << "Change Item ID: XXXXX, Description {...}" << endl;
+            cout << "Change Item ID: YXXXX, Description {...}" << endl;
+            cout << "Change Item ID: YYXXX, Description {...}" << endl;
+            cout << "Change Item ID: YYYXX, Description {...}" << endl;
+            cout << "Change Item ID: YYYYY, Description {...}" << endl;
             cout << "-----------------------------------\n";
         } else if(change_id[0] == 'P' || change_id[0] == 'p'){
             // flip to previous page
             system("clear");
-            cout << "\n\nThe following change requests are pending for " << product_name << ":" << endl;
+            cout << "\n\nThe following change items are pending for " << product_name << ":" << endl;
             cout << "-----------------------------------\n";
             cout << "this is the previous page i promise" << endl;
             cout << "-----------------------------------\n";
-            cout << "Change Request ID: XXXXX, Description {...}" << endl;
-            cout << "Change Request ID: YXXXX, Description {...}" << endl;
-            cout << "Change Request ID: YYXXX, Description {...}" << endl;
-            cout << "Change Request ID: YYYXX, Description {...}" << endl;
-            cout << "Change Request ID: YYYYY, Description {...}" << endl;
+            cout << "Change Item ID: XXXXX, Description {...}" << endl;
+            cout << "Change Item ID: YXXXX, Description {...}" << endl;
+            cout << "Change Item ID: YYXXX, Description {...}" << endl;
+            cout << "Change Item ID: YYYXX, Description {...}" << endl;
+            cout << "Change Item ID: YYYYY, Description {...}" << endl;
             cout << "-----------------------------------\n";
         } else{
             // query change item id
