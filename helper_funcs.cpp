@@ -16,19 +16,7 @@ using namespace std;
 #define MAX_NAME 100
 #define MAX_DESCRIPTION 1000
 
-// register new product
-void register_product(){
-    string product_name, product_version;
-    system("clear");
-    cout << "-----------------------------------\n";
-    cout << "Please enter the product name: ";
-    cin >> product_name;
-    cout << "\nPlease enter the product version: ";
-    cin >> product_version;
-    cout << "\n\nProduct " << product_name << " version " << product_version << " has been registered." << endl;
-    cout << "You will be returned to main menu" << endl;
-    sleep(2);
-}
+
 // register new customer
 void register_customer(){
     system("clear");
@@ -96,8 +84,22 @@ void register_customer(){
         cout << "\nUnable to register new Customer, please try again" << endl;
     }
 }
+// register new product
+void register_product(){
+    string product_name, product_version;
+    system("clear");
+    cout << "-----------------------------------\n";
+    cout << "Please enter the product name: ";
+    cin >> product_name;
+    cout << "\nPlease enter the product version: ";
+    cin >> product_version;
+    cout << "\n\nProduct " << product_name << " version " << product_version << " has been registered." << endl;
+    cout << "You will be returned to main menu" << endl;
+    sleep(2);
+}
+
 // report a bug
-void report_bug(){
+void create_change_request(){
     char cus_name[MAX_NAME], bug_description[MAX_DESCRIPTION]; // [1000] and [100] are arbitrary values, can be changed to [10000] or [1000000
     system("clear");
     cout << "-----------------------------------\n";
@@ -130,7 +132,7 @@ void report_bug(){
     }
 }
 // check bug status
-void check_bug_status(){
+void check_change_item_status(){
     long int bug_id;
     system("clear");
     cout << "-----------------------------------\n";
@@ -187,97 +189,7 @@ void check_product_release(){
         return;
     }
 }
-// confirm change request
-void confirm_change_request(){
-    long int change_id;
-    int priority;
-    system("clear");
-    cout << "-----------------------------------\n";
-    cout << "Change Request Confirmation Menu:" << endl;
-    cout << "Please enter (0) to return to Main Menu, or (1) to Continue: ";
-    string return_m;
-    cin >> return_m;
-    if(return_m[0] == '0'){
-        sleep(1);
-        return;
-    } else if(return_m[0] != '1'){
-        cout << "Invalid selection, please try again" << endl;
-        sleep(2);
-        return;
-    }
-    cout << "\nPlease enter the change request ID: ";
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    cin >> change_id;
-    cout << "\nPlease enter the priority level (1-5) for this change request: ";
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    cin >> priority;
-    cout << "\n\nChange Request ID " << change_id << " has been confirmed with priority level " << priority << "." << endl;   
-    cout << "Please enter (0) to return to Main Menu: ";
-    string return_main;
-    cin >> return_main;
-    if(return_main[0] == '0'){
-        sleep(1);
-        return;
-    } 
-}
-// check change request status
-void check_change_request_status(){
-    long int change_id;
-    system("clear");
-    cout << "-----------------------------------\n";
-    cout << "Change Request Status Menu:" << endl;
-    cout << "Please enter (0) to return to Main Menu, or (1) to Continue: ";
-    string return_m;
-    cin >> return_m;
-    if(return_m[0] == '0'){
-        sleep(1);
-        return;
-    } else if(return_m[0] != '1'){
-        cout << "Invalid selection, please try again" << endl;
-        sleep(2);
-        return;
-    }
-    cout << "\nPlease enter the change request ID: ";
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    cin >> change_id;
-    cout << "\nChange Request ID " << change_id << " is currently in <STATE> state." << endl;
-    cout << "Please enter (0) to return to Main Menu: ";
-    string return_main;
-    cin >> return_main;
-    if(return_main[0] == '0'){
-        sleep(1);
-        return;
-    }
-}
-// resolve change request
-void resolve_change_request(){
-    long int change_id;
-    system("clear");
-    cout << "-----------------------------------\n";
-    cout << "Change Request Resolution Menu:" << endl;
-    cout << "Please enter (0) to return to Main Menu, or (1) to Continue: ";
-    string return_m;
-    cin >> return_m;
-    if(return_m[0] == '0'){
-        sleep(1);
-        return;
-    } else if(return_m[0] != '1'){
-        cout << "Invalid selection, please try again" << endl;
-        sleep(2);
-        return;
-    }
-    cout << "\nPlease enter the change request ID: ";
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    cin >> change_id;
-    cout << "\nChange Request ID " << change_id << " has been resolved." << endl;
-    cout << "Please enter (0) to return to Main Menu: ";
-    string return_main;
-    cin >> return_main;
-    if(return_main[0] == '0'){
-        sleep(1);
-        return;
-    }
-}
+
 // edit change item
 void edit_change_request_priority(){
     char product_name[MAX_NAME], product_version[MAX_NAME];
@@ -384,39 +296,6 @@ void edit_change_request_priority(){
         }
     }
 }
-// make feature request
-void make_feature_request(){
-    char feature_name[MAX_NAME], feature_description[MAX_DESCRIPTION];
-    system("clear");
-    cout << "-----------------------------------\n";
-    cout << "Feature Request Menu:" << endl;
-    cout << "Please enter (0) to return to Main Menu, or (1) to Continue: ";
-    string return_m;
-    cin >> return_m;
-    if(return_m[0] == '0'){
-        sleep(1);
-        return;
-    } else if(return_m[0] != '1'){
-        cout << "Invalid selection, please try again" << endl;
-        sleep(2);
-        return;
-    }
-    cout << "\nPlease enter the feature name: ";
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    cin.get(feature_name, MAX_NAME-1);
-    cout << "\nPlease enter the feature description: ";
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    cin.get(feature_description, MAX_DESCRIPTION-1);
-    cout << "\nFeature " << feature_name << " has been requested." << endl;
-    cout << "\nThank you for requesting the feature! This feature request ID is XXXXX" << endl;
-    cout << "Please enter (0) to return to Main Menu: ";
-    string return_main;
-    cin >> return_main;
-    if(return_main[0] == '0'){
-        sleep(1);
-        return;
-    }
-}
 // send out new product release
 void send_new_product_release(){
     char product_name[MAX_NAME], product_version[MAX_NAME];
@@ -485,9 +364,6 @@ void see_all_pending_change_items(){
 
 }
 
-void see_all_customers_per_change_item(){
-
-}
 
 void search_all_change_items(){
     char product_name[MAX_NAME], product_version[MAX_NAME];

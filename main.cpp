@@ -53,10 +53,10 @@ int main()
             if(employee){
                 cout << "-> Register a New Product (3)" << endl;
                 cout << "-> Check Current Product Release (4)" << endl;
-                cout << "-> Edit Change Item (5)" << endl;  //actually 8
-                cout << "-> Send out new Product Release (6)" << endl; //actually 10
-                cout << "-> See all Pending Change Items (7)" << endl; //actually 11
-                cout << "-> Search from all Change Items (8)" << endl; //actually 12
+                cout << "-> Edit Change Item (5)" << endl;
+                cout << "-> Send out new Product Release (6)" << endl;
+                cout << "-> See all Pending Change Items (7)" << endl;
+                cout << "-> Search from all Change Items (8)" << endl;
                 // cout << "-> See all customers per Change Item ()" << endl;
             }
             cout << "-----------------------------------\n\n";
@@ -67,30 +67,22 @@ int main()
                 if(selection_two == 0){
                     cout << "Returning to main menu..." << endl;
                 } else if(selection_two == 1){
-                    report_bug();
+                    create_change_request();
                 } else if(selection_two == 2){
-                    check_bug_status();
+                    check_change_item_status();
                 } else if(selection_two == 3){
                     register_product();
                 } else if(selection_two == 4){
                     check_product_release();
                 } else if(selection_two == 5){
-                    confirm_change_request();
-                } else if(selection_two == 6){
-                    resolve_change_request();
-                } else if(selection_two == 7){
-                    check_change_request_status();
-                } else if(selection_two == 8){
                     edit_change_request_priority();
-                } else if(selection_two == 9){
-                    make_feature_request();
-                } else if(selection_two == 10){
+                } else if(selection_two == 6){
                     send_new_product_release();
-                } else if(selection_two == 11){
+                } else if(selection_two == 7){
                     see_all_pending_change_items();
-                } else if(selection_two == 12){
+                } else if(selection_two == 8){
                     search_all_change_items();
-                } 
+                }
                 else{
                     cout << "Invalid selection, please try again" << endl;
                 }
@@ -102,9 +94,9 @@ int main()
                     cout << "-----------------------------------\n\n";
                     sys_run = false;
                 } else if(selection_two == 1){
-                    report_bug();
+                    create_change_request();
                 } else if(selection_two == 2){
-                    check_bug_status();
+                    check_change_item_status();
                 } else{
                     cout << "Invalid selection, please try again" << endl;
                 }
