@@ -14,8 +14,14 @@
 #define MAX_DESCRIPTION 280
 #define MAX_EMAIL 64
 #define MAX_PHONE 11
+#define MAX_DATE 12
 
 // file names
-#define CUSTOMER_FILE "customer.txt"
+#define CUSTOMER_FILE "customers.txt"
+#define RELEASE_FILE "releases.txt"
+#define CHANGE_ITEM_FILE "changeItems.txt"
+#define CHANGE_REQUEST_FILE "changeRequests.txt"
+#define PRODUCT_FILE "products.txt"
+
 
 #endif

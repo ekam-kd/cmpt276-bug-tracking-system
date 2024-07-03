@@ -18,7 +18,11 @@
 #include "customer.hpp"
 #include "changeItem.hpp"
 #include "release.hpp"
+#include "changeRequest.hpp"
 #include "definitions.hpp"
+
+// initialize the system
+void start_up();
 
 // register new customer
 void register_customer();
@@ -32,7 +36,6 @@ void check_change_item_status();
 // register new product
 void register_product();
 
-
 // check product release
 void check_product_release();
 
@@ -42,9 +45,14 @@ void edit_change_item();
 // send out new product release
 void send_new_product_release();
 
-
+// see all pending change items
 void see_all_pending_change_items();
+
+// send out report
 void send_report();
+
+// shutdown the system
+void shut_down();
 
 // search for customer from file
 Customer search_customer(char* email);
@@ -52,7 +60,7 @@ Customer search_customer(char* email);
 bool edit_customer(Customer customer);
 
 // search for release from file
-Release search_release(char* version);
+Release search_release(char* product, char* version);
 // edit release info
 bool edit_release(Release release);
 
@@ -62,6 +70,10 @@ ChangeItem search_change_item(long int id);
 // edit change item info
 bool edit_change_item(ChangeItem changeItem);
 
+// search for change request from file
+ChangeRequest search_change_request(long int id);
 
+// edit change request info
+bool edit_change_request(ChangeRequest changeRequest);
 
 #endif

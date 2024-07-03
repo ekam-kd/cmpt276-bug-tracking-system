@@ -19,6 +19,7 @@ using namespace std;
 
 class Release{
     private:
+        char productName[MAX_NAME];
         char version[MAX_NAME];
         char description[MAX_DESCRIPTION];
         char date[MAX_NAME];
@@ -28,6 +29,8 @@ class Release{
         Release();
         // destructor
         ~Release();
+        // get product name
+        char* get_productName();
         // get version
         char* get_version();
         // get description
@@ -36,6 +39,8 @@ class Release{
         char* get_date();
         // get status
         char* get_status();
+        // set product name
+        void set_productName(char* productName);
         // set version
         void set_version(char* version);
         // set description
