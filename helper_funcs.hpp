@@ -61,7 +61,6 @@ ChangeItem search_change_item(long int id);
 
 // edit change item info
 bool edit_change_item(ChangeItem changeItem);
-//
 
 
 
