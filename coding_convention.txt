@@ -1,6 +1,7 @@
 The following outlines the coding convention that our team must follow:
 
--> All files must include a header of the following format:
+Files will be in the following format
+->header of the following format:
 /* 
  * File:   filename.filetype
  * Author: Author Name (firstname lastname)
@@ -8,3 +9,27 @@ The following outlines the coding convention that our team must follow:
  * Version version number
  * Purpose: short description of file purpose and contents
 */
+
+-> (if .hpp file) #ifndef FILENAME_HPP
+                  #define FILENAME_HPP
+
+-> followed by any import or include statements
+-> followed by any #define statements
+-> followed by class definition/implementation (if applicable)
+-> followed by function definitions/implementations (if applicable)
+-> (if .hpp file) #endif
+
+
+Function definitions in the hpp file must be preceeded by a comment outlining the 
+purpose of the function, ie what the function is meant to do
+
+Function definitions should look like this:
+-> return_type function_name(datatype1 parameter_1, // comment explaining parameter_1
+                            datatype2 parameter_2 // comment explaining parameter_2
+                            )
+
+All variable/entity/function names must be good descriptive names, and when possible
+should use the following naming convention:
+-> word1_word2_word3
+ie words should be seperated using underscores for legibility
+

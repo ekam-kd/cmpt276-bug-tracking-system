@@ -52,4 +52,8 @@ bool send_report();
 // shutdown the system
 bool shut_down();
 
+/* Note: Iterator functions seekToBeginningOfFile() and getRecord() can be included in the 
+   corresponding header files once the file access functions are being implemented. As this
+   has not yet been started, the iterator functions have not been included in any hpp file */
+
 #endif
