@@ -1,6 +1,6 @@
 /* 
  * File:   unit_tests.cpp
- * Author: Qiraa Qadri
+ * Author: Qiraa Qadri, Ashley Kim
  * Created: July 2024
  * Version 1.0
  * Purpose: unit tests for all helper functions in the Bug Tracking System
@@ -62,14 +62,16 @@ int mainForUnitTests(){
     
     // test edit_change_item
     cout << "Testing edit_change_item" << endl;
+    //testing to see if edit was successful
     if(edit_change_item()){
         cout << "edit_change_item test passed" << endl;
     } else{
         cout << "edit_change_item test failed" << endl;
     }
     
-    // test send_new_product_release
+    // test send_new_product_release 
     cout << "Testing send_new_product_release" << endl;
+    //testing to see if new product release was sent
     if(send_new_product_release()){
         cout << "send_new_product_release test passed" << endl;
     } else{
@@ -78,6 +80,7 @@ int mainForUnitTests(){
     
     // test see_all_pending_change_items
     cout << "Testing see_all_pending_change_items" << endl;
+    //if successful
     if(see_all_pending_change_items()){
         cout << "see_all_pending_change_items test passed" << endl;
     } else{
@@ -86,6 +89,7 @@ int mainForUnitTests(){
     
     // test send_report
     cout << "Testing send_report" << endl;
+    //testing to see if report was sent
     if(send_report()){
         cout << "send_report test passed" << endl;
     } else{
@@ -180,6 +184,7 @@ int mainForUnitTests(){
 
     // test add_product
     cout << "Testing add_product" << endl;
+    //checking to see if product was added
     if(add_product(new Product())){
         cout << "add_product test passed" << endl;
     } else{
@@ -224,7 +229,7 @@ int mainForUnitTests(){
     /*-----------------------------------------------------------------------------------------------*/
     /* Testing Change Request Module */
 
-    // test init_change_request
+    // test init_change_request -- initialization function
     cout << "Testing init_change_request" << endl;
     if(init_change_request()){
         cout << "init_change_request test passed" << endl;
@@ -234,6 +239,7 @@ int mainForUnitTests(){
 
     // test make_change_request
     cout << "Testing make_change_request" << endl;
+    //checks if change request was made
     if(make_change_request(new ChangeRequest())){
         cout << "make_change_request test passed" << endl;
     } else{
@@ -242,6 +248,7 @@ int mainForUnitTests(){
 
     // test close_change_request
     cout << "Testing close_change_request" << endl;
+    //checks if change request is closed
     if(close_change_request()){
         cout << "close_change_request test passed" << endl;
     } else{
@@ -253,13 +260,14 @@ int mainForUnitTests(){
 
     // test init_change_item
     cout << "Testing init_change_item" << endl;
+    //change item has been initialized
     if(init_change_item()){
         cout << "init_change_item test passed" << endl;
     } else{
         cout << "init_change_item test failed" << endl;
     }
 
-    // test make_change_item
+    // test make_change_item -- change item has been made successfully
     cout << "Testing make_change_item" << endl;
     if(make_change_item(new ChangeItem())){
         cout << "make_change_item test passed" << endl;
@@ -349,6 +357,7 @@ int mainForUnitTests(){
 
     // test close_change_item
     cout << "Testing close_change_item" << endl;
+    //checks if change item is closed.
     if(close_change_item()){
         cout << "close_change_item test passed" << endl;
     } else{
