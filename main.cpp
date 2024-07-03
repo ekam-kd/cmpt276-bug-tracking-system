@@ -66,7 +66,7 @@ int main()
             cout << "-----------------------------------\n\n";
             cout << "-> Return (0)" << endl;
             cout << "-> Create a Change Request (1)" << endl;
-            cout << "-> Check Change Item Status (2)" << endl;
+            cout << "-> Check Change Items (2)" << endl;
 
             // menu options for employees
             if(employee){
@@ -77,10 +77,12 @@ int main()
                 cout << "-> Send out Report for Change Item (7)" << endl;
             }
             cout << "-----------------------------------\n\n";
-            int selection_two = -1;
-            cout << "Selection: ";
-            cin >> selection_two;
-            if(employee){
+            int selection_two = -1; // intialize selection variable
+            cout << "Selection: "; // prompt user for selection
+            cin >> selection_two; // get user selection
+
+            // check user selection -> call appropriate submenu / function
+            if(employee){ // if user is an employee -> call employee functions
                 if(selection_two == 0){
                     cout << "Returning to main menu..." << endl;
                 } else if(selection_two == 1){
@@ -101,27 +103,27 @@ int main()
                 else{
                     cout << "Invalid selection, please try again" << endl;
                 }
-            } else{
-                if(selection_two == 0){
-                    system("clear");
+            } else{ // if user is not an employee -> call customer functions
+                if(selection_two == 0){ 
+                    system("clear"); // clear the screen
                     cout << "-----------------------------------\n";
                     cout << "Thank you for using the Bug Tracking System!" << endl;
                     cout << "-----------------------------------\n\n";
-                    sys_run = false;
+                    sys_run = false; // terminate UI loop
                 } else if(selection_two == 1){
-                    create_change_request();
+                    create_change_request(); // create a change request
                 } else if(selection_two == 2){
-                    check_change_item();
+                    check_change_item(); // check change items
                 } else{
                     cout << "Invalid selection, please try again" << endl;
                 }
             }
         } else if(selection_one == 3){
-            system("clear");
+            system("clear"); // clear the screen
             cout << "-----------------------------------\n";
             cout << "Thank you for using the Bug Tracking System!" << endl;
             cout << "-----------------------------------\n\n";
-            sys_run = false;
+            sys_run = false; // terminate UI loop
         } else{
             cout << "Invalid selection, please try again" << endl;
         }
