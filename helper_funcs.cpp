@@ -2,21 +2,14 @@
  * File:   helper_funcs.cpp
  * Author: Qiraa Qadri
  * Created: June 2024
- * Purpose: additional functions for the Bug Tracking System
+ * Purpose: additional functions for the Bug Tracking System control flow
+ *        to be used in main.cpp for readability and modularity
 */
 
-#include <iostream>
-#include <string>
-#include <unistd.h>
-#include <ios>
-#include <limits>
 #include "helper_funcs.hpp"
 using namespace std;
 
-#define MAX_NAME 100
-#define MAX_DESCRIPTION 1000
-
-
+//-----------------------------------------------------------------------------
 // register new customer
 void register_customer(){
     system("clear");
@@ -84,6 +77,8 @@ void register_customer(){
         cout << "\nUnable to register new Customer, please try again" << endl;
     }
 }
+
+//-----------------------------------------------------------------------------
 // register new product
 void register_product(){
     string product_name, product_version;
@@ -98,6 +93,7 @@ void register_product(){
     sleep(2);
 }
 
+//-----------------------------------------------------------------------------
 // report a bug
 void create_change_request(){
     char cus_name[MAX_NAME], bug_description[MAX_DESCRIPTION]; // [1000] and [100] are arbitrary values, can be changed to [10000] or [1000000
@@ -131,6 +127,8 @@ void create_change_request(){
         return;
     }
 }
+
+//-----------------------------------------------------------------------------
 // check bug status
 void check_change_item_status(){
     long int bug_id;
@@ -160,6 +158,8 @@ void check_change_item_status(){
         return;
     }
 }
+
+//-----------------------------------------------------------------------------
 // check product release
 void check_product_release(){
     char product_name[MAX_NAME];
@@ -190,6 +190,7 @@ void check_product_release(){
     }
 }
 
+//-----------------------------------------------------------------------------
 // edit change item
 void edit_change_item(){
     char product_name[MAX_NAME], product_version[MAX_NAME];
@@ -296,6 +297,8 @@ void edit_change_item(){
         }
     }
 }
+
+//-----------------------------------------------------------------------------
 // send out new product release
 void send_new_product_release(){
     char product_name[MAX_NAME], product_version[MAX_NAME];
@@ -330,6 +333,7 @@ void send_new_product_release(){
     }
 }
 
+//-----------------------------------------------------------------------------
 void see_all_pending_change_items(){
     char product_name[MAX_NAME];
     system("clear");
@@ -364,7 +368,7 @@ void see_all_pending_change_items(){
 
 }
 
-
+//-----------------------------------------------------------------------------
 void send_report(){
     char product_name[MAX_NAME], product_version[MAX_NAME];
     system("clear");

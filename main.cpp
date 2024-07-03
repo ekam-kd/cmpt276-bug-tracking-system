@@ -2,6 +2,7 @@
  * File:   main.cpp
  * Author: Qiraa Qadri
  * Created: June 2024
+ * Version 1.0
  * Purpose: Bug Tracking System for AAA Inc. as a project for CMPT 276
 */
 
