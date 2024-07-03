@@ -157,6 +157,7 @@ int mainForUnitTests(){
 
     // test close_customer
     cout << "Testing close_customer" << endl;
+    //if closed properly
     if(close_customer()){
         cout << "close_customer test passed" << endl;
     } else{
