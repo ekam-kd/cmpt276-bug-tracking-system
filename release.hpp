@@ -51,8 +51,6 @@ class Release{
         void set_status(char* status);
         // print release info
         void print_release_info();
-        // register new release
-        void register_release();
 };
 
 #endif

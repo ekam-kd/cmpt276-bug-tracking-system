@@ -56,24 +56,14 @@ void shut_down();
 
 // search for customer from file
 Customer search_customer(char* email);
-// edit customer info
-bool edit_customer(Customer customer);
 
 // search for release from file
 Release search_release(char* product, char* version);
-// edit release info
-bool edit_release(Release release);
 
 // search for change item from file
 ChangeItem search_change_item(long int id);
 
-// edit change item info
-bool edit_change_item(ChangeItem changeItem);
-
 // search for change request from file
 ChangeRequest search_change_request(long int id);
-
-// edit change request info
-bool edit_change_request(ChangeRequest changeRequest);
 
 #endif
