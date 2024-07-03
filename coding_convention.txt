@@ -1,0 +1,10 @@
+The following outlines the coding convention that our team must follow:
+
+-> All files must include a header of the following format:
+/* 
+ * File:   filename.filetype
+ * Author: Author Name (firstname lastname)
+ * Created: Month Year
+ * Version version number
+ * Purpose: short description of file purpose and contents
+*/

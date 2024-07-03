@@ -53,4 +53,16 @@ class Release{
         void print_release_info();
 };
 
+// helper functions
+
+// initialize release database
+void init_release();
+
+// create a new product release and add to file
+void create_product_release(Release* release // release to initialize
+                );
+
+// close release database file
+void close_product_release();
+
 #endif

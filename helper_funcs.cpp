@@ -130,7 +130,7 @@ void create_change_request(){
 
 //-----------------------------------------------------------------------------
 // check bug status
-void check_change_item_status(){
+void check_change_item(){
     long int bug_id;
     system("clear");
     cout << "-----------------------------------\n";
@@ -159,36 +159,6 @@ void check_change_item_status(){
     }
 }
 
-//-----------------------------------------------------------------------------
-// check product release
-void check_product_release(){
-    char product_name[MAX_NAME];
-    system("clear");
-    cout << "-----------------------------------\n";
-    cout << "Product Release Menu:" << endl;
-    cout << "Please enter (0) to return to Main Menu, or (1) to Continue: ";
-    string return_m;
-    cin >> return_m;
-    if(return_m[0] == '0'){
-        sleep(1);
-        return;
-    } else if(return_m[0] != '1'){
-        cout << "Invalid selection, please try again" << endl;
-        sleep(2);
-        return;
-    }
-    cout << "\nPlease enter the product name: ";
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    cin >> product_name;
-    cout << "\nThe latest release of " << product_name << " is version <VERSION>." << endl;
-    cout << "Please enter (0) to return to Main Menu: ";
-    string return_main;
-    cin >> return_main;
-    if(return_main[0] == '0'){
-        sleep(1);
-        return;
-    }
-}
 
 //-----------------------------------------------------------------------------
 // edit change item

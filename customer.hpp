@@ -50,6 +50,20 @@ class Customer{
         void register_customer();
         
 };
+
+// helper functions
+
+// check if customer exists in database file
+bool check_customer(char* name // name of the customer
+                    );
+
+// check of employee
+bool check_employee(char* name // name of the employee
+                    );
+
+// closes customer database file
+void close_customer();
+
         
 
 #endif

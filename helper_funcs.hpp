@@ -31,13 +31,10 @@ void register_customer();
 void create_change_request();
 
 // check change item status
-void check_change_item_status();
+void check_change_item();
 
 // register new product
 void register_product();
-
-// check product release
-void check_product_release();
 
 // edit change item
 void edit_change_item();
@@ -53,17 +50,5 @@ void send_report();
 
 // shutdown the system
 void shut_down();
-
-// search for customer from file
-Customer search_customer(char* email);
-
-// search for release from file
-Release search_release(char* product, char* version);
-
-// search for change item from file
-ChangeItem search_change_item(long int id);
-
-// search for change request from file
-ChangeRequest search_change_request(long int id);
 
 #endif

@@ -16,7 +16,7 @@
 #define MAX_PHONE 11
 #define MAX_DATE 12
 
-// file names
+// database file names
 #define CUSTOMER_FILE "customers.txt"
 #define RELEASE_FILE "releases.txt"
 #define CHANGE_ITEM_FILE "changeItems.txt"

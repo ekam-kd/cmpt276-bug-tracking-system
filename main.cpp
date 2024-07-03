@@ -12,10 +12,15 @@
 using namespace std;
 int main()
 {   
-    int selection_one = -1;
-    bool sys_run = true;
+    start_up(); // initialize the system and database files
+    int selection_one = -1; // intialize selection variable
+    bool sys_run = true; // boolean to keep the system running
+
+    // main menu loop
     while(sys_run){ 
-        system("clear");
+        system("clear"); // clear the screen
+
+        // main menu
         cout << "-----------------------------------\n";
         cout << "Welcome to the Bug Tracking System!" << endl;
         cout << "Please select one of the following to get started:\n " << endl;
@@ -24,16 +29,25 @@ int main()
         cout << "-> Existing Customer (2)" << endl;
         cout << "-> Exit (3)" << endl;
         cout << "-----------------------------------\n\n";
-        cout << "Selection: ";
+        cout << "Selection: "; // prompt user for selection
+
+        // get user selection
         cin >> selection_one;
+
+        // check user selection -> call appropriate submenu / function
         if(selection_one == 1){
+            // register new customer
             register_customer();
         } else if(selection_one == 2){
-            bool employee = false;
+            // existing customer
+            bool employee = false; // boolean to check if user is an employee
             
+            // check if user is an employee, loops for possible invalid input
             while(1){
-                system("clear");
+                system("clear"); // clear the screen
                 cout << "\nAre you an employee of AAA Inc.? (Y/N): ";
+
+                // get user input and check if they are an employee
                 string emp1;
                 cin >> emp1;  
                 if(emp1[0] == 'Y' || emp1[0] == 'y'){
@@ -46,19 +60,21 @@ int main()
                     cout << "Invalid selection, please try again" << endl;
                 }
             }
+
+            // submenu for existing customers
             cout << "\nPlease Select one of the following actions:" << endl;
             cout << "-----------------------------------\n\n";
             cout << "-> Return (0)" << endl;
             cout << "-> Create a Change Request (1)" << endl;
             cout << "-> Check Change Item Status (2)" << endl;
+
+            // menu options for employees
             if(employee){
                 cout << "-> Register a New Product (3)" << endl;
-                cout << "-> Check Current Product Release (4)" << endl;
-                cout << "-> Edit Change Item (5)" << endl;
-                cout << "-> Send out new Product Release (6)" << endl;
-                cout << "-> See all Pending Change Items (7)" << endl;
-                cout << "-> Send out Report for Change Item (8)" << endl;
-                // cout << "-> See all customers per Change Item ()" << endl;
+                cout << "-> Edit Change Item (4)" << endl;
+                cout << "-> Send out new Product Release (5)" << endl;
+                cout << "-> See all Pending Change Items (6)" << endl;
+                cout << "-> Send out Report for Change Item (7)" << endl;
             }
             cout << "-----------------------------------\n\n";
             int selection_two = -1;
@@ -70,18 +86,16 @@ int main()
                 } else if(selection_two == 1){
                     create_change_request();
                 } else if(selection_two == 2){
-                    check_change_item_status();
+                    check_change_item();
                 } else if(selection_two == 3){
                     register_product();
                 } else if(selection_two == 4){
-                    check_product_release();
-                } else if(selection_two == 5){
                     edit_change_item();
-                } else if(selection_two == 6){
+                } else if(selection_two == 5){
                     send_new_product_release();
-                } else if(selection_two == 7){
+                } else if(selection_two == 6){
                     see_all_pending_change_items();
-                } else if(selection_two == 8){
+                } else if(selection_two == 7){
                     send_report();
                 }
                 else{
@@ -97,7 +111,7 @@ int main()
                 } else if(selection_two == 1){
                     create_change_request();
                 } else if(selection_two == 2){
-                    check_change_item_status();
+                    check_change_item();
                 } else{
                     cout << "Invalid selection, please try again" << endl;
                 }
@@ -113,6 +127,7 @@ int main()
         }
 
     }
+    shut_down(); // close the system and database files
     return 0;
 }
 
