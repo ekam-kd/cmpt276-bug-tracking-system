@@ -75,7 +75,7 @@ int main()
                 } else if(selection_two == 4){
                     check_product_release();
                 } else if(selection_two == 5){
-                    edit_change_request_priority();
+                    edit_change_item();
                 } else if(selection_two == 6){
                     send_new_product_release();
                 } else if(selection_two == 7){

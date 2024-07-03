@@ -24,8 +24,8 @@ void register_product();
 // check product release
 void check_product_release();
 
-// SUPPOSED TO BE: edit change item
-void edit_change_request_priority();
+// edit change item
+void edit_change_item();
 
 // send out new product release
 void send_new_product_release();

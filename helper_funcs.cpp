@@ -191,7 +191,7 @@ void check_product_release(){
 }
 
 // edit change item
-void edit_change_request_priority(){
+void edit_change_item(){
     char product_name[MAX_NAME], product_version[MAX_NAME];
     system("clear");
     cout << "-----------------------------------\n";
