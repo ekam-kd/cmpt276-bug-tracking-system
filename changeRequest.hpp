@@ -55,13 +55,13 @@ class ChangeRequest{
 // helper functions
 
 // initialize change request database
-void init_change_request();
+bool init_change_request();
 
 // add change request to file
-void make_change_request(ChangeRequest changeRequest // change request to add
+bool make_change_request(ChangeRequest* changeRequest // change request to add
                         );
 
 // close change request database file
-void close_change_request();
+bool close_change_request();
 
 #endif

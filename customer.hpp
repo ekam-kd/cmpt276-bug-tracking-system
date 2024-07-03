@@ -53,16 +53,22 @@ class Customer{
 
 // helper functions
 
+// initialize customer database
+bool init_customer();
+
 // check if customer exists in database file
 bool check_customer(char* name // name of the customer
                     );
 
+// add customer to file
+bool create_customer(Customer* customer // customer to initialize
+                    );
 // check of employee
 bool check_employee(char* name // name of the employee
                     );
 
 // closes customer database file
-void close_customer();
+bool close_customer();
 
         
 

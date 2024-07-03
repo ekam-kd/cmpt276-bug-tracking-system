@@ -18,37 +18,38 @@
 #include "customer.hpp"
 #include "changeItem.hpp"
 #include "release.hpp"
+#include "product.hpp"
 #include "changeRequest.hpp"
 #include "definitions.hpp"
 
 // initialize the system
-void start_up();
+bool start_up();
 
 // register new customer
-void register_customer();
+bool register_customer();
 
 // create a change request
-void create_change_request();
+bool create_change_request();
 
 // check change item status
-void check_change_item();
+bool check_change_item();
 
 // register new product
-void register_product();
+bool register_product();
 
 // edit change item
-void edit_change_item();
+bool edit_change_item();
 
 // send out new product release
-void send_new_product_release();
+bool send_new_product_release();
 
 // see all pending change items
-void see_all_pending_change_items();
+bool see_all_pending_change_items();
 
 // send out report
-void send_report();
+bool send_report();
 
 // shutdown the system
-void shut_down();
+bool shut_down();
 
 #endif

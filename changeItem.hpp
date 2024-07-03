@@ -66,19 +66,19 @@ class ChangeItem{
 // helper functions
 
 // initialize change item database
-void init_change_item();
+bool init_change_item();
 
 // create a new change item and add to file
-void make_change_item(ChangeItem* changeItem // change item to initialize
+bool make_change_item(ChangeItem* changeItem // change item to initialize
                 );
 
 // display to user all the pending change items for a product
-void get_change_items(char* productName // name of the product
+bool get_change_items(char* productName // name of the product
                 );
 
 // search through changeItem file for a specific change item 
 // then print info to screen
-void see_change_item(long int ch_id // id of the change item
+bool see_change_item(long int ch_id // id of the change item
                 );
 
 // modify a change item
@@ -86,13 +86,13 @@ bool modify_change_item(long int ch_id // id of the change item
                     );
 
 // see all change items (pending AND completed) for a product
-void see_all_change_items(char* productName // name of the product
+bool see_all_change_items(char* productName // name of the product
                     );
 
 // takes a change item ID and generates a report for relevent users
-void create_report(long int ch_id // id of the change item
+bool create_report(long int ch_id // id of the change item
                     );
 
 // close change item database file
-void close_change_item();
+bool close_change_item();
 #endif

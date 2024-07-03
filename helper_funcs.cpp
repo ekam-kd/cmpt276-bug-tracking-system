@@ -9,6 +9,7 @@
 #include "helper_funcs.hpp"
 using namespace std;
 
+//todo change the return type of the functions to bool
 //-----------------------------------------------------------------------------
 // register new customer
 void register_customer(){

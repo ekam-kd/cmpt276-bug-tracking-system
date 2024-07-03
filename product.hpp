@@ -35,19 +35,17 @@ class Product{
 
 // helper functions
 
-// initialize product
-void init_product(Product* product, // product to initialize
-                    char* name // name of the product
-                );
+// initialize product database
+bool init_product();
 
 // displays list of products, allows user to select one
 Product select_product();
 
 // add product to file
-void add_product(Product product // product to add
+bool add_product(Product* product // product to add
                 );
 
 // close product database file
-void close_product();
+bool close_product();
 
 #endif
