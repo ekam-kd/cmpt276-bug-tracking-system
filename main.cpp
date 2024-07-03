@@ -56,7 +56,7 @@ int main()
                 cout << "-> Edit Change Item (5)" << endl;
                 cout << "-> Send out new Product Release (6)" << endl;
                 cout << "-> See all Pending Change Items (7)" << endl;
-                cout << "-> Search from all Change Items (8)" << endl;
+                cout << "-> Send out Report for Change Item (8)" << endl;
                 // cout << "-> See all customers per Change Item ()" << endl;
             }
             cout << "-----------------------------------\n\n";
@@ -81,7 +81,7 @@ int main()
                 } else if(selection_two == 7){
                     see_all_pending_change_items();
                 } else if(selection_two == 8){
-                    search_all_change_items();
+                    send_report();
                 }
                 else{
                     cout << "Invalid selection, please try again" << endl;

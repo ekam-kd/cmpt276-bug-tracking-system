@@ -365,7 +365,7 @@ void see_all_pending_change_items(){
 }
 
 
-void search_all_change_items(){
+void send_report(){
     char product_name[MAX_NAME], product_version[MAX_NAME];
     system("clear");
     cout << "-----------------------------------\n";

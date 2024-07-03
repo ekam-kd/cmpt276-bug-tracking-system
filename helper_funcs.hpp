@@ -32,5 +32,5 @@ void send_new_product_release();
 
 
 void see_all_pending_change_items();
-void search_all_change_items();
+void send_report();
 #endif
