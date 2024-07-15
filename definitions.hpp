@@ -23,5 +23,4 @@
 #define CHANGE_REQUEST_FILE "changeRequests.txt"
 #define PRODUCT_FILE "products.txt"
 
-
 #endif
