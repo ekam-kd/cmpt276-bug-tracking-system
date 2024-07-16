@@ -1,7 +1,4 @@
 #include "release.hpp"
-#include <fstream>
-//global filestream for customer file so it stays open for program duration
-fstream releaseFile;
 
 bool init_release() {
     //open file for reading/writing and create it if it doesn't exist
@@ -23,4 +20,109 @@ bool close_product_release() {
         return true;
     }
     return false;
+}
+
+// constructor
+Release::Release() {
+    //initialize all member variables to empty strings
+    strcpy(productName, "");
+    strcpy(version, "");
+    strcpy(description, "");
+    strcpy(date, "");
+    strcpy(status, "");
+}
+
+// destructor
+Release::~Release() {
+    //nothing to do here
+}
+
+// get product name
+char* Release::get_productName() {
+    return productName;
+}
+
+// get version
+char* Release::get_version() {
+    return version;
+}
+
+// get description
+char* Release::get_description() {
+    return description;
+}
+
+// get date
+char* Release::get_date() {
+    return date;
+}
+
+// get status
+char* Release::get_status() {
+    return status;
+}
+
+// set product name
+void Release::set_productName(string productName) {
+    strcpy(this->productName, productName.c_str());
+}
+
+// set version
+void Release::set_version(string version) {
+    strcpy(this->version, version.c_str());
+}
+
+// set description
+void Release::set_description(string description) {
+    strcpy(this->description, description.c_str());
+}
+
+// set date
+void Release::set_date(string date) {
+    strcpy(this->date, date.c_str());
+}
+
+// set status
+void Release::set_status(string status) {
+    strcpy(this->status, status.c_str());
+}
+
+// print release info
+void Release::print_release_info() {
+    cout << "Product Name: " << productName << endl;
+    cout << "Version: " << version << endl;
+    cout << "Description: " << description << endl;
+    cout << "Date: " << date << endl;
+    cout << "Status: " << status << endl;
+}
+
+
+// write release to file
+bool write_release(Release &release) {
+    // assume file is open
+    // write release to file
+    releaseFile.write((char*)&release, sizeof(Release));
+    return true;
+}
+
+// read release from file
+bool read_release(int index, Release &release) {
+    // assume file is open
+    // seek to the correct position in the file
+    releaseFile.seekg(index * sizeof(Release), ios::beg);
+    // read release from file
+    releaseFile.read((char*)&release, sizeof(Release));
+    return true;
+}
+
+// delete release from file
+bool delete_release(int index) {
+    // assume file is open
+    // seek to the correct position in the file
+    releaseFile.seekg(index * sizeof(Release), ios::beg);
+    // create a temporary release object
+    Release temp;
+    // write the temporary release object to the file
+    releaseFile.write((char*)&temp, sizeof(Release));
+    return true;
 }

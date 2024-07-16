@@ -1,7 +1,5 @@
 #include "changeItem.hpp"
 #include <fstream>
-//global filestream for customer file so it stays open for program duration
-fstream changeItemFile;
 
 bool init_change_item() {
     //open file for reading/writing and create it if it doesn't exist

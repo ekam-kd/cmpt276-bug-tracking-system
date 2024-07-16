@@ -24,4 +24,9 @@
 #define CHANGE_REQUEST_FILE "changeRequests.dat"
 #define PRODUCT_FILE "products.dat"
 
+
+//global filestream for customer file so it stays open for program duration
+fstream releaseFile, changeItemFile, changeRequestFile, productFile;
+
+
 #endif

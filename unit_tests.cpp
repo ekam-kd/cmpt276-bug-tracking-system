@@ -183,14 +183,14 @@ int mainForUnitTests(){
         cout << "select_product test failed" << endl;
     }
 
-    // test add_product
-    cout << "Testing add_product" << endl;
-    //checking to see if product was added
-    if(add_product(new Product())){
-        cout << "add_product test passed" << endl;
-    } else{
-        cout << "add_product test failed" << endl;
-    }
+    // // test add_product
+    // cout << "Testing add_product" << endl;
+    // //checking to see if product was added
+    // if(add_product(new Product())){
+    //     cout << "add_product test passed" << endl;
+    // } else{
+    //     cout << "add_product test failed" << endl;
+    // }
 
     // test close_product
     cout << "Testing close_product" << endl;

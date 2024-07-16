@@ -15,6 +15,8 @@
 #include <ios>
 #include <limits>
 #include "definitions.hpp"
+#include <fstream>
+#include <cstring>
 using namespace std;
 
 class Release{
@@ -40,15 +42,15 @@ class Release{
         // get status
         char* get_status();
         // set product name
-        void set_productName(char* productName);
+        void set_productName(string productName);
         // set version
-        void set_version(char* version);
+        void set_version(string version);
         // set description
-        void set_description(char* description);
+        void set_description(string description);
         // set date
-        void set_date(char* date);
+        void set_date(string date);
         // set status
-        void set_status(char* status);
+        void set_status(string status);
         // print release info
         void print_release_info();
 };
@@ -71,4 +73,8 @@ bool select_anticipated_release();
 // update the anticipated release
 bool update_anticipated_release();
 
+// file operations
+static bool write_release(Release &release);
+static bool read_release(int index ,Release &release);
+static bool delete_release(int index);
 #endif
