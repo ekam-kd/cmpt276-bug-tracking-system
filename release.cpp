@@ -15,3 +15,12 @@ bool init_release() {
     }
 
 }
+
+//close product release file
+bool close_product_release() {
+    if (releaseFile.is_open()) {
+        releaseFile.close();
+        return true;
+    }
+    return false;
+}

@@ -15,3 +15,11 @@ bool init_change_request() {
     }
 
 }
+
+bool close_change_request() {
+    if (changeRequestFile.is_open()) {
+        changeRequestFile.close();
+        return true;
+    }
+    return false;
+}

@@ -15,3 +15,12 @@ bool init_change_item() {
     }
 
 }
+
+//close change item file
+bool close_change_item() {
+    if (changeItemFile.is_open()) {
+        changeItemFile.close();
+        return true;
+    }
+    return false;
+}
