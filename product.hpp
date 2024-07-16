@@ -18,6 +18,7 @@
 #include "helper_funcs.hpp"
 using namespace std;
 
+
 class Product{
     private:
         char name[MAX_NAME];

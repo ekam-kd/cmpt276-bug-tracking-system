@@ -1,6 +1,7 @@
 #include "changeRequest.hpp"
 #include <fstream>
-//global filestream for customer file so it stays open for program duration
+
+//global filestream for change request file so it stays open for program duration
 fstream changeRequestFile;
 
 bool init_change_request() {

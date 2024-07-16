@@ -17,6 +17,7 @@
 #include "definitions.hpp"
 using namespace std;
 
+
 class ChangeItem{
     private:
         long int id;

@@ -9,6 +9,8 @@
 #ifndef DEFINITIONS_HPP
 #define DEFINITIONS_HPP
 
+#include <fstream>
+
 // set in requirements spec
 #define MAX_NAME 30 
 #define MAX_DESCRIPTION 280
@@ -25,8 +27,8 @@
 #define PRODUCT_FILE "products.dat"
 
 
-//global filestream for customer file so it stays open for program duration
-fstream releaseFile, changeItemFile, changeRequestFile, productFile;
+// //global filestream for customer file so it stays open for program duration
+// extern std::fstream releaseFile, changeItemFile, changeRequestFile, productFile;
 
 
 #endif

@@ -1,4 +1,6 @@
 #include "release.hpp"
+//global filestream for product release file so it stays open for program duration
+fstream releaseFile;
 
 bool init_release() {
     //open file for reading/writing and create it if it doesn't exist
