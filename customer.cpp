@@ -150,7 +150,7 @@ bool check_customer(char *name)
 }
 
 // Add customer to file
-bool write_customer(Customer *customer)
+bool write_customer(Customer &customer)
 {
     // assume file is open
     // seek to the end of the file
@@ -194,38 +194,32 @@ bool check_employee(const char *name)
     return false;
 }
 
-bool delete_customer(int index)
-{
-    // Open temporary file for writing
-    ofstream tempFile("temp_db.txt", ios::out | ios::binary);
-    if (!tempFile)
-    {
-        cerr << "Error opening temporary file!" << endl;
+bool delete_customer(int index) {
+    // Open temporary file for writing, truncating it if it exists
+    ofstream tempFile("temp_db_customer.dat", ios::out | ios::binary | ios::trunc);
+    if (!tempFile) {
+        cerr << "Error opening or truncating temporary file!" << endl;
         return false;
     }
 
     // Open original file for reading
     ifstream infile(CUSTOMER_FILE, ios::in | ios::binary);
-    if (!infile)
-    {
+    if (!infile) {
         cerr << "Error opening customer database file!" << endl;
+        tempFile.close();
         return false;
     }
 
     Customer customer;
+    bool found = false;
     int currentIndex = 0;
-    bool deleted = false;
 
-    // Read each record and write to the temp file if it's not the one to be deleted
-    while (infile.read(reinterpret_cast<char *>(&customer), sizeof(Customer)))
-    {
-        if (currentIndex != index)
-        {
+    // Read and write records
+    while (infile.read(reinterpret_cast<char *>(&customer), sizeof(Customer))) {
+        if (currentIndex != index) {
             tempFile.write(reinterpret_cast<char *>(&customer), sizeof(Customer));
-        }
-        else
-        {
-            deleted = true; // Record found and deleted
+        } else {
+            found = true; // Record found and should be deleted
         }
         currentIndex++;
     }
@@ -234,18 +228,19 @@ bool delete_customer(int index)
     infile.close();
     tempFile.close();
 
-    // Replace original file with temporary file if deletion was successful
-    if (deleted)
-    {
-        remove(CUSTOMER_FILE);                // Delete original file
-        rename("temp_db.txt", CUSTOMER_FILE); // Rename temp file to original file name
-    }
-    else
-    {
-        remove("temp_db.txt"); // Delete temp file if deletion was not successful
+    // Check if record was found and deleted
+    if (found) {
+        // Remove original file
+        remove(CUSTOMER_FILE);
+        // Rename temp file to original file name
+        rename("temp_db_customer.dat", CUSTOMER_FILE);
+        return found;
+    } else {
+        // Delete temp file if deletion failed
+        return false;
     }
 
-    return deleted;
+    
 }
 
 // Close customer file

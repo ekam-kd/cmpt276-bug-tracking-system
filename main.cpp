@@ -37,15 +37,48 @@ int main(){
 
     init_customer();
 
-    Customer new_customer = Customer();
-    new_customer.set_name("John Doe");
-    new_customer.set_phone("12345678910");
-    new_customer.set_email("johndoe@abc.ca");
-    new_customer.set_department("sales");
+    Customer cust1 = Customer();
+    Customer cust2 = Customer();
+    Customer cust3 = Customer();
 
-    new_customer.print_customer_info();
+    cust1.set_name("John Doe");
+    cust1.set_phone("12345678910");
+    cust1.set_email("johndoe@abc.ca");
+    cust1.set_department("sales");
+    cust1.print_customer_info();
 
-    new_customer ;
+
+    cust2.set_name("Jane Smith");
+    cust2.set_phone("9999999999");
+    cust2.set_email("janesmith@abc.ca");
+    cust2.set_department("hr");
+
+    cust3.set_name("Trac Pham");
+    cust3.set_phone("7777777777");
+    cust3.set_email("tracpham@abc.ca");
+    cust3.set_department("tracbucks");
+
+    write_customer(cust1);
+    write_customer(cust2);
+    write_customer(cust3);
+    cout <<  "reading customer from file..." << endl;
+    if (read_customer(1, cust1)){
+        cout << "read customer 1 successfully!" << endl;
+    }
+    if (read_customer(2, cust2)){
+        cout << "read customer 2 successfully!" << endl;
+    }
+    if (read_customer(3, cust3)){
+        cout << "read customer 3 successfully!" << endl;
+    }
+
+    bool deleted = delete_customer(3);
+
+    if (deleted == true){
+        cout <<"deleted succesfully" <<endl;
+    }
+
+    cust1 ;
 
 
 

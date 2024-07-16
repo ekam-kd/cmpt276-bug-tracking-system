@@ -62,7 +62,7 @@ bool check_customer(char* name // name of the customer
                     );
 
 // add customer to file
-bool write_customer(Customer* customer // customer to initialize
+bool write_customer(Customer &customer // customer to initialize
                     );
 
 // read customer from file
