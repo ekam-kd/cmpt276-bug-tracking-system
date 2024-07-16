@@ -1,3 +1,11 @@
+/* 
+ * File:   product.cpp
+ * Author: Ashley Kim
+ * Created: July 2024
+ * Version 1.1
+ * Purpose: implementation of the Product class
+*/
+
 #include "product.hpp"
 #include <cstring> // For strcpy, strncpy
 #include <fstream> // For file operations

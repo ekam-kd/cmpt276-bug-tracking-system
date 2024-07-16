@@ -62,22 +62,22 @@ char* Customer::get_department() {
 }
 
 // Setters
-void Customer::set_name(char* new_name) {
+void Customer::set_name(const char* new_name) {
     strncpy(name, new_name, MAX_NAME - 1);
     name[MAX_NAME - 1] = '\0'; // Ensure null-terminated
 }
 
-void Customer::set_email(char* new_email) {
+void Customer::set_email(const char* new_email) {
     strncpy(email, new_email, MAX_EMAIL - 1);
     email[MAX_EMAIL - 1] = '\0'; // Ensure null-terminated
 }
 
-void Customer::set_phone(char* new_phone) {
+void Customer::set_phone(const char* new_phone) {
     strncpy(phone, new_phone, MAX_PHONE - 1);
     phone[MAX_PHONE - 1] = '\0'; // Ensure null-terminated
 }
 
-void Customer::set_department(char* new_department) {
+void Customer::set_department(const char* new_department) {
     strncpy(department, new_department, MAX_NAME - 1);
     department[MAX_NAME - 1] = '\0'; // Ensure null-terminated
 }
