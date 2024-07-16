@@ -16,9 +16,9 @@
 #include <ios>
 #include <limits>
 #include "customer.hpp"
+#include "product.hpp"
 #include "changeItem.hpp"
 #include "release.hpp"
-#include "product.hpp"
 #include "changeRequest.hpp"
 #include "definitions.hpp"
 #include <fstream>
