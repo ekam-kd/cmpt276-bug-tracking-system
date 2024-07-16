@@ -153,32 +153,21 @@ bool check_customer(char *name)
 bool write_customer(Customer *customer)
 {
     // assume file is open
-    // write release to file
-    customerFile.write((char *)&customer, sizeof(Customer));
+    // seek to the end of the file
+    customerFile.seekp(0, ios::end);
+    // write the change item to the file
+    customerFile.write((char*)&customer, sizeof(Customer));
     return true;
 }
 
 bool read_customer(int index, Customer &customer)
 {
-    //open file for reading in binary mode
-    customerFile.open(CUSTOMER_FILE, ios::in | ios::out | ios::binary);
-    
-    //if file opened successfully
-    if(customerFile.is_open()) {
-        //seek to the correct position in the file
-        customerFile.seekg(index * sizeof(Customer), ios::beg);
-        
-        //read the change item from the file
-        customerFile.read((char*)&customer, sizeof(Customer));
-        
-        //close the file
-        customer.close();
-        
-        //return true
-        return true;
-    } else { //otherwise return false
-        return false;
-    }
+    // assume file is open
+    // seek to the correct position in the file
+    customerFile.seekg(index * sizeof(Customer), ios::beg);
+    // read the change item from the file
+    customerFile.read((char*)&customer, sizeof(Customer));
+    return true;
 }
 
 // Check if employee exists
