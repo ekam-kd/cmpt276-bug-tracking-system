@@ -170,16 +170,20 @@ bool read_customer(int index, Customer &customer)
 }
 
 // Check if employee exists
-bool check_employee(const char* name) {
+bool check_employee(const char *name)
+{
     ifstream infile(CUSTOMER_FILE, ios::binary);
-    if (!infile) {
+    if (!infile)
+    {
         cerr << "Error opening customer database file!" << endl;
         return false;
     }
 
     Customer customer;
-    while (infile.read(reinterpret_cast<char*>(&customer), sizeof(Customer))) {
-        if (strcmp(customer.get_name(), name) == 0) {
+    while (infile.read(reinterpret_cast<char *>(&customer), sizeof(Customer)))
+    {
+        if (strcmp(customer.get_name(), name) == 0)
+        {
             infile.close();
             return true;
         }
@@ -189,17 +193,20 @@ bool check_employee(const char* name) {
     return false;
 }
 
-bool delete_customer(int index) {
+bool delete_customer(int index)
+{
     // Open temporary file for writing
     ofstream tempFile("temp_db.txt", ios::out | ios::binary);
-    if (!tempFile) {
+    if (!tempFile)
+    {
         cerr << "Error opening temporary file!" << endl;
         return false;
     }
 
     // Open original file for reading
     ifstream infile(CUSTOMER_FILE, ios::in | ios::binary);
-    if (!infile) {
+    if (!infile)
+    {
         cerr << "Error opening customer database file!" << endl;
         return false;
     }
@@ -209,10 +216,14 @@ bool delete_customer(int index) {
     bool deleted = false;
 
     // Read each record and write to the temp file if it's not the one to be deleted
-    while (infile.read(reinterpret_cast<char*>(&customer), sizeof(Customer))) {
-        if (currentIndex != index) {
-            tempFile.write(reinterpret_cast<char*>(&customer), sizeof(Customer));
-        } else {
+    while (infile.read(reinterpret_cast<char *>(&customer), sizeof(Customer)))
+    {
+        if (currentIndex != index)
+        {
+            tempFile.write(reinterpret_cast<char *>(&customer), sizeof(Customer));
+        }
+        else
+        {
             deleted = true; // Record found and deleted
         }
         currentIndex++;
@@ -223,20 +234,25 @@ bool delete_customer(int index) {
     tempFile.close();
 
     // Replace original file with temporary file if deletion was successful
-    if (deleted) {
-        remove(CUSTOMER_FILE); // Delete original file
+    if (deleted)
+    {
+        remove(CUSTOMER_FILE);                // Delete original file
         rename("temp_db.txt", CUSTOMER_FILE); // Rename temp file to original file name
-    } else {
+    }
+    else
+    {
         remove("temp_db.txt"); // Delete temp file if deletion was not successful
     }
 
     return deleted;
 }
 
-
-
 // Close customer file
 bool close_customer()
 {
-
+    if (customerFile.is_open())
+    {
+        customerFile.close();
+    }
+    return true;
 }
