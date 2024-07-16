@@ -7,6 +7,7 @@
 // */
 
 #include "helper_funcs.hpp"
+#include "product.cpp"
 using namespace std;
 
 //todo change the return type of the functions to bool
@@ -427,21 +428,21 @@ bool send_report(){
     }
     return true;
 
-// }
+}
 
-// bool start_up() {
-//     //this function starts up the system by opening all the files
-//     //opening file for customer records:
-//     init_customer();
+bool start_up() {
+    //this function starts up the system by opening all the files
+    //opening file for customer records:
+    init_customer();
 
     //opening file for product records:
-    //init_product();
+    init_product();
 
-//     //opening file for product release records:
-//     init_release();
+    //opening file for product release records:
+    init_release();
 
-//     //opening file for changeRequest records:
-//     init_change_request();
+    //opening file for changeRequest records:
+    init_change_request();
 
     //opening file for changeItem records:
     init_change_item();
@@ -451,7 +452,7 @@ bool send_report(){
 bool shut_down() {
     //this function shuts down the system by closing all the files
     close_customer();
-   // close_product();
+    close_product();
     close_product_release();
     close_change_request();
     close_change_item();

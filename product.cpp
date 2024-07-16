@@ -9,7 +9,9 @@
 #include "product.hpp"
 #include <cstring> // For strcpy, strncpy
 #include <fstream> // For file operations
+using namespace std;
 
+//global filestream for product file
 fstream productFile;
 
 bool init_product() {
@@ -22,7 +24,6 @@ bool init_product() {
     } else { //otherwise return false
         return false;
     }
-
 }
 
 // Constructor
