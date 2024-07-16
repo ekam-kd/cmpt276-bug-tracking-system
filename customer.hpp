@@ -71,9 +71,7 @@ bool read_customer(int index, Customer &customer);
 bool check_employee(char* name // name of the employee
                     );
 
-bool delete_customer(int index){
-
-}
+bool delete_customer(int index);
 // closes customer database file
 bool close_customer();
 

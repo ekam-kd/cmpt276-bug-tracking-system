@@ -49,13 +49,13 @@ class ChangeItem{
         // set id
         void set_id(long int id);
         // set product name
-        void set_productName(char* productName);
+        void set_productName(string productName);
         // set product release ID
-        void set_productReleaseID(char* productReleaseID);
+        void set_productReleaseID(string productReleaseID);
         // set description
-        void set_description(char* description);
+        void set_description(string description);
         // set status
-        void set_status(char* status);
+        void set_status(string status);
         // set priority
         void set_priority(int priority);
         // set requests
@@ -99,6 +99,6 @@ bool close_change_item();
 
 // file operations
 bool write_change_item(ChangeItem &changeItem);
-bool read_change_item(long int id, ChangeItem &changeItem);
-bool delete_change_item(long int id);
+bool read_change_item(int index, ChangeItem &changeItem);
+bool delete_change_item(int index);
 #endif

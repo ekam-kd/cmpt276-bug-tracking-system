@@ -109,6 +109,8 @@ void Release::print_release_info() {
 // write release to file
 bool write_release(Release &release) {
     // assume file is open
+    // seek to the end of the file
+    releaseFile.seekp(0, ios::end);
     // write release to file
     releaseFile.write((char*)&release, sizeof(Release));
     return true;

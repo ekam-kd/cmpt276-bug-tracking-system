@@ -14,6 +14,26 @@ using namespace std;
 // main for testing:
 int main(){
     init_change_item();
+    // test change item
+    ChangeItem c1;
+    c1.set_id(1);
+    c1.set_productName("Product 1");
+    c1.set_productReleaseID("Release 1");
+    c1.set_description("Description 1");
+    c1.set_status("Pending");
+    c1.set_priority(1);
+    c1.set_requests(1);
+    c1.print_change_item_info();
+
+    // write to file
+    write_change_item(c1);
+
+    // read from file
+    cout << "\nReading from file..." << endl;
+    ChangeItem c2;
+    read_change_item(1, c2);
+    c2.print_change_item_info();
+
 
     return 0;
 }
