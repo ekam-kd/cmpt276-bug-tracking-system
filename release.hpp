@@ -65,4 +65,10 @@ bool create_product_release(Release* release // release to initialize
 // close release database file
 bool close_product_release();
 
+// select anticipated release
+bool select_anticipated_release();
+
+// update the anticipated release
+bool update_anticipated_release();
+
 #endif
