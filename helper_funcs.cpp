@@ -12,7 +12,7 @@ using namespace std;
 //todo change the return type of the functions to bool
 //-----------------------------------------------------------------------------
 // register new customer
-void register_customer(){
+bool register_customer(){
     system("clear");
     string cus_fname, cus_lname, cus_email, emp_department, phone_number;
     bool employee = false;
@@ -26,11 +26,11 @@ void register_customer(){
     if(confirm_register[0] == 'N' || confirm_register[0] == 'n'){
         cout << "\nYou will be returned to main menu" << endl;
         sleep(2);
-        return;
+        return true;
     } else if (confirm_register[0] != 'Y' && confirm_register[0] != 'y'){
         cout << "\nInvalid selection, please try again" << endl;
         sleep(2);
-        return;
+        return true;
     }
     cout << "\n\nAre you an employee of AAA Inc.? (Y/N): ";
     string emp;
@@ -72,16 +72,17 @@ void register_customer(){
         cin >> return_main;
         if(return_main[0] == '0'){
             sleep(1);
-            return;
+            return true;
         }
     } else{
         cout << "\nUnable to register new Customer, please try again" << endl;
     }
+    return true;
 }
 
 //-----------------------------------------------------------------------------
 // register new product
-void register_product(){
+bool register_product(){
     string product_name, product_version;
     system("clear");
     cout << "-----------------------------------\n";
@@ -92,11 +93,12 @@ void register_product(){
     cout << "\n\nProduct " << product_name << " version " << product_version << " has been registered." << endl;
     cout << "You will be returned to main menu" << endl;
     sleep(2);
+    return true;
 }
 
 //-----------------------------------------------------------------------------
 // report a bug
-void create_change_request(){
+bool create_change_request(){
     char cus_name[MAX_NAME], bug_description[MAX_DESCRIPTION]; // [1000] and [100] are arbitrary values, can be changed to [10000] or [1000000
     system("clear");
     cout << "-----------------------------------\n";
@@ -106,11 +108,11 @@ void create_change_request(){
     cin >> return_m;
     if(return_m[0] == '0'){
         sleep(1);
-        return;
+        return true;
     } else if(return_m[0] != '1'){
         cout << "Invalid selection, please try again" << endl;
         sleep(2);
-        return;
+        return true;
     }
     cout << "Please enter your name:\n";
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -125,13 +127,14 @@ void create_change_request(){
     cin >> return_main;
     if(return_main[0] == '0'){
         sleep(1);
-        return;
+        return true;
     }
+    return true;
 }
 
 //-----------------------------------------------------------------------------
 // check bug status
-void check_change_item(){
+bool check_change_item(){
     long int bug_id;
     system("clear");
     cout << "-----------------------------------\n";
@@ -141,11 +144,11 @@ void check_change_item(){
     cin >> return_m;
     if(return_m[0] == '0'){
         sleep(1);
-        return;
+        return true;
     } else if(return_m[0] != '1'){
         cout << "Invalid selection, please try again" << endl;
         sleep(2);
-        return;
+        return true;
     }
     cout << "\nPlease enter the change ID: ";
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -156,14 +159,15 @@ void check_change_item(){
     cin >> return_main;
     if(return_main[0] == '0'){
         sleep(1);
-        return;
+        return true;
     }
+    return true;
 }
 
 
 //-----------------------------------------------------------------------------
 // edit change item
-void edit_change_item(){
+bool edit_change_item(){
     char product_name[MAX_NAME], product_version[MAX_NAME];
     system("clear");
     cout << "-----------------------------------\n";
@@ -173,11 +177,11 @@ void edit_change_item(){
     cin >> return_m;
     if(return_m[0] == '0'){
         sleep(1);
-        return;
+        return true;
     } else if(return_m[0] != '1'){
         cout << "Invalid selection, please try again" << endl;
         sleep(2);
-        return;
+        return true;
     }
     cout << "\nPlease enter the product name: ";
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -267,11 +271,12 @@ void edit_change_item(){
             break;
         }
     }
+    return true;
 }
 
 //-----------------------------------------------------------------------------
 // send out new product release
-void send_new_product_release(){
+bool send_new_product_release(){
     char product_name[MAX_NAME], product_version[MAX_NAME];
     system("clear");
     cout << "-----------------------------------\n";
@@ -281,11 +286,11 @@ void send_new_product_release(){
     cin >> return_m;
     if(return_m[0] == '0'){
         sleep(1);
-        return;
+        return true;
     } else if(return_m[0] != '1'){
         cout << "Invalid selection, please try again" << endl;
         sleep(2);
-        return;
+        return true;
     }
     cout << "\nPlease enter the product name: ";
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -300,12 +305,13 @@ void send_new_product_release(){
     cin >> return_main;
     if(return_main[0] == '0'){
         sleep(1);
-        return;
+        return true;
     }
+    return true;
 }
 
 //-----------------------------------------------------------------------------
-void see_all_pending_change_items(){
+bool see_all_pending_change_items(){
     char product_name[MAX_NAME];
     system("clear");
     cout << "-----------------------------------\n";
@@ -315,11 +321,11 @@ void see_all_pending_change_items(){
     cin >> return_m;
     if(return_m[0] == '0'){
         sleep(1);
-        return;
+        return true;
     } else if(return_m[0] != '1'){
         cout << "Invalid selection, please try again" << endl;
         sleep(2);
-        return;
+        return true;
     }
     cout << "\nPlease enter the product name: ";
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -334,13 +340,13 @@ void see_all_pending_change_items(){
     cin >> return_main;
     if(return_main[0] == '0'){
         sleep(1);
-        return;
+        return true;
     }
-
+    return true;
 }
 
 //-----------------------------------------------------------------------------
-void send_report(){
+bool send_report(){
     char product_name[MAX_NAME], product_version[MAX_NAME];
     system("clear");
     cout << "-----------------------------------\n";
@@ -350,11 +356,11 @@ void send_report(){
     cin >> return_m;
     if(return_m[0] == '0'){
         sleep(1);
-        return;
+        return true;
     } else if(return_m[0] != '1'){
         cout << "Invalid selection, please try again" << endl;
         sleep(2);
-        return;
+        return true;
     }
     cout << "\nPlease enter the product name: ";
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -417,8 +423,9 @@ void send_report(){
     cin >> return_main;
     if(return_main[0] == '0'){
         sleep(1);
-        return;
+        return true;
     }
+    return true;
 
 }
 
@@ -428,7 +435,7 @@ bool start_up() {
     init_customer();
 
     //opening file for product records:
-    init_product();
+    //init_product();
 
     //opening file for product release records:
     init_release();
@@ -438,13 +445,15 @@ bool start_up() {
 
     //opening file for changeItem records:
     init_change_item();
+    return true;
 }
 
 bool shut_down() {
     //this function shuts down the system by closing all the files
     close_customer();
-    close_product();
+   // close_product();
     close_product_release();
     close_change_request();
     close_change_item();
+    return true;
 }
