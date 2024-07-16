@@ -15,6 +15,7 @@
 #define MAX_EMAIL 64
 #define MAX_PHONE 11
 #define MAX_DATE 12
+#define MAX_DEPARTMENT 30
 
 // database file names
 #define CUSTOMER_FILE "customers.dat"

@@ -26,16 +26,16 @@ void main_test_ops(){
 
         // testing set_id()
         cout << "testing set_id() -- set to '12345" << endl;
-        if(set_id(12345)){
+        if(new_item.set_id(12345)){
             cout << "Set id test passed." << endl;
         }
         // testing set_productName() to acrobat
         cout << "testing set_productName() -- set to Acrobat" << endl;
-        if(set_productName('Acrobat')){
+        if(new_item.set_productName('Acrobat')){
             cout << "Set product name passed." << endl;
         }
         // Testing set product release ID -- to rel1
-        if(set_productReleaseID('rel1')){
+        if(new_item.set_productReleaseID('rel1')){
             
         }
         // set description
