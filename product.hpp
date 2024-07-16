@@ -47,6 +47,10 @@ Product select_product();
 bool add_product(const Product& product // product to add
                 );
 
+bool read_product(int index, Product& product);
+
+bool delete_product(int index);
+
 // close product database file
 bool close_product();
 
