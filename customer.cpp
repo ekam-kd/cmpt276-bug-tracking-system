@@ -169,7 +169,9 @@ bool check_employee(char* name) {
 
 // Close customer database file
 bool close_customer() {
-    // Placeholder for any cleanup code
-    // For example, closing a file or a database connection
-    return true;
+    if (customerFile.is_open()) {
+        customerFile.close();
+        return true;
+    }
+    return false;
 }

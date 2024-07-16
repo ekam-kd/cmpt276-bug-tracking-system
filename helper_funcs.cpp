@@ -439,3 +439,12 @@ bool start_up() {
     //opening file for changeItem records:
     init_change_item();
 }
+
+bool shut_down() {
+    //this function shuts down the system by closing all the files
+    close_customer();
+    close_product();
+    close_product_release();
+    close_change_request();
+    close_change_item();
+}
