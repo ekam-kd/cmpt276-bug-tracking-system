@@ -16,7 +16,7 @@ int main(){
     // init rel
     init_release();
     // testing release class
-    Release release;
+    Release release, release1;
     release.set_productName("Product 1");
     release.set_version("1.0");
     release.set_description("This is a test product");
@@ -24,16 +24,27 @@ int main(){
     release.set_status("Active");
     release.print_release_info();
 
+    release1.set_productName("Product 2");
+    release1.set_version("2.0");
+    release1.set_description("This is a test product");
+    release1.set_date("01/01/2021");
+    release1.set_status("Inactive");
+    release1.print_release_info();
+
+
     // write release to file
     write_release(release);
+    write_release(release1);
 
     // read release from file
-    Release release2;
+    Release release2, release3;
     read_release(0, release2);
+    read_release(1, release3);
 
     // print release info
     cout << "\nReading from file: " << endl;
     release2.print_release_info();
+    release3.print_release_info();
 
     // delete from file
     delete_release(0);
