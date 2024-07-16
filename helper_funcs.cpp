@@ -6,8 +6,8 @@
 //  *        to be used in main.cpp for readability and modularity
 // */
 
-// #include "helper_funcs.hpp"
-// using namespace std;
+#include "helper_funcs.hpp"
+using namespace std;
 
 //todo change the return type of the functions to bool
 //-----------------------------------------------------------------------------
