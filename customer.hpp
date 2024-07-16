@@ -37,13 +37,13 @@ class Customer{
         // get department
         char* get_department();
         // set name
-        void set_name(char* name);
+        void set_name(char* new_name);
         // set email
-        void set_email(char* email);
+        void set_email(char* new_email);
         // set phone
-        void set_phone(char* phone);
+        void set_phone(char* new_phone);
         // set department
-        void set_department(char* department);
+        void set_department(char* new_department);
         // print customer info
         void print_customer_info();
         // register new customer
