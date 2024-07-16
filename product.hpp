@@ -26,11 +26,11 @@ class Product{
         // destructor
         ~Product();
         // get name
-        char* get_name();
+        const char* get_name() const; // Declaration with const qualifier
         // set name
-        void set_name(char* name);
+        void set_name(const char* name);
         // print product info
-        void print_product_info();
+        void print_product_info() const;
 };
 
 // helper functions
@@ -42,7 +42,7 @@ bool init_product();
 Product select_product();
 
 // add product to file
-bool add_product(Product* product // product to add
+bool add_product(const Product& product // product to add
                 );
 
 // close product database file
