@@ -68,4 +68,7 @@ bool close_product_release();
 // select anticipated release
 bool select_anticipated_release();
 
+// update the anticipated release
+bool update_anticipated_release();
+
 #endif
