@@ -15,6 +15,7 @@
 #include <ios>
 #include <limits>
 #include "definitions.hpp"
+#include "helper_funcs.hpp"
 using namespace std;
 
 class Customer{

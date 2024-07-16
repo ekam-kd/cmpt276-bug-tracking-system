@@ -421,3 +421,21 @@ void send_report(){
     }
 
 }
+
+bool start_up() {
+    //this function starts up the system by opening all the files
+    //opening file for customer records:
+    init_customer();
+
+    //opening file for product records:
+    init_product();
+
+    //opening file for product release records:
+    init_release();
+
+    //opening file for changeRequest records:
+    init_change_request();
+
+    //opening file for changeItem records:
+    init_change_item();
+}

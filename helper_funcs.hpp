@@ -21,6 +21,7 @@
 #include "product.hpp"
 #include "changeRequest.hpp"
 #include "definitions.hpp"
+#include <fstream>
 
 // initialize the system
 bool start_up();
