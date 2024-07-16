@@ -18,10 +18,10 @@
 #define MAX_DEPARTMENT 30
 
 // database file names
-#define CUSTOMER_FILE "customers.txt"
-#define RELEASE_FILE "releases.txt"
-#define CHANGE_ITEM_FILE "changeItems.txt"
-#define CHANGE_REQUEST_FILE "changeRequests.txt"
-#define PRODUCT_FILE "products.txt"
+#define CUSTOMER_FILE "customers.dat"
+#define RELEASE_FILE "releases.dat"
+#define CHANGE_ITEM_FILE "changeItems.dat"
+#define CHANGE_REQUEST_FILE "changeRequests.dat"
+#define PRODUCT_FILE "products.dat"
 
 #endif
