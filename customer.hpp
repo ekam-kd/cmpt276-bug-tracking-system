@@ -67,9 +67,6 @@ bool write_customer(Customer* customer // customer to initialize
 
 // read customer from file
 bool read_customer(int index, Customer &customer);
-// check of employee
-bool check_employee(char* name // name of the employee
-                    );
 
 bool delete_customer(int index);
 

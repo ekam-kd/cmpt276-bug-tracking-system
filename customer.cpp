@@ -5,10 +5,9 @@
  * Version 1.1
  * Purpose: Class implementation for Customer class
  */
-#include <iostream>
-#include <string>
 #include "customer.hpp"
 #include "definitions.hpp"
+#include <fstream>
 using namespace std;
 // public methods
 //  constructor
@@ -161,12 +160,25 @@ bool write_customer(Customer *customer)
 
 bool read_customer(int index, Customer &customer)
 {
-    // assume file is open
-    // seek to the correct position in the file
-    customerFile.seekg(index * sizeof(Customer), ios::beg);
-    // read release from file
-    customerFile.read((char *)&customer, sizeof(Customer));
-    return true;
+    //open file for reading in binary mode
+    customerFile.open(CUSTOMER_FILE, ios::in | ios::out | ios::binary);
+    
+    //if file opened successfully
+    if(customerFile.is_open()) {
+        //seek to the correct position in the file
+        customerFile.seekg(index * sizeof(Customer), ios::beg);
+        
+        //read the change item from the file
+        customerFile.read((char*)&customer, sizeof(Customer));
+        
+        //close the file
+        customer.close();
+        
+        //return true
+        return true;
+    } else { //otherwise return false
+        return false;
+    }
 }
 
 // Check if employee exists
