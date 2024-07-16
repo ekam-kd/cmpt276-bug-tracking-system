@@ -2,6 +2,21 @@
 #include <cstring> // For strcpy, strncpy
 #include <fstream> // For file operations
 
+//global filestream for product file so it stays open for program duration
+fstream productFile;
+
+bool init_product() {
+    //open file for reading/writing and create it if it doesn't exist
+    productFile.open(PRODUCT_FILE, ios::in | ios::out | ios::binary);
+    
+    //if file opened successfully, return true
+    if(productFile.is_open()) {
+        return true;
+    } else { //otherwise return false
+        return false;
+    }
+}
+
 // Constructor
 Product::Product() {
     strcpy(name, "NOT_SET");
