@@ -125,6 +125,7 @@ bool read_release(int index, Release &release) {
 }
 
 // delete release from file
+// DOES NOT WORK
 bool delete_release(int index) {
     // assume file is open
     // seek to the correct position in the file

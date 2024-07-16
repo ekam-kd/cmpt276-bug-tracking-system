@@ -96,4 +96,9 @@ bool create_report(long int ch_id // id of the change item
 
 // close change item database file
 bool close_change_item();
+
+// file operations
+bool write_change_item(ChangeItem &changeItem);
+bool read_change_item(long int id, ChangeItem &changeItem);
+bool delete_change_item(long int id);
 #endif
