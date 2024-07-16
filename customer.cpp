@@ -167,7 +167,7 @@ bool check_employee(char* name) {
     return false;
 }
 
-// Close customer database file
+// Close customer file
 bool close_customer() {
     if (customerFile.is_open()) {
         customerFile.close();
