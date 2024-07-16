@@ -13,6 +13,8 @@ using namespace std;
 
 // main for testing:
 int main(){
+    // init rel
+    init_release();
     // testing release class
     Release release;
     release.set_productName("Product 1");
@@ -21,6 +23,22 @@ int main(){
     release.set_date("01/01/2021");
     release.set_status("Active");
     release.print_release_info();
+
+    // write release to file
+    write_release(release);
+
+    // read release from file
+    Release release2;
+    read_release(0, release2);
+
+    // print release info
+    cout << "\nReading from file: " << endl;
+    release2.print_release_info();
+
+    // delete from file
+    delete_release(0);
+
+    return 0;
 }
 
 // real main

@@ -121,10 +121,27 @@ bool read_release(int index, Release &release) {
 bool delete_release(int index) {
     // assume file is open
     // seek to the correct position in the file
-    releaseFile.seekg(index * sizeof(Release), ios::beg);
-    // create a temporary release object
-    Release temp;
-    // write the temporary release object to the file
-    releaseFile.write((char*)&temp, sizeof(Release));
+    
+    releaseFile.seekg(0, ios::end);
+    streampos fileSize = releaseFile.tellg();
+    int numReleases = fileSize / sizeof(Release);
+
+    if(index < 0 || index >= numReleases) {
+        return false;
+    }
+
+    // move all releases after the one to be deleted
+    Release last_release;
+    releaseFile.seekg((numReleases - 1) * sizeof(Release), ios::beg);
+    releaseFile.read((char*)&last_release, sizeof(Release));
+    releaseFile.seekp(index * sizeof(Release), ios::beg);
+    releaseFile.write((char*)&last_release, sizeof(Release));
+
+    // truncate the file
+    if(truncate(RELEASE_FILE, (numReleases - 1)* sizeof(Release)) != 0) {
+        return false;
+    }
+
     return true;
+
 }

@@ -74,7 +74,7 @@ bool select_anticipated_release();
 bool update_anticipated_release();
 
 // file operations
-static bool write_release(Release &release);
-static bool read_release(int index ,Release &release);
-static bool delete_release(int index);
+bool write_release(Release &release);
+bool read_release(int index ,Release &release);
+bool delete_release(int index);
 #endif
