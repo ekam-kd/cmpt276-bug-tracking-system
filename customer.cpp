@@ -111,16 +111,6 @@ void Customer::register_customer() {
     set_department(input);
 }
 
-// Initialize customer database
-bool init_customer() {
-    ofstream outfile("customer_db.txt", ios::app); // Open in append mode
-    if (!outfile) {
-        cerr << "Error initializing customer database!" << endl;
-        return false;
-    }
-    outfile.close();
-    return true;
-}
 
 // Check if customer exists in database file
 bool check_customer(char* name) {

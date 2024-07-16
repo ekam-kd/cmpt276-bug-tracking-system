@@ -10,6 +10,7 @@
 #include <cstring> // For strcpy, strncpy
 #include <fstream> // For file operations
 
+
 // Constructor
 Product::Product() {
     strcpy(name, "NOT_SET");
