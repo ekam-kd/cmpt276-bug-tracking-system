@@ -51,18 +51,6 @@ void Product::print_product_info() const {
     std::cout << "Product Name: " << name << std::endl;
 }
 
-// Initialize product database
-bool init_product() {
-    // This is a placeholder for any initialization code
-    // For example, creating a file or opening a database connection
-    ofstream outfile("product_db.txt", ios::app); // Open in append mode
-    if (!outfile) {
-        cerr << "Error initializing product database!" << endl;
-        return false;
-    }
-    outfile.close();
-    return true;
-}
 
 // Displays list of products, allows user to select one
 Product select_product() {
@@ -87,7 +75,9 @@ bool add_product(const Product& product) {
 
 // Close product database file
 bool close_product() {
-    // Placeholder for any cleanup code
-    // For example, closing a file or a database connection
-    return true;
+    if (productFile.is_open()) {
+        productFile.close();
+        return true;
+    }
+    return false;
 }
