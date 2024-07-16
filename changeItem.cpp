@@ -1,5 +1,6 @@
 #include "changeItem.hpp"
 #include <fstream>
+#include <cstring>
 
 //global filestream for change item file so it stays open for program duration
 fstream changeItemFile;
@@ -84,23 +85,23 @@ void ChangeItem::set_id(long int id) {
 }
 
 // set product name
-void ChangeItem::set_productName(char* productName) {
-    strcpy(this->productName, productName);
+void ChangeItem::set_productName(string productName) {
+    strcpy(this->productName, productName.c_str());
 }
 
 // set product release ID
-void ChangeItem::set_productReleaseID(char* productReleaseID) {
-    strcpy(this->productReleaseID, productReleaseID);
+void ChangeItem::set_productReleaseID(string productReleaseID) {
+    strcpy(this->productReleaseID, productReleaseID.c_str());
 }
 
 // set description
-void ChangeItem::set_description(char* description) {
-    strcpy(this->description, description);
+void ChangeItem::set_description(string description) {
+    strcpy(this->description, description.c_str());
 }
 
 // set status
-void ChangeItem::set_status(char* status) {
-    strcpy(this->status, status);
+void ChangeItem::set_status(string status) {
+    strcpy(this->status, status.c_str());
 }
 
 // set priority
@@ -126,48 +127,22 @@ void ChangeItem::print_change_item_info() {
 
 // write change item to file
 bool write_change_item(ChangeItem &changeItem) {
-    //open file for writing in binary mode
-    changeItemFile.open(CHANGE_ITEM_FILE, ios::in | ios::out | ios::binary);
-    
-    //if file opened successfully
-    if(changeItemFile.is_open()) {
-        //seek to the end of the file
-        changeItemFile.seekp(0, ios::end);
-        
-        //write the change item to the file
-        changeItemFile.write((char*)&changeItem, sizeof(ChangeItem));
-        
-        //close the file
-        changeItemFile.close();
-        
-        //return true
-        return true;
-    } else { //otherwise return false
-        return false;
-    }
+    // assume file is open
+    // seek to the end of the file
+    changeItemFile.seekp(0, ios::end);
+    // write the change item to the file
+    changeItemFile.write((char*)&changeItem, sizeof(ChangeItem));
+    return true;
 }
 
 // read change item from file
 bool read_change_item(int index, ChangeItem &changeItem) {
-    //open file for reading in binary mode
-    changeItemFile.open(CHANGE_ITEM_FILE, ios::in | ios::out | ios::binary);
-    
-    //if file opened successfully
-    if(changeItemFile.is_open()) {
-        //seek to the correct position in the file
-        changeItemFile.seekg(index * sizeof(ChangeItem), ios::beg);
-        
-        //read the change item from the file
-        changeItemFile.read((char*)&changeItem, sizeof(ChangeItem));
-        
-        //close the file
-        changeItemFile.close();
-        
-        //return true
-        return true;
-    } else { //otherwise return false
-        return false;
-    }
+    // assume file is open
+    // seek to the correct position in the file
+    changeItemFile.seekg(index * sizeof(ChangeItem), ios::beg);
+    // read the change item from the file
+    changeItemFile.read((char*)&changeItem, sizeof(ChangeItem));
+    return true;
 }
 
 // delete change item from file
