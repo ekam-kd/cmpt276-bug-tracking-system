@@ -1,3 +1,10 @@
+/* 
+ * File:   customer.hpp
+ * Author: Qiraa Qadri
+ * Created: July 2024
+ * Version 1.1
+ * Purpose: Class definition for Release class
+*/
 #include "release.hpp"
 //global filestream for product release file so it stays open for program duration
 fstream releaseFile;
