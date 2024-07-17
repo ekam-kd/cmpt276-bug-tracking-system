@@ -247,13 +247,57 @@ void main_test_ops()
     //print info
     new_release.print_release_info();
 
-    //testing create product release
-    if (create_product_release(&new_release)){
-        cout << "create_product_release() test PASSED" << endl;
+    // //testing create product release
+    // if (create_product_release(&new_release)){
+    //     cout << "create_product_release() test PASSED" << endl;
+    // }
+    // else
+    // {
+    //     cout << "create_product_release() test FAILED" << endl;
+    // }
+
+
+    //testing write
+    if (write_release(new_release))
+    {
+        cout << "write_release() test PASSED" << endl;
     }
     else
     {
-        cout << "create_product_release() test FAILED" << endl;
+        cout << "write_release() test FAILED" << endl;
     }
+        
+        
+        //testing read
+    if (read_release(0, new_release))
+    {
+        cout << "read_release() test PASSED" << endl;
+    }
+    else
+    {
+        cout << "read_release() test FAILED" << endl;
+    }
+
+            //testing delete
+    if (delete_release(0))
+    {
+        cout << "delete_release() test PASSED" << endl;
+    }
+    else
+    {
+        cout << "delete_release() test FAILED" << endl;
+    }
+
+            //testing close
+    if (close_product_release())
+    {
+        cout << "close_product_release() test PASSED" << endl;
+    }
+    else
+    {
+        cout << "close_product_release() test FAILED" << endl;
+    }
+
+
 
 }
