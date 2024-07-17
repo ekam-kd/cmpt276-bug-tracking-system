@@ -232,3 +232,15 @@ bool close_customer()
     }
     return true;
 }
+
+// Select customer
+Customer select_customer(const char *name){
+    Customer customer;
+    while (customerFile.read(reinterpret_cast<char *>(&customer), sizeof(Customer)))
+    {
+        if (strcmp(customer.get_name(), name) == 0)
+        {
+            return customer;
+        }
+    }
+}

@@ -2,7 +2,7 @@
  * File: changeItem.hpp
  * Author: Qiraa Qadri
  * Created: July 2024
- * Version 1.0
+ * Version 1.1
  * Purpose: Class definition for Change Item class
 */
 
