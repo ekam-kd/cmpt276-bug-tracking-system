@@ -3,6 +3,8 @@
 //global filestream for change request file so it stays open for program duration
 fstream changeRequestFile;
 
+//-----------------------------------------------------------------------------
+//initialize change request database
 bool init_change_request() {
     //open file for reading/writing and create it if it doesn't exist
     changeRequestFile.open(CHANGE_ITEM_FILE, ios::in | ios::out | ios::binary);
@@ -16,14 +18,16 @@ bool init_change_request() {
 
 }
 
+//-----------------------------------------------------------------------------
+// add change request to file
 bool make_change_request(ChangeRequest* changeRequest) {
     //write change request to file
     write_change_request(*changeRequest);
     return true;
 }
 
-
-
+//-----------------------------------------------------------------------------
+// close change request database file
 bool close_change_request() {
     if (changeRequestFile.is_open()) {
         changeRequestFile.close();
@@ -32,6 +36,7 @@ bool close_change_request() {
     return false;
 }
 
+//-----------------------------------------------------------------------------
 // constructor
 ChangeRequest::ChangeRequest() {
     //initialize all member variables to empty strings
@@ -41,51 +46,61 @@ ChangeRequest::ChangeRequest() {
     strcpy(request_date, "");
 }
 
+//-----------------------------------------------------------------------------
 // destructor
 ChangeRequest::~ChangeRequest() {
     //nothing to do here
 }
 
+//-----------------------------------------------------------------------------
 // get id
 long int ChangeRequest::get_id() {
     return id;
 }
 
+//-----------------------------------------------------------------------------
 // get customer name
 char* ChangeRequest::get_customer_name() {
     return customer_name;
 }   
 
+//-----------------------------------------------------------------------------
 // get reported release
 char* ChangeRequest::get_reported_release() {
     return reported_release;
 }
 
+//-----------------------------------------------------------------------------
 // get request date
 char* ChangeRequest::get_request_date() {
     return request_date;
 }
 
+//-----------------------------------------------------------------------------
 // set id
 void ChangeRequest::set_id(long int id) {
     this->id = id;
 }
 
+//-----------------------------------------------------------------------------
 // set customer name
 void ChangeRequest::set_customer_name(string customer_name) {
     strcpy(this->customer_name, customer_name.c_str());
 }
 
+//-----------------------------------------------------------------------------
 // set reported release
 void ChangeRequest::set_reported_release(string reported_release) {
     strcpy(this->reported_release, reported_release.c_str());
 }
 
+//-----------------------------------------------------------------------------
 // set request date
 void ChangeRequest::set_request_date(string request_date) {
     strcpy(this->request_date, request_date.c_str());
 }
 
+//-----------------------------------------------------------------------------
 // print change request info
 void ChangeRequest::print_change_request_info() {
     cout << "Change Request ID: " << id << endl;
@@ -94,8 +109,8 @@ void ChangeRequest::print_change_request_info() {
     cout << "Request Date: " << request_date << endl;
 }
 
+//-----------------------------------------------------------------------------
 // register new change request
-// need to test this ish
 void ChangeRequest::register_change_request() {
     //prompt user for change request information
     cout << "Enter Customer Name: ";
@@ -117,6 +132,7 @@ void ChangeRequest::register_change_request() {
 
 // file operations
 
+//-----------------------------------------------------------------------------
 // write change request to file
 bool write_change_request(ChangeRequest &changeRequest){
     changeRequestFile.seekp(0, ios::end); 
@@ -124,6 +140,7 @@ bool write_change_request(ChangeRequest &changeRequest){
     return true;
 }
 
+//-----------------------------------------------------------------------------
 // read change request from file
 bool read_change_request(int index, ChangeRequest &changeRequest){
     changeRequestFile.seekg(index * sizeof(ChangeRequest), ios::beg);
@@ -131,6 +148,7 @@ bool read_change_request(int index, ChangeRequest &changeRequest){
     return true;
 }
 
+//-----------------------------------------------------------------------------
 // delete change request from file
 bool delete_change_request(int index){
     fstream tempFile("temp_changereq.dat", ios::out | ios::binary);

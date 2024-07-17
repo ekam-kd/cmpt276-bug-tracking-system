@@ -2,6 +2,7 @@
 //global filestream for change item file so it stays open for program duration
 fstream changeItemFile;
 
+//-----------------------------------------------------------------------------
 bool init_change_item() {
     //open file for reading/writing and create it if it doesn't exist
     changeItemFile.open(CHANGE_ITEM_FILE, ios::in | ios::out | ios::binary);
@@ -15,12 +16,14 @@ bool init_change_item() {
 
 }
 
+//-----------------------------------------------------------------------------
 bool make_change_item(ChangeItem* changeItem) {
     //write change item to file
     write_change_item(*changeItem);
     return true;
 }
 
+//-----------------------------------------------------------------------------
 // need to test this function
 bool get_change_item(char* productName){
     ChangeItem changeItem;
@@ -42,6 +45,7 @@ bool get_change_item(char* productName){
     return false;
 }
 
+//-----------------------------------------------------------------------------
 // need to test this function
 bool see_change_item(long int ch_id){
     ChangeItem changeItem;
@@ -63,6 +67,7 @@ bool see_change_item(long int ch_id){
     return false;
 }
 
+//-----------------------------------------------------------------------------
 // need to test this function
 bool modify_change_item(long int ch_id){
     // find index of change item
@@ -118,6 +123,7 @@ bool modify_change_item(long int ch_id){
     return true;
 }
 
+//-----------------------------------------------------------------------------
 // need to test this function
 bool see_all_change_items(char* productName){
     ChangeItem changeItem;
@@ -137,7 +143,7 @@ bool see_all_change_items(char* productName){
     return true;
 }
 
-
+//-----------------------------------------------------------------------------
 bool create_report(long int ch_id){
     // open changeRequest file + search fo matching ch_id
     // if found, add customerName to a .txt file
@@ -168,7 +174,7 @@ bool create_report(long int ch_id){
     return true;
 }
 
-
+//-----------------------------------------------------------------------------
 //close change item file
 bool close_change_item() {
     if (changeItemFile.is_open()) {
@@ -178,6 +184,7 @@ bool close_change_item() {
     return false;
 }
 
+//-----------------------------------------------------------------------------
 // constructor
 ChangeItem::ChangeItem() {
     //initialize all member variables to empty strings
@@ -190,81 +197,97 @@ ChangeItem::ChangeItem() {
     id = 0;
 }
 
+//-----------------------------------------------------------------------------
 // destructor
 ChangeItem::~ChangeItem() {
     //nothing to do here
 }
 
+//-----------------------------------------------------------------------------
 // get id
 long int ChangeItem::get_id() {
     return id;
 }
 
+//-----------------------------------------------------------------------------
 // get product name
 char* ChangeItem::get_productName() {
     return productName;
 }
 
+//-----------------------------------------------------------------------------
 // get product release ID
 char* ChangeItem::get_productReleaseID() {
     return productReleaseID;
 }
 
+//-----------------------------------------------------------------------------
 // get description
 char* ChangeItem::get_description() {
     return description;
 }
 
+//-----------------------------------------------------------------------------
 // get status
 char* ChangeItem::get_status() {
     return status;
 }
 
+//-----------------------------------------------------------------------------
 // get priority
 int ChangeItem::get_priority() {
     return priority;
 }   
 
+//-----------------------------------------------------------------------------
 // get requests
 int ChangeItem::get_requests() {
     return requests;
 }
 
+//-----------------------------------------------------------------------------
 // set id
 void ChangeItem::set_id(long int id) {
     this->id = id;
 }
 
+//-----------------------------------------------------------------------------
 // set product name
 void ChangeItem::set_productName(string productName) {
     strcpy(this->productName, productName.c_str());
 }
 
+//-----------------------------------------------------------------------------
 // set product release ID
 void ChangeItem::set_productReleaseID(string productReleaseID) {
     strcpy(this->productReleaseID, productReleaseID.c_str());
 }
 
+//-----------------------------------------------------------------------------
 // set description
 void ChangeItem::set_description(string description) {
     strcpy(this->description, description.c_str());
 }
 
+//-----------------------------------------------------------------------------
 // set status
 void ChangeItem::set_status(string status) {
     strcpy(this->status, status.c_str());
 }
 
+//-----------------------------------------------------------------------------
 // set priority
 void ChangeItem::set_priority(int priority) {
     this->priority = priority;
 }
 
+//-----------------------------------------------------------------------------
 // set requests
 void ChangeItem::set_requests(int requests) {
     this->requests = requests;
 }
 
+//-----------------------------------------------------------------------------
 // print change item info
 void ChangeItem::print_change_item_info() {
     cout << "Change Item ID: " << id << endl;
@@ -276,6 +299,7 @@ void ChangeItem::print_change_item_info() {
     cout << "Requests: " << requests << endl;
 }
 
+//-----------------------------------------------------------------------------
 // write change item to file
 bool write_change_item(ChangeItem &changeItem) {
     // assume file is open
@@ -286,6 +310,7 @@ bool write_change_item(ChangeItem &changeItem) {
     return true;
 }
 
+//-----------------------------------------------------------------------------
 // read change item from file
 bool read_change_item(int index, ChangeItem &changeItem) {
     // assume file is open
@@ -302,6 +327,7 @@ bool read_change_item(int index, ChangeItem &changeItem) {
     return true;
 }
 
+//-----------------------------------------------------------------------------
 // delete change item from file
 bool delete_change_item(int index) {
    fstream tempFile("temp_changeitem.dat", ios::out | ios::binary);

@@ -10,6 +10,8 @@
 //global filestream for product release file so it stays open for program duration
 fstream releaseFile;
 
+//-----------------------------------------------------------------------------
+//initialize product release database
 bool init_release() {
     //open file for reading/writing and create it if it doesn't exist
     releaseFile.open(RELEASE_FILE, ios::in | ios::out | ios::binary);
@@ -23,6 +25,7 @@ bool init_release() {
 
 }
 
+//-----------------------------------------------------------------------------
 //close product release file
 bool close_product_release() {
     if (releaseFile.is_open()) {
@@ -32,6 +35,7 @@ bool close_product_release() {
     return false;
 }
 
+//-----------------------------------------------------------------------------
 // constructor
 Release::Release() {
     //initialize all member variables to empty strings
@@ -41,52 +45,61 @@ Release::Release() {
     strcpy(date, "");
 }
 
+//-----------------------------------------------------------------------------
 // destructor
 Release::~Release() {
     //nothing to do here
 }
 
+//-----------------------------------------------------------------------------
 // get product name
 char* Release::get_productName() {
     return productName;
 }
 
+//-----------------------------------------------------------------------------
 // get version
 char* Release::get_version() {
     return version;
 }
 
+//-----------------------------------------------------------------------------
 // get description
 char* Release::get_description() {
     return description;
 }
 
+//-----------------------------------------------------------------------------
 // get date
 char* Release::get_date() {
     return date;
 }
 
-
+//-----------------------------------------------------------------------------
 // set product name
 void Release::set_productName(string productName) {
     strcpy(this->productName, productName.c_str());
 }
 
+//-----------------------------------------------------------------------------
 // set version
 void Release::set_version(string version) {
     strcpy(this->version, version.c_str());
 }
 
+//-----------------------------------------------------------------------------
 // set description
 void Release::set_description(string description) {
     strcpy(this->description, description.c_str());
 }
 
+//-----------------------------------------------------------------------------
 // set date
 void Release::set_date(string date) {
     strcpy(this->date, date.c_str());
 }
 
+//-----------------------------------------------------------------------------
 // print release info
 void Release::print_release_info() {
     cout << "Product Name: " << productName << endl;
@@ -95,7 +108,7 @@ void Release::print_release_info() {
     cout << "Date: " << date << endl;
 }
 
-
+//-----------------------------------------------------------------------------
 // write release to file
 bool write_release(Release &release) {
     // assume file is open
@@ -106,6 +119,7 @@ bool write_release(Release &release) {
     return true;
 }
 
+//-----------------------------------------------------------------------------
 // read release from file
 bool read_release(int index, Release &release) {
     // assume file is open
@@ -116,7 +130,8 @@ bool read_release(int index, Release &release) {
     return true;
 }
 
-
+//-----------------------------------------------------------------------------
+// delete release from file
 bool delete_release(int index) {
     fstream tempFile("temp_release.dat", ios::out | ios::binary);
 
@@ -153,6 +168,7 @@ bool delete_release(int index) {
     return true;
 }
 
+//-----------------------------------------------------------------------------
 // create a new product release and add to file
 bool create_product_release(Release* release){
     // write release to file
