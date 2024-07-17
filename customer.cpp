@@ -127,7 +127,7 @@ void Customer::register_customer()
 }
 
 // Check if customer exists in database file
-bool check_customer(char *name)
+bool check_customer(const char *name)
 {
     if (!customerFile)
     {

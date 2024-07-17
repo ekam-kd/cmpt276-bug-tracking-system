@@ -9,32 +9,34 @@
 #include <iostream>
 #include <string>
 #include "helper_funcs.hpp"
+#include "testFileOps.cpp"
 using namespace std;
 
 // main for testing:
 int main(){
-    start_up();
+    main_test_ops();
+    // start_up();
 
-    // testing change request file io
-    ChangeRequest cr;
-    cr.set_id(1);
-    cr.set_customer_name("Qiraa");
-    cr.set_reported_release("1.0"); 
-    cr.set_request_date("2024-07-01");
+    // // testing change request file io
+    // ChangeRequest cr;
+    // cr.set_id(1);
+    // cr.set_customer_name("Qiraa");
+    // cr.set_reported_release("1.0"); 
+    // cr.set_request_date("2024-07-01");
 
-    cout << "Reading from file" << endl;
+    // cout << "Reading from file" << endl;
 
-    ChangeRequest cr2;
-    write_change_request(cr);
-    read_change_request(0, cr2);
+    // ChangeRequest cr2;
+    // write_change_request(cr);
+    // read_change_request(0, cr2);
 
-    cr2.print_change_request_info();
+    // cr2.print_change_request_info();
 
-    // delete change request
-    if(delete_change_request(0)) cout << "Deleted change request" << endl;
+    // // delete change request
+    // if(delete_change_request(0)) cout << "Deleted change request" << endl;
 
-    shut_down();
-    return 0;
+    // shut_down();
+    // return 0;
 }
 
 // real main
