@@ -6,6 +6,7 @@
  * Purpose: Class definition for Release class
 */
 #include "release.hpp"
+#include <vector>
 //global filestream for product release file so it stays open for program duration
 fstream releaseFile;
 
@@ -126,32 +127,39 @@ bool read_release(int index, Release &release) {
     return true;
 }
 
-// delete release from file
-// DOES NOT WORK
+
 bool delete_release(int index) {
-    // assume file is open
-    // seek to the correct position in the file
-    
-    releaseFile.seekg(0, ios::end);
-    streampos fileSize = releaseFile.tellg();
-    int numReleases = fileSize / sizeof(Release);
+    fstream tempFile("temp_release.dat", ios::out | ios::binary);
 
-    if(index < 0 || index >= numReleases) {
-        return false;
+    // Seek to the start of the file
+    releaseFile.seekg(0, std::ios::beg);
+
+    // Read all releases into memory except the one to be deleted
+    Release tempRelease;
+    int currentIndex = 0;
+    while (releaseFile.read(reinterpret_cast<char*>(&tempRelease), sizeof(Release))) {
+        if (currentIndex != index) {
+            tempFile.write(reinterpret_cast<const char*>(&tempRelease), sizeof(Release));
+        }
+        currentIndex++;
     }
 
-    // move all releases after the one to be deleted
-    Release last_release;
-    releaseFile.seekg((numReleases - 1) * sizeof(Release), ios::beg);
-    releaseFile.read((char*)&last_release, sizeof(Release));
-    releaseFile.seekp(index * sizeof(Release), ios::beg);
-    releaseFile.write((char*)&last_release, sizeof(Release));
+    // Clear the file (truncate to 0 and seek to the beginning)
+    releaseFile.close();
+    releaseFile.open(RELEASE_FILE, std::ios::out | std::ios::trunc);
+    releaseFile.close();
+    releaseFile.open(RELEASE_FILE, std::ios::in | std::ios::out | std::ios::binary);
 
-    // truncate the file
-    if(truncate(RELEASE_FILE, (numReleases - 1)* sizeof(Release)) != 0) {
-        return false;
+    // Copy the temp file back to the original file
+    tempFile.seekg(0, std::ios::beg);
+    while (tempFile.read(reinterpret_cast<char*>(&tempRelease), sizeof(Release))) {
+        releaseFile.write(reinterpret_cast<const char*>(&tempRelease), sizeof(Release));
     }
+
+    // Close the temp file
+    tempFile.close();
+    tempFile.open("temp_release.dat", std::ios::out | std::ios::trunc);
+    tempFile.close();
 
     return true;
-
 }

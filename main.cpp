@@ -13,27 +13,42 @@ using namespace std;
 
 // main for testing:
 int main(){
-    init_change_item();
-    // test change item
-    ChangeItem c1;
-    c1.set_id(1);
-    c1.set_productName("Product 1");
-    c1.set_productReleaseID("Release 1");
-    c1.set_description("Description 1");
-    c1.set_status("Pending");
-    c1.set_priority(1);
-    c1.set_requests(1);
-    c1.print_change_item_info();
+    // init rel
+    init_release();
+    // testing release class
+    Release release, release1, blank;
+    release.set_productName("Product 1");
+    release.set_version("1.0");
+    release.set_description("This is a test product");
+    release.set_date("01/01/2021");
+    release.set_status("Active");
+    release.print_release_info();
 
-    // write to file
-    write_change_item(c1);
+    release1.set_productName("Product 2");
+    release1.set_version("2.0");
+    release1.set_description("This is a test product");
+    release1.set_date("01/01/2021");
+    release1.set_status("Inactive");
+    release1.print_release_info();
 
-    // read from file
-    cout << "\nReading from file..." << endl;
-    ChangeItem c2;
-    read_change_item(1, c2);
-    c2.print_change_item_info();
 
+    // write release to file
+    write_release(release);
+    write_release(release1);
+
+    // read release from file
+    Release release2, release3;
+    read_release(0, release2);
+    read_release(1, release3);
+
+    // print release info
+    cout << "\nReading from file: " << endl;
+    release2.print_release_info();
+    release3.print_release_info();
+    
+    // delete release from file
+    if(delete_release(0)) cout << "Release 0 deleted" << endl;
+    if(delete_release(0)) cout << "Release 1 deleted" << endl;
 
     init_customer();
 

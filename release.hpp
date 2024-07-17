@@ -77,4 +77,5 @@ bool update_anticipated_release();
 bool write_release(Release &release);
 bool read_release(int index ,Release &release);
 bool delete_release(int index);
+bool truncateFile(const std::string& filePath, int numReleases);
 #endif
