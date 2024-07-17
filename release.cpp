@@ -1,5 +1,5 @@
 /* 
- * File:   customer.hpp
+ * File:   release.hpp
  * Author: Qiraa Qadri
  * Created: July 2024
  * Version 1.1
@@ -39,7 +39,6 @@ Release::Release() {
     strcpy(version, "");
     strcpy(description, "");
     strcpy(date, "");
-    strcpy(status, "");
 }
 
 // destructor
@@ -67,10 +66,6 @@ char* Release::get_date() {
     return date;
 }
 
-// get status
-char* Release::get_status() {
-    return status;
-}
 
 // set product name
 void Release::set_productName(string productName) {
@@ -92,18 +87,12 @@ void Release::set_date(string date) {
     strcpy(this->date, date.c_str());
 }
 
-// set status
-void Release::set_status(string status) {
-    strcpy(this->status, status.c_str());
-}
-
 // print release info
 void Release::print_release_info() {
     cout << "Product Name: " << productName << endl;
     cout << "Version: " << version << endl;
     cout << "Description: " << description << endl;
     cout << "Date: " << date << endl;
-    cout << "Status: " << status << endl;
 }
 
 

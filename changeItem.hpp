@@ -17,6 +17,8 @@
 #include <fstream>
 #include <cstring>
 #include "definitions.hpp"
+#include "changeRequest.hpp"
+#include "customer.hpp"
 using namespace std;
 
 
