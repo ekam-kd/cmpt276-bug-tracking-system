@@ -21,6 +21,18 @@ void main_test_ops()
 {
 
     // public methods of product
+    cout << "----------UNIT TEST 1----------" << endl;
+
+    cout << "Testing init_customer()" << endl;
+    if (init_customer())
+    {
+        cout << "init_customer() test PASSED" << endl;
+    }
+    else
+    {
+        cout << "init_customer() test FAILED" << endl;
+    }
+
     //  constructor
     Customer new_customer = Customer();
 
@@ -78,33 +90,66 @@ void main_test_ops()
     {
         cout << "set_department() test FAILED" << endl;
         cout << "get_department() test FAILED" << endl;
-    }    
+    }
+
+    // print customer info
+    new_customer.print_customer_info();
+
+    // register new customer
+    //register_customer();
+
+    // helper functions
+
+    // add customer to file
+    if(write_customer(new_customer)){
+        cout <<"write_customer() test PASSED" << endl;
+    }else{
+        cout << "write_customer() test FAILED" << endl;
+    }
+    // read customer from file
+    if(read_customer(1, new_customer)){
+        cout << "read_customer() test PASSED" <<endl;
+    }else{
+        cout << "read_customer() test FAILED" <<endl;
+    }
+    // check if customer exists in database file
+    if (check_customer("John Doe"))
+    {
+        cout << "check_customer() test PASSED" << endl;
+    }
+    else
+    {
+        cout << "check_customer test FAILED" << endl;
+    }
+
+    if (check_employee("John Doe"))
+    {
+        cout << "check_employee() test PASSED" << endl;
+    }
+    else
+    {
+        cout << "check_employee test FAILED" << endl;
+    }
 
 
-    // // print customer info
-    // void print_customer_info();
+    if(delete_customer(1)){
+        cout << "delete_customer() test PASSED" << endl;
+    }
+else{
+    cout << "delete_customer() test FAILED" << endl;
+}
+    if(close_customer()){
+        cout << "close_customer() test PASSED" << endl;
+    }
+else{
+    cout << "close_customer() test FAILED" << endl;
+}
 
 
 
-    // // register new customer
-    // void register_customer();
 
-    // // helper functions
 
-    // // initialize customer database
-    // bool init_customer();
 
-    // // check if customer exists in database file
-    // bool check_customer(char *name // name of the customer
-    // );
+cout << "----------UNIT TEST 2----------"<< endl;
 
-    // // add customer to file
-    // bool create_customer(Customer * customer // customer to initialize
-    // );
-    // // check of employee
-    // bool check_employee(char *name // name of the employee
-    // );
-
-    // // closes customer database file
-    // bool close_customer();
 }
