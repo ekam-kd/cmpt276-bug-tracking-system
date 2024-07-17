@@ -202,7 +202,7 @@ void main_test_ops()
     // set_date is dependent on get_date to pass.
     cout << "Testing set_date() and get_date():" << endl;
     new_release.set_date("11/11/2024");
-    if (strcmp(new_release.get_productName(), "11/11/2024") == 0)
+    if (strcmp(new_release.get_date(), "11/11/2024") == 0)
     {
         cout << "set_date() test PASSED" << endl;
         cout << "get_date() test PASSED" << endl;
