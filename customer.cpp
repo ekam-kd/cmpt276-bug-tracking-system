@@ -16,7 +16,7 @@ using namespace std;
 #include "customer.hpp"
 // global filestream for customer file so it stays open for program duration
 fstream customerFile;
-
+//-----------------------------------------------------------------------------
 bool init_customer()
 {
     // open file for reading/writing and create it if it doesn't exist
@@ -32,7 +32,7 @@ bool init_customer()
         return false;
     }
 }
-
+//-----------------------------------------------------------------------------
 // Constructor
 Customer::Customer()
 {
@@ -41,13 +41,13 @@ Customer::Customer()
     strcpy(phone, "NOT_SET");
     strcpy(department, "NOT_SET");
 }
-
+//-----------------------------------------------------------------------------
 // Destructor
 Customer::~Customer()
 {
     // No dynamic memory to clean up, so this is empty
 }
-
+//-----------------------------------------------------------------------------
 // Getters
 char *Customer::get_name()
 {
@@ -68,7 +68,7 @@ char *Customer::get_department()
 {
     return department;
 }
-
+//-----------------------------------------------------------------------------
 // Setters
 void Customer::set_name(const char *new_name)
 {
@@ -93,7 +93,7 @@ void Customer::set_department(const char *new_department)
     strncpy(department, new_department, MAX_NAME - 1);
     department[MAX_NAME - 1] = '\0'; // Ensure null-terminated
 }
-
+//-----------------------------------------------------------------------------
 // Print customer info
 void Customer::print_customer_info()
 {
@@ -102,7 +102,7 @@ void Customer::print_customer_info()
     cout << "Customer phone: " << phone << endl;
     cout << "Customer department: " << department << endl;
 }
-
+//-----------------------------------------------------------------------------
 // Register new customer
 void Customer::register_customer()
 {
@@ -125,7 +125,7 @@ void Customer::register_customer()
     set_department(input);
     write_customer(*this);
 }
-
+//-----------------------------------------------------------------------------
 // Check if customer exists in database file
 bool check_customer(const char *name)
 {
@@ -145,7 +145,7 @@ bool check_customer(const char *name)
     }
     return false;
 }
-
+//-----------------------------------------------------------------------------
 // Add customer to file
 bool write_customer(Customer &customer)
 {
@@ -156,7 +156,7 @@ bool write_customer(Customer &customer)
     customerFile.write((char *)&customer, sizeof(Customer));
     return true;
 }
-
+//-----------------------------------------------------------------------------
 bool read_customer(int index, Customer &customer)
 {
     // assume file is open
@@ -166,7 +166,7 @@ bool read_customer(int index, Customer &customer)
     customerFile.read((char *)&customer, sizeof(Customer));
     return true;
 }
-
+//-----------------------------------------------------------------------------
 // Check if employee exists
 bool check_employee(const char *name)
 {
@@ -186,7 +186,7 @@ bool check_employee(const char *name)
     }
     return false;
 }
-
+//-----------------------------------------------------------------------------
 bool delete_customer(int index)
 {
     fstream tempFile("temp_Customer.dat", ios::out | ios::binary);
@@ -226,7 +226,7 @@ bool delete_customer(int index)
 
     return true;
 }
-
+//-----------------------------------------------------------------------------
 // Close customer file
 bool close_customer()
 {
@@ -236,7 +236,7 @@ bool close_customer()
     }
     return true;
 }
-
+//-----------------------------------------------------------------------------
 Customer select_customer(const char *name)
 {
     ifstream customerFile(CUSTOMER_FILE, ios::in | ios::binary);
@@ -262,3 +262,4 @@ Customer select_customer(const char *name)
     // Depending on your design, return a default or throw an exception
     return Customer(); // Return a default-constructed Customer object
 }
+//-----------------------------------------------------------------------------
