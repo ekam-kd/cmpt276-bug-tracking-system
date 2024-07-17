@@ -18,6 +18,133 @@ bool init_change_item() {
 
 }
 
+bool make_change_item(ChangeItem* changeItem) {
+    //write change item to file
+    write_change_item(*changeItem);
+    return true;
+}
+
+// need to test this function
+bool get_change_item(char* productName){
+    ChangeItem changeItem;
+    int i = 0;
+    bool found = false;
+    while(!found){
+        if(!read_change_item(i, changeItem)){
+            break;
+        }
+        char* name = changeItem.get_productName();
+        if(strcmp(name, productName) == 0){
+            found = true;
+            changeItem.print_change_item_info();
+            return true;
+        } else {
+            i++;
+        }
+    }
+    return false;
+}
+
+// need to test this function
+bool see_change_item(long int ch_id){
+    ChangeItem changeItem;
+    int i = 0;
+    bool found = false;
+    while(!found){
+        if(!read_change_item(i, changeItem)){
+            break;
+        }
+        long int id = changeItem.get_id();
+        if(id == ch_id){
+            found = true;
+            changeItem.print_change_item_info();
+            return true;
+        } else {
+            i++;
+        }
+    }
+    return false;
+}
+
+// need to test this function
+bool modify_change_item(long int ch_id){
+    // find index of change item
+    ChangeItem changeItem;
+    int i = 0;
+    bool found = false;
+    while(!found){
+        if(!read_change_item(i, changeItem)){
+            return false;
+        }
+        long int id = changeItem.get_id();
+        if(id == ch_id){
+            found = true;
+            break;
+        } else {
+            i++;
+        }
+    }
+    
+    // print change item info
+    changeItem.print_change_item_info();
+    // prompt user for changes
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    cout << "Enter new product name: ";
+    string productName;
+    cin >> productName;
+    changeItem.set_productName(productName);
+    cout << "Enter new product release ID: ";
+    string productReleaseID;
+    cin >> productReleaseID;
+    changeItem.set_productReleaseID(productReleaseID);
+    cout << "Enter new description: ";
+    string description;
+    cin >> description;
+    changeItem.set_description(description);
+    cout << "Enter new status: ";
+    string status;
+    cin >> status;
+    changeItem.set_status(status);
+    cout << "Enter new priority: ";
+    int priority;
+    cin >> priority;
+    changeItem.set_priority(priority);
+    cout << "Enter new # of requests: ";
+    int requests;
+    cin >> requests;
+    changeItem.set_requests(requests);
+    // modify change item by creating new change item and adding to file
+    make_change_item(&changeItem);
+
+    // delete change item
+    delete_change_item(i);
+}
+
+// need to test this function
+bool see_all_change_items(char* productName){
+    ChangeItem changeItem;
+    int i = 0;
+    while(1){
+        if(!read_change_item(i, changeItem)){
+            break;
+        }
+        char* name = changeItem.get_productName();
+        if(strcmp(name, productName) == 0){
+            changeItem.print_change_item_info();
+            i++;
+        } else {
+            i++;
+        }
+    }
+    return true;
+}
+
+// todo: implement this function
+bool create_report(long int ch_id){
+    // do smth idk
+}
+
+
 //close change item file
 bool close_change_item() {
     if (changeItemFile.is_open()) {
@@ -138,6 +265,12 @@ bool write_change_item(ChangeItem &changeItem) {
 // read change item from file
 bool read_change_item(int index, ChangeItem &changeItem) {
     // assume file is open
+    // make sure index is valid
+    changeItemFile.seekg(0, ios::end);
+    int numItems = changeItemFile.tellg() / sizeof(ChangeItem);
+    if(index >= numItems || index < 0) {
+        return false;
+    }
     // seek to the correct position in the file
     changeItemFile.seekg(index * sizeof(ChangeItem), ios::beg);
     // read the change item from the file
