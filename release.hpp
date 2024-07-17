@@ -25,7 +25,6 @@ class Release{
         char version[MAX_NAME];
         char description[MAX_DESCRIPTION];
         char date[MAX_NAME];
-        char status[MAX_NAME];
     public:
         // constructor
         Release();
@@ -39,8 +38,6 @@ class Release{
         char* get_description();
         // get date
         char* get_date();
-        // get status
-        char* get_status();
         // set product name
         void set_productName(string productName);
         // set version
@@ -49,8 +46,6 @@ class Release{
         void set_description(string description);
         // set date
         void set_date(string date);
-        // set status
-        void set_status(string status);
         // print release info
         void print_release_info();
 };

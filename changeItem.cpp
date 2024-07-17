@@ -139,7 +139,27 @@ bool see_all_change_items(char* productName){
 
 // todo: implement this function
 bool create_report(long int ch_id){
-    // do smth idk
+    // open changeRequest file + search fo matching ch_id
+    // if found, add customerName to a .txt file
+    ChangeRequest changeRequest;
+    int i = 0;
+    while(1){
+        if(!read_change_request(i, changeRequest)){
+            break;
+        }
+        long int id = changeRequest.get_id();
+        if(id == ch_id){
+            string customerName = changeRequest.get_customer_name();
+            ofstream reportFile;
+            reportFile.open("report.txt", ios::app);
+            reportFile << customerName << endl;
+            reportFile.close();
+            return true;
+        } else {
+            i++;
+        }
+    }
+
     return true;
     //it will need to open the changeRequest file and traverse it (linear search) and for every changeId that
     //matches, we add the associated customerName in a .txt file
