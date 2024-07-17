@@ -70,7 +70,7 @@ void main_test_ops()
     if (new_customer.get_phone() == "12345678910")
     {
         cout << "set_phone() test PASSED" << endl;
-        cout << "set_phone() test PASSED" << endl;
+        cout << "get_phone() test PASSED" << endl;
     }
     else
     {
@@ -84,7 +84,7 @@ void main_test_ops()
     if (new_customer.get_department() == "sales")
     {
         cout << "set_department() test PASSED" << endl;
-        cout << "set_department() test PASSED" << endl;
+        cout << "get_department() test PASSED" << endl;
     }
     else
     {
@@ -96,21 +96,27 @@ void main_test_ops()
     new_customer.print_customer_info();
 
     // register new customer
-    //register_customer();
+    // register_customer();
 
     // helper functions
 
     // add customer to file
-    if(write_customer(new_customer)){
-        cout <<"write_customer() test PASSED" << endl;
-    }else{
+    if (write_customer(new_customer))
+    {
+        cout << "write_customer() test PASSED" << endl;
+    }
+    else
+    {
         cout << "write_customer() test FAILED" << endl;
     }
     // read customer from file
-    if(read_customer(1, new_customer)){
-        cout << "read_customer() test PASSED" <<endl;
-    }else{
-        cout << "read_customer() test FAILED" <<endl;
+    if (read_customer(1, new_customer))
+    {
+        cout << "read_customer() test PASSED" << endl;
+    }
+    else
+    {
+        cout << "read_customer() test FAILED" << endl;
     }
     // check if customer exists in database file
     if (check_customer("John Doe"))
@@ -131,27 +137,40 @@ void main_test_ops()
         cout << "check_employee test FAILED" << endl;
     }
 
-
-    if(delete_customer(1)){
+    if (delete_customer(1))
+    {
         cout << "delete_customer() test PASSED" << endl;
     }
-else{
-    cout << "delete_customer() test FAILED" << endl;
-}
-    if(close_customer()){
+    else
+    {
+        cout << "delete_customer() test FAILED" << endl;
+    }
+    if (close_customer())
+    {
         cout << "close_customer() test PASSED" << endl;
     }
-else{
-    cout << "close_customer() test FAILED" << endl;
-}
+    else
+    {
+        cout << "close_customer() test FAILED" << endl;
+    }
+
+    cout << "----------UNIT TEST 2----------" << endl;
+
+    init_release();
+    Release new_release = Release();
+        // set_department is dependent on get_department to pass.
+    cout << "Testing set_productName() and get_productName():" << endl;
+    new_release.set_productName("acrobat");
+    if (new_release.get_productName() == "acrobat")
+    {
+        cout << "set_productName() test PASSED" << endl;
+        cout << "get_productName()) test PASSED" << endl;
+    }
+    else
+    {
+        cout << "set_productName() test FAILED" << endl;
+        cout << "get_productName() test FAILED" << endl;
+    }
 
 
-
-
-
-
-cout << "----------UNIT TEST 2----------"<< endl;
-
-    Product new_product = Product();
-    
 }

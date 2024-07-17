@@ -123,6 +123,7 @@ void Customer::register_customer()
     cout << "Enter customer department: ";
     cin.getline(input, MAX_NAME);
     set_department(input);
+    write_customer(*this);
 }
 
 // Check if customer exists in database file
