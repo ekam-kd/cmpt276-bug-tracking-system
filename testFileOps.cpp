@@ -183,9 +183,7 @@ void main_test_ops()
         cout << "get_productName() test FAILED" << endl;
     }
 
-
-
-        // set_version is dependent on get_version to pass.
+    // set_version is dependent on get_version to pass.
     cout << "Testing set_version() and get_version():" << endl;
     new_release.set_version("1.1");
     if (new_release.get_version() == "1.1")
@@ -199,8 +197,7 @@ void main_test_ops()
         cout << "get_version() test FAILED" << endl;
     }
 
-    
-        // set_date is dependent on get_date to pass.
+    // set_date is dependent on get_date to pass.
     cout << "Testing set_date() and get_date():" << endl;
     new_release.set_date("1.1");
     if (new_release.get_version() == "1.1")
@@ -214,8 +211,7 @@ void main_test_ops()
         cout << "get_date() test FAILED" << endl;
     }
 
-
-            // set_description is dependent on get_description to pass.
+    // set_description is dependent on get_description to pass.
     cout << "Testing set_description() and get_description():" << endl;
     new_release.set_date("1.1");
     if (new_release.get_version() == "1.1")
@@ -229,7 +225,7 @@ void main_test_ops()
         cout << "get_description() test FAILED" << endl;
     }
 
-    //print info
+    // print info
     new_release.print_release_info();
 
     // //testing create product release
@@ -241,8 +237,7 @@ void main_test_ops()
     //     cout << "create_product_release() test FAILED" << endl;
     // }
 
-
-    //testing write
+    // testing write
     if (write_release(new_release))
     {
         cout << "write_release() test PASSED" << endl;
@@ -251,9 +246,8 @@ void main_test_ops()
     {
         cout << "write_release() test FAILED" << endl;
     }
-        
-        
-        //testing read
+
+    // testing read
     if (read_release(0, new_release))
     {
         cout << "read_release() test PASSED" << endl;
@@ -263,7 +257,7 @@ void main_test_ops()
         cout << "read_release() test FAILED" << endl;
     }
 
-            //testing delete
+    // testing delete
     if (delete_release(0))
     {
         cout << "delete_release() test PASSED" << endl;
@@ -273,7 +267,7 @@ void main_test_ops()
         cout << "delete_release() test FAILED" << endl;
     }
 
-            //testing close
+    // testing close
     if (close_product_release())
     {
         cout << "close_product_release() test PASSED" << endl;
@@ -282,7 +276,4 @@ void main_test_ops()
     {
         cout << "close_product_release() test FAILED" << endl;
     }
-
-
-
 }
