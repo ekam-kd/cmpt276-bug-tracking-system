@@ -115,6 +115,7 @@ bool modify_change_item(long int ch_id){
 
     // delete change item
     delete_change_item(i);
+    return true;
 }
 
 // need to test this function
@@ -139,6 +140,9 @@ bool see_all_change_items(char* productName){
 // todo: implement this function
 bool create_report(long int ch_id){
     // do smth idk
+    return true;
+    //it will need to open the changeRequest file and traverse it (linear search) and for every changeId that
+    //matches, we add the associated customerName in a .txt file
 }
 
 
