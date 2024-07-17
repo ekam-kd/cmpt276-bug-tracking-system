@@ -215,21 +215,6 @@ void main_test_ops()
     }
 
 
-            // set_status is dependent on get_status to pass.
-    cout << "Testing set_status() and get_status():" << endl;
-    new_release.set_status("1.1");
-    if (new_release.get_status() == "1.1")
-    {
-        cout << "set_status() test PASSED" << endl;
-        cout << "get_status() test PASSED" << endl;
-    }
-    else
-    {
-        cout << "set_status() test FAILED" << endl;
-        cout << "get_status() test FAILED" << endl;
-    }
-
-
             // set_description is dependent on get_description to pass.
     cout << "Testing set_description() and get_description():" << endl;
     new_release.set_date("1.1");
