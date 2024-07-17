@@ -158,9 +158,9 @@ void main_test_ops()
 
     cout << "----------UNIT TEST 2----------" << endl;
 
-    init_release();
     Release new_release = Release();
 
+    //testing initializing the relese database
     cout << "Testing init_release()" << endl;
     if (init_release())
     {
