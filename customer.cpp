@@ -131,7 +131,7 @@ bool check_customer(const char *name)
 {
     if (!customerFile)
     {
-        cerr << "Error opening customer database file!" << endl;
+        //cerr << "Error opening customer database file!" << endl;
         return false;
     }
 
@@ -237,14 +237,28 @@ bool close_customer()
     return true;
 }
 
-// Select customer
-Customer select_customer(const char *name){
+Customer select_customer(const char *name)
+{
+    ifstream customerFile(CUSTOMER_FILE, ios::in | ios::binary);
+    if (!customerFile)
+    {
+        cerr << "Error opening customer database file!" << endl;
+        // Handle the error, e.g., throw an exception or return a default customer
+        return Customer(); // Return a default-constructed Customer object
+    }
+
     Customer customer;
     while (customerFile.read(reinterpret_cast<char *>(&customer), sizeof(Customer)))
     {
         if (strcmp(customer.get_name(), name) == 0)
         {
+            customerFile.close(); // Close the file after successful find
             return customer;
         }
     }
+
+    // Customer not found in file, handle this case accordingly
+    customerFile.close(); // Close the file if customer not found
+    // Depending on your design, return a default or throw an exception
+    return Customer(); // Return a default-constructed Customer object
 }

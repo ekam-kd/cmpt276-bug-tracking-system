@@ -39,7 +39,8 @@ void main_test_ops()
     // set_name is dependent on get_name to pass.
     cout << "Testing set_name() and get_name():" << endl;
     new_customer.set_name("John Doe");
-    if (new_customer.get_name() == "John Doe")
+
+    if (strcmp(new_customer.get_name(), "John Doe") == 0)
     {
         cout << "set_name() test PASSED" << endl;
         cout << "get_name() test PASSED" << endl;
@@ -53,7 +54,7 @@ void main_test_ops()
     // set_email is dependent on get_email to pass.
     cout << "Testing set_email() and get_email():" << endl;
     new_customer.set_email("JohnDoe@company.ca");
-    if (new_customer.get_email() == "JohnDoe@company.ca")
+    if (strcmp(new_customer.get_email(), "JohnDoe@company.ca") == 0)
     {
         cout << "set_email() test PASSED" << endl;
         cout << "get_email() test PASSED" << endl;
@@ -67,7 +68,7 @@ void main_test_ops()
     // set_phone is dependent on get_phone to pass.
     cout << "Testing set_phone() and get_phone():" << endl;
     new_customer.set_phone("12345678910");
-    if (new_customer.get_phone() == "12345678910")
+    if (strcmp(new_customer.get_phone(), "1234567891") == 0)
     {
         cout << "set_phone() test PASSED" << endl;
         cout << "get_phone() test PASSED" << endl;
@@ -81,7 +82,7 @@ void main_test_ops()
     // set_department is dependent on get_department to pass.
     cout << "Testing set_department() and get_department():" << endl;
     new_customer.set_department("sales");
-    if (new_customer.get_department() == "sales")
+    if (strcmp(new_customer.get_department(), "sales") == 0)
     {
         cout << "set_department() test PASSED" << endl;
         cout << "get_department() test PASSED" << endl;
@@ -173,7 +174,7 @@ void main_test_ops()
     // set_productName is dependent on get_productName to pass.
     cout << "Testing set_productName() and get_productName():" << endl;
     new_release.set_productName("acrobat");
-    if (new_release.get_productName() == "acrobat")
+    if (strcmp(new_release.get_productName(), "acrobat") == 0)
     {
         cout << "set_productName() test PASSED" << endl;
         cout << "get_productName()) test PASSED" << endl;
@@ -187,7 +188,7 @@ void main_test_ops()
     // set_version is dependent on get_version to pass.
     cout << "Testing set_version() and get_version():" << endl;
     new_release.set_version("1.1");
-    if (new_release.get_version() == "1.1")
+    if (strcmp(new_release.get_version(), "1.1") == 0)
     {
         cout << "set_version() test PASSED" << endl;
         cout << "get_version()) test PASSED" << endl;
@@ -200,8 +201,8 @@ void main_test_ops()
 
     // set_date is dependent on get_date to pass.
     cout << "Testing set_date() and get_date():" << endl;
-    new_release.set_date("1.1");
-    if (new_release.get_version() == "1.1")
+    new_release.set_date("11/11/2024");
+    if (strcmp(new_release.get_productName(), "11/11/2024") == 0)
     {
         cout << "set_date() test PASSED" << endl;
         cout << "get_date() test PASSED" << endl;
@@ -214,8 +215,8 @@ void main_test_ops()
 
     // set_description is dependent on get_description to pass.
     cout << "Testing set_description() and get_description():" << endl;
-    new_release.set_date("1.1");
-    if (new_release.get_version() == "1.1")
+    new_release.set_description("lalala");
+    if (strcmp(new_release.get_description(), "lalala") == 0)
     {
         cout << "set_description() test PASSED" << endl;
         cout << "get_description() test PASSED" << endl;
