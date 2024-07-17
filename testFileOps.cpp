@@ -152,4 +152,6 @@ else{
 
 cout << "----------UNIT TEST 2----------"<< endl;
 
+    Product new_product = Product();
+    
 }

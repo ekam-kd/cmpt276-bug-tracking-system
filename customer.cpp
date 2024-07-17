@@ -195,52 +195,39 @@ bool check_employee(const char *name)
 }
 
 bool delete_customer(int index) {
-    // Open temporary file for writing, truncating it if it exists
-    ofstream tempFile("temp_db_customer.dat", ios::out | ios::binary | ios::trunc);
-    if (!tempFile) {
-        cerr << "Error opening or truncating temporary file!" << endl;
-        return false;
-    }
+    fstream tempFile("temp_Customer.dat", ios::out | ios::binary);
 
-    // Open original file for reading
-    ifstream infile(CUSTOMER_FILE, ios::in | ios::binary);
-    if (!infile) {
-        cerr << "Error opening customer database file!" << endl;
-        tempFile.close();
-        return false;
-    }
+    // Seek to the start of the file
+    customerFile.seekg(0, std::ios::beg);
 
-    Customer customer;
-    bool found = false;
+    // Read all Customers into memory except the one to be deleted
+    Customer tempCustomer;
     int currentIndex = 0;
-
-    // Read and write records
-    while (infile.read(reinterpret_cast<char *>(&customer), sizeof(Customer))) {
+    while (customerFile.read(reinterpret_cast<char*>(&tempCustomer), sizeof(Customer))) {
         if (currentIndex != index) {
-            tempFile.write(reinterpret_cast<char *>(&customer), sizeof(Customer));
-        } else {
-            found = true; // Record found and should be deleted
+            tempFile.write(reinterpret_cast<const char*>(&tempCustomer), sizeof(Customer));
         }
         currentIndex++;
     }
 
-    // Close files
-    infile.close();
-    tempFile.close();
+    // Clear the file (truncate to 0 and seek to the beginning)
+    customerFile.close();
+    customerFile.open(CUSTOMER_FILE, std::ios::out | std::ios::trunc);
+    customerFile.close();
+    customerFile.open(CUSTOMER_FILE, std::ios::in | std::ios::out | std::ios::binary);
 
-    // Check if record was found and deleted
-    if (found) {
-        // Remove original file
-        remove(CUSTOMER_FILE);
-        // Rename temp file to original file name
-        rename("temp_db_customer.dat", CUSTOMER_FILE);
-        return found;
-    } else {
-        // Delete temp file if deletion failed
-        return false;
+    // Copy the temp file back to the original file
+    tempFile.seekg(0, std::ios::beg);
+    while (tempFile.read(reinterpret_cast<char*>(&tempCustomer), sizeof(Customer))) {
+        customerFile.write(reinterpret_cast<const char*>(&tempCustomer), sizeof(Customer));
     }
 
-    
+    // Close the temp file
+    tempFile.close();
+    tempFile.open("temp_Customer.dat", std::ios::out | std::ios::trunc);
+    tempFile.close();
+
+    return true;
 }
 
 // Close customer file
