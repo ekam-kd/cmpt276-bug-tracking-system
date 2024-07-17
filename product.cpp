@@ -13,7 +13,7 @@ using namespace std;
 
 // global filestream for product file
 fstream productFile;
-
+//-----------------------------------------------------------------------------
 bool init_product()
 {
     // Open file for reading/writing and create it if it doesn't exist
@@ -30,38 +30,38 @@ bool init_product()
         return false;
     }
 }
-
+//-----------------------------------------------------------------------------
 // Constructor
 Product::Product()
 {
     strcpy(name, "NOT_SET");
 }
-
+//-----------------------------------------------------------------------------
 // Destructor
 Product::~Product()
 {
     // No dynamic memory to clean up, so this is empty
 }
-
+//-----------------------------------------------------------------------------
 // Get name
 const char *Product::get_name() const
 {
     return name;
 }
-
+//-----------------------------------------------------------------------------
 // Set name
 void Product::set_name(const char *newName)
 {
     strncpy(name, newName, MAX_NAME - 1);
     name[MAX_NAME - 1] = '\0'; // Ensure null-terminated
 }
-
+//-----------------------------------------------------------------------------
 // Print product info
 void Product::print_product_info() const
 {
     std::cout << "Product Name: " << name << std::endl;
 }
-
+//-----------------------------------------------------------------------------
 // Displays list of products, allows user to select one
 Product select_product()
 {
@@ -71,7 +71,7 @@ Product select_product()
     product.set_name("Sample Product");
     return product;
 }
-
+//-----------------------------------------------------------------------------
 // Add product to file
 bool add_product(const Product &product)
 {
@@ -85,7 +85,7 @@ bool add_product(const Product &product)
     productFile.write(reinterpret_cast<const char *>(&product), sizeof(Product));
     return true;
 }
-
+//-----------------------------------------------------------------------------
 // Read product from file
 bool read_product(int index, Product &product)
 {
@@ -101,7 +101,7 @@ bool read_product(int index, Product &product)
     productFile.read(reinterpret_cast<char *>(&product), sizeof(Product));
     return true;
 }
-
+//-----------------------------------------------------------------------------
 // Delete product by index
 bool delete_product(int index)
 {
@@ -156,7 +156,7 @@ bool delete_product(int index)
 
     return deleted;
 }
-
+//-----------------------------------------------------------------------------
 // Close product database file
 bool close_product()
 {
@@ -167,3 +167,4 @@ bool close_product()
     }
     return false;
 }
+//-----------------------------------------------------------------------------
