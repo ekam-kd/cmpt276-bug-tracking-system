@@ -153,7 +153,7 @@ bool write_customer(Customer &customer)
     // seek to the end of the file
     customerFile.seekp(0, ios::end);
     // write the change item to the file
-    customerFile.write((char*)&customer, sizeof(Customer));
+    customerFile.write((char *)&customer, sizeof(Customer));
     return true;
 }
 
@@ -163,7 +163,7 @@ bool read_customer(int index, Customer &customer)
     // seek to the correct position in the file
     customerFile.seekg(index * sizeof(Customer), ios::beg);
     // read the change item from the file
-    customerFile.read((char*)&customer, sizeof(Customer));
+    customerFile.read((char *)&customer, sizeof(Customer));
     return true;
 }
 
@@ -187,7 +187,8 @@ bool check_employee(const char *name)
     return false;
 }
 
-bool delete_customer(int index) {
+bool delete_customer(int index)
+{
     fstream tempFile("temp_Customer.dat", ios::out | ios::binary);
 
     // Seek to the start of the file
@@ -196,9 +197,11 @@ bool delete_customer(int index) {
     // Read all Customers into memory except the one to be deleted
     Customer tempCustomer;
     int currentIndex = 0;
-    while (customerFile.read(reinterpret_cast<char*>(&tempCustomer), sizeof(Customer))) {
-        if (currentIndex != index) {
-            tempFile.write(reinterpret_cast<const char*>(&tempCustomer), sizeof(Customer));
+    while (customerFile.read(reinterpret_cast<char *>(&tempCustomer), sizeof(Customer)))
+    {
+        if (currentIndex != index)
+        {
+            tempFile.write(reinterpret_cast<const char *>(&tempCustomer), sizeof(Customer));
         }
         currentIndex++;
     }
@@ -211,8 +214,9 @@ bool delete_customer(int index) {
 
     // Copy the temp file back to the original file
     tempFile.seekg(0, std::ios::beg);
-    while (tempFile.read(reinterpret_cast<char*>(&tempCustomer), sizeof(Customer))) {
-        customerFile.write(reinterpret_cast<const char*>(&tempCustomer), sizeof(Customer));
+    while (tempFile.read(reinterpret_cast<char *>(&tempCustomer), sizeof(Customer)))
+    {
+        customerFile.write(reinterpret_cast<const char *>(&tempCustomer), sizeof(Customer));
     }
 
     // Close the temp file
