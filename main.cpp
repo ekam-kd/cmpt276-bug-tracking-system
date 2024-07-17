@@ -13,58 +13,27 @@ using namespace std;
 
 // main for testing:
 int main(){
-    // init rel
-    init_release();
-    // testing release class
-    Release release, release1, blank;
-    release.set_productName("Product 1");
-    release.set_version("1.0");
-    release.set_description("This is a test product");
-    release.set_date("01/01/2021");
-    release.set_status("Active");
-    release.print_release_info();
+    start_up();
 
-    release1.set_productName("Product 2");
-    release1.set_version("2.0");
-    release1.set_description("This is a test product");
-    release1.set_date("01/01/2021");
-    release1.set_status("Inactive");
-    release1.print_release_info();
+    // testing change request file io
+    ChangeRequest cr;
+    cr.set_id(1);
+    cr.set_customer_name("Qiraa");
+    cr.set_reported_release("1.0"); 
+    cr.set_request_date("2024-07-01");
 
+    cout << "Reading from file" << endl;
 
-    // write release to file
-    write_release(release);
-    write_release(release1);
+    ChangeRequest cr2;
+    write_change_request(cr);
+    read_change_request(0, cr2);
 
-    // read release from file
-    Release release2, release3;
-    read_release(0, release2);
-    read_release(1, release3);
+    cr2.print_change_request_info();
 
-    // print release info
-    cout << "\nReading from file: " << endl;
-    release2.print_release_info();
-    release3.print_release_info();
-    
-    // delete release from file
-    if(delete_release(0)) cout << "Release 0 deleted" << endl;
-    if(delete_release(0)) cout << "Release 1 deleted" << endl;
+    // delete change request
+    if(delete_change_request(0)) cout << "Deleted change request" << endl;
 
-    init_customer();
-
-    Customer new_customer = Customer();
-    new_customer.set_name("John Doe");
-    new_customer.set_phone("12345678910");
-    new_customer.set_email("johndoe@abc.ca");
-    new_customer.set_department("sales");
-
-    new_customer.print_customer_info();
-
-    new_customer ;
-
-
-
-
+    shut_down();
     return 0;
 }
 

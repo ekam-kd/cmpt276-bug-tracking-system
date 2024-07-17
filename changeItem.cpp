@@ -146,53 +146,34 @@ bool read_change_item(int index, ChangeItem &changeItem) {
 }
 
 // delete change item from file
-// DOES NOT WORK
 bool delete_change_item(int index) {
-    //open file for reading/writing in binary mode
-    changeItemFile.open(CHANGE_ITEM_FILE, ios::in | ios::out | ios::binary);
-    
-    //if file opened successfully
-    if(changeItemFile.is_open()) {
-        //seek to the correct position in the file
-        changeItemFile.seekg(0, ios::end);
-        streampos fileSize = changeItemFile.tellg();
-        int numChangeItems = fileSize / sizeof(ChangeItem);
-        
-        //if index is out of bounds, return false
-        if(index < 0 || index >= numChangeItems) {
-            return false;
+   fstream tempFile("temp_changeitem.dat", ios::out | ios::binary);
+    // assume file is open
+    // seek to the correct position in the file
+    changeItemFile.seekg(0, ios::beg);
+    // read the change item from the file
+    ChangeItem tempChangeItem;
+    int i = 0;
+    while(changeItemFile.read((char*)&tempChangeItem, sizeof(ChangeItem))) {
+        if(i != index) {
+            tempFile.write((char*)&tempChangeItem, sizeof(ChangeItem));
         }
-        
-        //calculate the number of bytes to shift
-        int shiftBytes = (numChangeItems - index - 1) * sizeof(ChangeItem);
-        
-        //create a buffer to hold the remaining change items
-        char* buffer = new char[shiftBytes];
-        
-        //seek to the position of the change item to delete
-        changeItemFile.seekg((index + 1) * sizeof(ChangeItem), ios::beg);
-        
-        //read the remaining change items into the buffer
-        changeItemFile.read(buffer, shiftBytes);
-        
-        //seek back to the position of the change item to delete
-        changeItemFile.seekp(index * sizeof(ChangeItem), ios::beg);
-        
-        //write the remaining change items back to the file
-        changeItemFile.write(buffer, shiftBytes);
-        
-        //truncate the file to remove the last change item
-        // changeItemFile.truncate(fileSize - sizeof(ChangeItem));
-        
-        //delete the buffer
-        delete[] buffer;
-        
-        //close the file
-        changeItemFile.close();
-        
-        //return true
-        return true;
-    } else { //otherwise return false
-        return false;
+        i++;
     }
+    changeItemFile.close();
+    changeItemFile.open(CHANGE_ITEM_FILE, ios::out | ios::trunc);
+    changeItemFile.close();
+    changeItemFile.open(CHANGE_ITEM_FILE, ios::in | ios::out | ios::binary);
+
+    tempFile.seekg(0, ios::beg);
+    while(tempFile.read((char*)&tempChangeItem, sizeof(ChangeItem))) {
+        changeItemFile.write((char*)&tempChangeItem, sizeof(ChangeItem));
+    }
+
+    tempFile.close();
+    tempFile.open("temp_changeitem.dat", ios::out | ios::trunc);
+    tempFile.close();
+
+    return true;
+
 }
