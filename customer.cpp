@@ -5,10 +5,9 @@
  * Version 1.1
  * Purpose: Class implementation for Customer class
  */
-#include <iostream>
-#include <string>
 #include "customer.hpp"
 #include "definitions.hpp"
+#include <fstream>
 using namespace std;
 // public methods
 //  constructor
@@ -154,8 +153,10 @@ bool check_customer(char *name)
 bool write_customer(Customer *customer)
 {
     // assume file is open
-    // write release to file
-    customerFile.write((char *)&customer, sizeof(Customer));
+    // seek to the end of the file
+    customerFile.seekp(0, ios::end);
+    // write the change item to the file
+    customerFile.write((char*)&customer, sizeof(Customer));
     return true;
 }
 
@@ -164,8 +165,8 @@ bool read_customer(int index, Customer &customer)
     // assume file is open
     // seek to the correct position in the file
     customerFile.seekg(index * sizeof(Customer), ios::beg);
-    // read release from file
-    customerFile.read((char *)&customer, sizeof(Customer));
+    // read the change item from the file
+    customerFile.read((char*)&customer, sizeof(Customer));
     return true;
 }
 

@@ -50,6 +50,21 @@ int main(){
     if(delete_release(0)) cout << "Release 0 deleted" << endl;
     if(delete_release(0)) cout << "Release 1 deleted" << endl;
 
+    init_customer();
+
+    Customer new_customer = Customer();
+    new_customer.set_name("John Doe");
+    new_customer.set_phone("12345678910");
+    new_customer.set_email("johndoe@abc.ca");
+    new_customer.set_department("sales");
+
+    new_customer.print_customer_info();
+
+    new_customer ;
+
+
+
+
     return 0;
 }
 
