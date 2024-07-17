@@ -3,7 +3,7 @@
  * Author: Ashley Kim
  * Created: July 2024
  * Version 1.1
- * Purpose: girl, so COMPUTER [green heart]
+ * Purpose: unit tests for customer and release classes.
  */
 
 #include <iostream>
