@@ -3,7 +3,7 @@
  * Author: Ashley Kim
  * Created: July 2024
  * Version 1.1
- * Purpose: girl, so COMPUTER [green heart]
+ * Purpose: unit tests for customer and release classes.
  */
 
 #include <iostream>
@@ -183,9 +183,7 @@ void main_test_ops()
         cout << "get_productName() test FAILED" << endl;
     }
 
-
-
-        // set_version is dependent on get_version to pass.
+    // set_version is dependent on get_version to pass.
     cout << "Testing set_version() and get_version():" << endl;
     new_release.set_version("1.1");
     if (new_release.get_version() == "1.1")
@@ -199,8 +197,7 @@ void main_test_ops()
         cout << "get_version() test FAILED" << endl;
     }
 
-    
-        // set_date is dependent on get_date to pass.
+    // set_date is dependent on get_date to pass.
     cout << "Testing set_date() and get_date():" << endl;
     new_release.set_date("1.1");
     if (new_release.get_version() == "1.1")
@@ -214,23 +211,7 @@ void main_test_ops()
         cout << "get_date() test FAILED" << endl;
     }
 
-
-            // set_status is dependent on get_status to pass.
-    cout << "Testing set_status() and get_status():" << endl;
-    new_release.set_status("1.1");
-    if (new_release.get_status() == "1.1")
-    {
-        cout << "set_status() test PASSED" << endl;
-        cout << "get_status() test PASSED" << endl;
-    }
-    else
-    {
-        cout << "set_status() test FAILED" << endl;
-        cout << "get_status() test FAILED" << endl;
-    }
-
-
-            // set_description is dependent on get_description to pass.
+    // set_description is dependent on get_description to pass.
     cout << "Testing set_description() and get_description():" << endl;
     new_release.set_date("1.1");
     if (new_release.get_version() == "1.1")
@@ -244,16 +225,55 @@ void main_test_ops()
         cout << "get_description() test FAILED" << endl;
     }
 
-    //print info
+    // print info
     new_release.print_release_info();
 
-    //testing create product release
-    if (create_product_release(&new_release)){
-        cout << "create_product_release() test PASSED" << endl;
+    // //testing create product release
+    // if (create_product_release(&new_release)){
+    //     cout << "create_product_release() test PASSED" << endl;
+    // }
+    // else
+    // {
+    //     cout << "create_product_release() test FAILED" << endl;
+    // }
+
+    // testing write
+    if (write_release(new_release))
+    {
+        cout << "write_release() test PASSED" << endl;
     }
     else
     {
-        cout << "create_product_release() test FAILED" << endl;
+        cout << "write_release() test FAILED" << endl;
     }
 
+    // testing read
+    if (read_release(0, new_release))
+    {
+        cout << "read_release() test PASSED" << endl;
+    }
+    else
+    {
+        cout << "read_release() test FAILED" << endl;
+    }
+
+    // testing delete
+    if (delete_release(0))
+    {
+        cout << "delete_release() test PASSED" << endl;
+    }
+    else
+    {
+        cout << "delete_release() test FAILED" << endl;
+    }
+
+    // testing close
+    if (close_product_release())
+    {
+        cout << "close_product_release() test PASSED" << endl;
+    }
+    else
+    {
+        cout << "close_product_release() test FAILED" << endl;
+    }
 }

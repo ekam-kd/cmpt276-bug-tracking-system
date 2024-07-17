@@ -133,7 +133,7 @@ int mainForUnitTests(){
 
     // test create_customer
     cout << "Testing create_customer" << endl;
-    if(create_customer(new Customer())){
+    if(create_customer()){
         cout << "create_customer test passed" << endl;
     } else{
         cout << "create_customer test failed" << endl;
