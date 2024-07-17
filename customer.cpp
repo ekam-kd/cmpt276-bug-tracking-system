@@ -128,24 +128,20 @@ void Customer::register_customer()
 // Check if customer exists in database file
 bool check_customer(char *name)
 {
-    ifstream infile("customer_db.txt");
-    if (!infile)
+    if (!customerFile)
     {
         cerr << "Error opening customer database file!" << endl;
         return false;
     }
 
     string line;
-    while (getline(infile, line))
+    while (getline(customerFile, line))
     {
         if (line.find(name) != string::npos)
         {
-            infile.close();
             return true;
         }
     }
-
-    infile.close();
     return false;
 }
 
