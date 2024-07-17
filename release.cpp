@@ -163,3 +163,8 @@ bool delete_release(int index) {
 
     return true;
 }
+
+// create a new product release and add to file
+bool create_product_release(Release* release){
+    //TO DO *********************************************************************************************************************************
+}
