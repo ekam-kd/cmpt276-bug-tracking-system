@@ -1,5 +1,4 @@
 #include "changeRequest.hpp"
-#include <fstream>
 
 //global filestream for change request file so it stays open for program duration
 fstream changeRequestFile;
@@ -16,6 +15,14 @@ bool init_change_request() {
     }
 
 }
+
+bool make_change_request(ChangeRequest* changeRequest) {
+    //write change request to file
+    write_change_request(*changeRequest);
+    return true;
+}
+
+
 
 bool close_change_request() {
     if (changeRequestFile.is_open()) {
@@ -85,6 +92,27 @@ void ChangeRequest::print_change_request_info() {
     cout << "Customer Name: " << customer_name << endl;
     cout << "Reported Release: " << reported_release << endl;
     cout << "Request Date: " << request_date << endl;
+}
+
+// register new change request
+// need to test this ish
+void ChangeRequest::register_change_request() {
+    //prompt user for change request information
+    cout << "Enter Customer Name: ";
+    string customer_name;
+    cin.ignore();
+    getline(cin, customer_name);
+    set_customer_name(customer_name);
+
+    cout << "Enter Reported Release: ";
+    string reported_release;
+    cin >> reported_release;
+    set_reported_release(reported_release);
+
+    cout << "Enter Request Date (YYYY-MM-DD): ";
+    string request_date;
+    cin >> request_date;
+    set_request_date(request_date);
 }
 
 // file operations

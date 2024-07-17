@@ -1,7 +1,4 @@
 #include "changeItem.hpp"
-#include <fstream>
-#include <cstring>
-
 //global filestream for change item file so it stays open for program duration
 fstream changeItemFile;
 
