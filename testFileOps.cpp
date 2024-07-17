@@ -70,7 +70,7 @@ void main_test_ops()
     if (new_customer.get_phone() == "12345678910")
     {
         cout << "set_phone() test PASSED" << endl;
-        cout << "set_phone() test PASSED" << endl;
+        cout << "get_phone() test PASSED" << endl;
     }
     else
     {
@@ -84,7 +84,7 @@ void main_test_ops()
     if (new_customer.get_department() == "sales")
     {
         cout << "set_department() test PASSED" << endl;
-        cout << "set_department() test PASSED" << endl;
+        cout << "get_department() test PASSED" << endl;
     }
     else
     {
@@ -96,21 +96,27 @@ void main_test_ops()
     new_customer.print_customer_info();
 
     // register new customer
-    //register_customer();
+    // register_customer();
 
     // helper functions
 
     // add customer to file
-    if(write_customer(new_customer)){
-        cout <<"write_customer() test PASSED" << endl;
-    }else{
+    if (write_customer(new_customer))
+    {
+        cout << "write_customer() test PASSED" << endl;
+    }
+    else
+    {
         cout << "write_customer() test FAILED" << endl;
     }
     // read customer from file
-    if(read_customer(1, new_customer)){
-        cout << "read_customer() test PASSED" <<endl;
-    }else{
-        cout << "read_customer() test FAILED" <<endl;
+    if (read_customer(1, new_customer))
+    {
+        cout << "read_customer() test PASSED" << endl;
+    }
+    else
+    {
+        cout << "read_customer() test FAILED" << endl;
     }
     // check if customer exists in database file
     if (check_customer("John Doe"))
@@ -131,27 +137,123 @@ void main_test_ops()
         cout << "check_employee test FAILED" << endl;
     }
 
-
-    if(delete_customer(1)){
+    if (delete_customer(1))
+    {
         cout << "delete_customer() test PASSED" << endl;
     }
-else{
-    cout << "delete_customer() test FAILED" << endl;
-}
-    if(close_customer()){
+    else
+    {
+        cout << "delete_customer() test FAILED" << endl;
+    }
+    if (close_customer())
+    {
         cout << "close_customer() test PASSED" << endl;
     }
-else{
-    cout << "close_customer() test FAILED" << endl;
-}
+    else
+    {
+        cout << "close_customer() test FAILED" << endl;
+    }
+
+    cout << "----------UNIT TEST 2----------" << endl;
+
+    init_release();
+    Release new_release = Release();
+
+    cout << "Testing init_release()" << endl;
+    if (init_release())
+    {
+        cout << "init_release() test PASSED" << endl;
+    }
+    else
+    {
+        cout << "init_release() test FAILED" << endl;
+    }
+
+    // set_productName is dependent on get_productName to pass.
+    cout << "Testing set_productName() and get_productName():" << endl;
+    new_release.set_productName("acrobat");
+    if (new_release.get_productName() == "acrobat")
+    {
+        cout << "set_productName() test PASSED" << endl;
+        cout << "get_productName()) test PASSED" << endl;
+    }
+    else
+    {
+        cout << "set_productName() test FAILED" << endl;
+        cout << "get_productName() test FAILED" << endl;
+    }
 
 
 
+        // set_version is dependent on get_version to pass.
+    cout << "Testing set_version() and get_version():" << endl;
+    new_release.set_version("1.1");
+    if (new_release.get_version() == "1.1")
+    {
+        cout << "set_version() test PASSED" << endl;
+        cout << "get_version()) test PASSED" << endl;
+    }
+    else
+    {
+        cout << "set_version() test FAILED" << endl;
+        cout << "get_version() test FAILED" << endl;
+    }
 
-
-
-cout << "----------UNIT TEST 2----------"<< endl;
-
-    Product new_product = Product();
     
+        // set_date is dependent on get_date to pass.
+    cout << "Testing set_date() and get_date():" << endl;
+    new_release.set_date("1.1");
+    if (new_release.get_version() == "1.1")
+    {
+        cout << "set_date() test PASSED" << endl;
+        cout << "get_date() test PASSED" << endl;
+    }
+    else
+    {
+        cout << "set_date() test FAILED" << endl;
+        cout << "get_date() test FAILED" << endl;
+    }
+
+
+            // set_status is dependent on get_status to pass.
+    cout << "Testing set_status() and get_status():" << endl;
+    new_release.set_status("1.1");
+    if (new_release.get_status() == "1.1")
+    {
+        cout << "set_status() test PASSED" << endl;
+        cout << "get_status() test PASSED" << endl;
+    }
+    else
+    {
+        cout << "set_status() test FAILED" << endl;
+        cout << "get_status() test FAILED" << endl;
+    }
+
+
+            // set_description is dependent on get_description to pass.
+    cout << "Testing set_description() and get_description():" << endl;
+    new_release.set_date("1.1");
+    if (new_release.get_version() == "1.1")
+    {
+        cout << "set_description() test PASSED" << endl;
+        cout << "get_description() test PASSED" << endl;
+    }
+    else
+    {
+        cout << "set_description() test FAILED" << endl;
+        cout << "get_description() test FAILED" << endl;
+    }
+
+    //print info
+    new_release.print_release_info();
+
+    //testing create product release
+    if (create_product_release(&new_release)){
+        cout << "create_product_release() test PASSED" << endl;
+    }
+    else
+    {
+        cout << "create_product_release() test FAILED" << endl;
+    }
+
 }
