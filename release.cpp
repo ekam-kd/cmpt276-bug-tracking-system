@@ -155,5 +155,7 @@ bool delete_release(int index) {
 
 // create a new product release and add to file
 bool create_product_release(Release* release){
-    //TO DO *********************************************************************************************************************************
+    // write release to file
+    write_release(*release);
+    return true;
 }

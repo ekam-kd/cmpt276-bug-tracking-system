@@ -62,15 +62,9 @@ bool create_product_release(Release* release // release to initialize
 // close release database file
 bool close_product_release();
 
-// select anticipated release
-bool select_anticipated_release();
-
-// update the anticipated release
-bool update_anticipated_release();
-
 // file operations
 bool write_release(Release &release);
 bool read_release(int index ,Release &release);
 bool delete_release(int index);
-bool truncateFile(const std::string& filePath, int numReleases);
+
 #endif
