@@ -7,7 +7,6 @@
 // */
 
 #include "helper_funcs.hpp"
-#include "product.cpp"
 using namespace std;
 
 //todo change the return type of the functions to bool

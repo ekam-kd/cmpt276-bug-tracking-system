@@ -1,7 +1,4 @@
 #include "changeItem.hpp"
-#include <fstream>
-#include <cstring>
-
 //global filestream for change item file so it stays open for program duration
 fstream changeItemFile;
 
@@ -17,6 +14,137 @@ bool init_change_item() {
     }
 
 }
+
+bool make_change_item(ChangeItem* changeItem) {
+    //write change item to file
+    write_change_item(*changeItem);
+    return true;
+}
+
+// need to test this function
+bool get_change_item(char* productName){
+    ChangeItem changeItem;
+    int i = 0;
+    bool found = false;
+    while(!found){
+        if(!read_change_item(i, changeItem)){
+            break;
+        }
+        char* name = changeItem.get_productName();
+        if(strcmp(name, productName) == 0){
+            found = true;
+            changeItem.print_change_item_info();
+            return true;
+        } else {
+            i++;
+        }
+    }
+    return false;
+}
+
+// need to test this function
+bool see_change_item(long int ch_id){
+    ChangeItem changeItem;
+    int i = 0;
+    bool found = false;
+    while(!found){
+        if(!read_change_item(i, changeItem)){
+            break;
+        }
+        long int id = changeItem.get_id();
+        if(id == ch_id){
+            found = true;
+            changeItem.print_change_item_info();
+            return true;
+        } else {
+            i++;
+        }
+    }
+    return false;
+}
+
+// need to test this function
+bool modify_change_item(long int ch_id){
+    // find index of change item
+    ChangeItem changeItem;
+    int i = 0;
+    bool found = false;
+    while(!found){
+        if(!read_change_item(i, changeItem)){
+            return false;
+        }
+        long int id = changeItem.get_id();
+        if(id == ch_id){
+            found = true;
+            break;
+        } else {
+            i++;
+        }
+    }
+    
+    // print change item info
+    changeItem.print_change_item_info();
+    // prompt user for changes
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    cout << "Enter new product name: ";
+    string productName;
+    cin >> productName;
+    changeItem.set_productName(productName);
+    cout << "Enter new product release ID: ";
+    string productReleaseID;
+    cin >> productReleaseID;
+    changeItem.set_productReleaseID(productReleaseID);
+    cout << "Enter new description: ";
+    string description;
+    cin >> description;
+    changeItem.set_description(description);
+    cout << "Enter new status: ";
+    string status;
+    cin >> status;
+    changeItem.set_status(status);
+    cout << "Enter new priority: ";
+    int priority;
+    cin >> priority;
+    changeItem.set_priority(priority);
+    cout << "Enter new # of requests: ";
+    int requests;
+    cin >> requests;
+    changeItem.set_requests(requests);
+    // modify change item by creating new change item and adding to file
+    make_change_item(&changeItem);
+
+    // delete change item
+    delete_change_item(i);
+    return true;
+}
+
+// need to test this function
+bool see_all_change_items(char* productName){
+    ChangeItem changeItem;
+    int i = 0;
+    while(1){
+        if(!read_change_item(i, changeItem)){
+            break;
+        }
+        char* name = changeItem.get_productName();
+        if(strcmp(name, productName) == 0){
+            changeItem.print_change_item_info();
+            i++;
+        } else {
+            i++;
+        }
+    }
+    return true;
+}
+
+// todo: implement this function
+bool create_report(long int ch_id){
+    // do smth idk
+    return true;
+    //it will need to open the changeRequest file and traverse it (linear search) and for every changeId that
+    //matches, we add the associated customerName in a .txt file
+}
+
 
 //close change item file
 bool close_change_item() {
@@ -138,6 +266,12 @@ bool write_change_item(ChangeItem &changeItem) {
 // read change item from file
 bool read_change_item(int index, ChangeItem &changeItem) {
     // assume file is open
+    // make sure index is valid
+    changeItemFile.seekg(0, ios::end);
+    int numItems = changeItemFile.tellg() / sizeof(ChangeItem);
+    if(index >= numItems || index < 0) {
+        return false;
+    }
     // seek to the correct position in the file
     changeItemFile.seekg(index * sizeof(ChangeItem), ios::beg);
     // read the change item from the file
@@ -146,53 +280,34 @@ bool read_change_item(int index, ChangeItem &changeItem) {
 }
 
 // delete change item from file
-// DOES NOT WORK
 bool delete_change_item(int index) {
-    //open file for reading/writing in binary mode
-    changeItemFile.open(CHANGE_ITEM_FILE, ios::in | ios::out | ios::binary);
-    
-    //if file opened successfully
-    if(changeItemFile.is_open()) {
-        //seek to the correct position in the file
-        changeItemFile.seekg(0, ios::end);
-        streampos fileSize = changeItemFile.tellg();
-        int numChangeItems = fileSize / sizeof(ChangeItem);
-        
-        //if index is out of bounds, return false
-        if(index < 0 || index >= numChangeItems) {
-            return false;
+   fstream tempFile("temp_changeitem.dat", ios::out | ios::binary);
+    // assume file is open
+    // seek to the correct position in the file
+    changeItemFile.seekg(0, ios::beg);
+    // read the change item from the file
+    ChangeItem tempChangeItem;
+    int i = 0;
+    while(changeItemFile.read((char*)&tempChangeItem, sizeof(ChangeItem))) {
+        if(i != index) {
+            tempFile.write((char*)&tempChangeItem, sizeof(ChangeItem));
         }
-        
-        //calculate the number of bytes to shift
-        int shiftBytes = (numChangeItems - index - 1) * sizeof(ChangeItem);
-        
-        //create a buffer to hold the remaining change items
-        char* buffer = new char[shiftBytes];
-        
-        //seek to the position of the change item to delete
-        changeItemFile.seekg((index + 1) * sizeof(ChangeItem), ios::beg);
-        
-        //read the remaining change items into the buffer
-        changeItemFile.read(buffer, shiftBytes);
-        
-        //seek back to the position of the change item to delete
-        changeItemFile.seekp(index * sizeof(ChangeItem), ios::beg);
-        
-        //write the remaining change items back to the file
-        changeItemFile.write(buffer, shiftBytes);
-        
-        //truncate the file to remove the last change item
-        // changeItemFile.truncate(fileSize - sizeof(ChangeItem));
-        
-        //delete the buffer
-        delete[] buffer;
-        
-        //close the file
-        changeItemFile.close();
-        
-        //return true
-        return true;
-    } else { //otherwise return false
-        return false;
+        i++;
     }
+    changeItemFile.close();
+    changeItemFile.open(CHANGE_ITEM_FILE, ios::out | ios::trunc);
+    changeItemFile.close();
+    changeItemFile.open(CHANGE_ITEM_FILE, ios::in | ios::out | ios::binary);
+
+    tempFile.seekg(0, ios::beg);
+    while(tempFile.read((char*)&tempChangeItem, sizeof(ChangeItem))) {
+        changeItemFile.write((char*)&tempChangeItem, sizeof(ChangeItem));
+    }
+
+    tempFile.close();
+    tempFile.open("temp_changeitem.dat", ios::out | ios::trunc);
+    tempFile.close();
+
+    return true;
+
 }

@@ -128,24 +128,20 @@ void Customer::register_customer()
 // Check if customer exists in database file
 bool check_customer(char *name)
 {
-    ifstream infile("customer_db.txt");
-    if (!infile)
+    if (!customerFile)
     {
         cerr << "Error opening customer database file!" << endl;
         return false;
     }
 
     string line;
-    while (getline(infile, line))
+    while (getline(customerFile, line))
     {
         if (line.find(name) != string::npos)
         {
-            infile.close();
             return true;
         }
     }
-
-    infile.close();
     return false;
 }
 
@@ -173,24 +169,20 @@ bool read_customer(int index, Customer &customer)
 // Check if employee exists
 bool check_employee(const char *name)
 {
-    ifstream infile(CUSTOMER_FILE, ios::binary);
-    if (!infile)
+    if (!customerFile)
     {
         cerr << "Error opening customer database file!" << endl;
         return false;
     }
 
     Customer customer;
-    while (infile.read(reinterpret_cast<char *>(&customer), sizeof(Customer)))
+    while (customerFile.read(reinterpret_cast<char *>(&customer), sizeof(Customer)))
     {
         if (strcmp(customer.get_name(), name) == 0)
         {
-            infile.close();
             return true;
         }
     }
-
-    infile.close();
     return false;
 }
 

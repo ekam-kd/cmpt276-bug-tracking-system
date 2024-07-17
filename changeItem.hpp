@@ -14,6 +14,8 @@
 #include <unistd.h>
 #include <ios>
 #include <limits>
+#include <fstream>
+#include <cstring>
 #include "definitions.hpp"
 using namespace std;
 

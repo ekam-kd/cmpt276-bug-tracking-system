@@ -13,91 +13,27 @@ using namespace std;
 
 // main for testing:
 int main(){
-    // init rel
-    init_release();
-    // testing release class
-    Release release, release1, blank;
-    release.set_productName("Product 1");
-    release.set_version("1.0");
-    release.set_description("This is a test product");
-    release.set_date("01/01/2021");
-    release.set_status("Active");
-    release.print_release_info();
+    start_up();
 
-    release1.set_productName("Product 2");
-    release1.set_version("2.0");
-    release1.set_description("This is a test product");
-    release1.set_date("01/01/2021");
-    release1.set_status("Inactive");
-    release1.print_release_info();
+    // testing change request file io
+    ChangeRequest cr;
+    cr.set_id(1);
+    cr.set_customer_name("Qiraa");
+    cr.set_reported_release("1.0"); 
+    cr.set_request_date("2024-07-01");
 
+    cout << "Reading from file" << endl;
 
-    // write release to file
-    write_release(release);
-    write_release(release1);
+    ChangeRequest cr2;
+    write_change_request(cr);
+    read_change_request(0, cr2);
 
-    // read release from file
-    Release release2, release3;
-    read_release(0, release2);
-    read_release(1, release3);
+    cr2.print_change_request_info();
 
-    // print release info
-    cout << "\nReading from file: " << endl;
-    release2.print_release_info();
-    release3.print_release_info();
-    
-    // delete release from file
-    if(delete_release(0)) cout << "Release 0 deleted" << endl;
-    if(delete_release(0)) cout << "Release 1 deleted" << endl;
+    // delete change request
+    if(delete_change_request(0)) cout << "Deleted change request" << endl;
 
-    init_customer();
-
-    Customer cust1 = Customer();
-    Customer cust2 = Customer();
-    Customer cust3 = Customer();
-
-    cust1.set_name("John Doe");
-    cust1.set_phone("12345678910");
-    cust1.set_email("johndoe@abc.ca");
-    cust1.set_department("sales");
-    cust1.print_customer_info();
-
-
-    cust2.set_name("Jane Smith");
-    cust2.set_phone("9999999999");
-    cust2.set_email("janesmith@abc.ca");
-    cust2.set_department("hr");
-
-    cust3.set_name("Trac Pham");
-    cust3.set_phone("7777777777");
-    cust3.set_email("tracpham@abc.ca");
-    cust3.set_department("tracbucks");
-
-    write_customer(cust1);
-    write_customer(cust2);
-    write_customer(cust3);
-    cout <<  "reading customer from file..." << endl;
-    if (read_customer(1, cust1)){
-        cout << "read customer 1 successfully!" << endl;
-    }
-    if (read_customer(2, cust2)){
-        cout << "read customer 2 successfully!" << endl;
-    }
-    if (read_customer(3, cust3)){
-        cout << "read customer 3 successfully!" << endl;
-    }
-
-    bool deleted = delete_customer(3);
-
-    if (deleted == true){
-        cout <<"deleted succesfully" <<endl;
-    }
-
-    cust1 ;
-
-
-
-
+    shut_down();
     return 0;
 }
 

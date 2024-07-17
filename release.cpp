@@ -146,9 +146,9 @@ bool delete_release(int index) {
 
     // Clear the file (truncate to 0 and seek to the beginning)
     releaseFile.close();
-    releaseFile.open(RELEASE_FILE, std::ios::out | std::ios::trunc);
+    releaseFile.open(RELEASE_FILE, ios::out | ios::trunc);
     releaseFile.close();
-    releaseFile.open(RELEASE_FILE, std::ios::in | std::ios::out | std::ios::binary);
+    releaseFile.open(RELEASE_FILE, ios::in | ios::out | ios::binary);
 
     // Copy the temp file back to the original file
     tempFile.seekg(0, std::ios::beg);
