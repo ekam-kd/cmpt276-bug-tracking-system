@@ -2,7 +2,7 @@
  * File:   helper_funcs.hpp
  * Author: Qiraa Qadri
  * Created: June 2024
- * Version 1.0
+ * Version 1
  * Purpose: additional functions for the Bug Tracking System control flow
  *         to be used in main.cpp for readability and modularity
 */

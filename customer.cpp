@@ -2,7 +2,7 @@
  * File:   customer.cpp
  * Authors: Ashley Kim, Ekam Dhanoa
  * Created: July 2024
- * Version 1.1
+ * Version 1
  * Purpose: Class implementation for Customer class
  */
 #include "customer.hpp"

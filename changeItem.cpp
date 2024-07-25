@@ -2,7 +2,7 @@
  * File: changeItem.cpp
  * Author: Qiraa , Ekam Dhanoa
  * Created: July 2024
- * Version 1.1
+ * Version 1
  * Purpose: implementation of the Change Item class
 */
 #include "changeItem.hpp"

@@ -2,7 +2,7 @@
  * File: changeRequest.cpp
  * Author: Qiraa Qadri, Ekam Dhanoa
  * Created: July 2024
- * Version 1.1
+ * Version 1
  * Purpose: Implementation for Change Item class
 */
 #include "changeRequest.hpp"

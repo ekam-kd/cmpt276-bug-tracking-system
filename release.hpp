@@ -2,7 +2,7 @@
  * File:   release.hpp
  * Author: Qiraa Qadri
  * Created: Julyy 2024
- * Version 1.0
+ * Version 2
  * Purpose: Class definition for product release class
 */
 

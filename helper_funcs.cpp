@@ -2,6 +2,7 @@
 //  * File:   helper_funcs.cpp
 //  * Author: Qiraa Qadri
 //  * Created: June 2024
+//  * Version: 2
 //  * Purpose: additional functions for the Bug Tracking System control flow
 //  *        to be used in main.cpp for readability and modularity
 // */

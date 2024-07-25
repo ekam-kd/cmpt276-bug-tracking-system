@@ -2,7 +2,7 @@
  * File:   customer.hpp
  * Author: Qiraa Qadri
  * Created: July 2024
- * Version 1.0
+ * Version 2
  * Purpose: Class definition for Customer class
  */
 

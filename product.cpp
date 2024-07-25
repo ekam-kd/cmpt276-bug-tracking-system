@@ -2,7 +2,7 @@
  * File:   product.cpp
  * Author: Ashley Kim, Ekam Dhanoa
  * Created: July 2024
- * Version 1.1
+ * Version 1
  * Purpose: implementation of the Product class
  */
 

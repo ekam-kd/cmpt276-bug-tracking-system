@@ -2,7 +2,7 @@
  * File:   definitions.hpp
  * Author: Qiraa Qadri, Ekam Dhanoa
  * Created: July 2024
- * Version 1.1
+ * Version 2
  * Purpose: definitions and constants for use in other modules
 */
 
