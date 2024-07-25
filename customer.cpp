@@ -1,6 +1,6 @@
 /*
  * File:   customer.cpp
- * Author: Ashley Kim
+ * Authors: Ashley Kim, Ekam Dhanoa
  * Created: July 2024
  * Version 1.1
  * Purpose: Class implementation for Customer class

@@ -1,6 +1,6 @@
 /* 
  * File:   release.hpp
- * Author: Qiraa Qadri
+ * Author: Qiraa Qadri, Ekam Dhanoa
  * Created: July 2024
  * Version 1.1
  * Purpose: Class definition for Release class
