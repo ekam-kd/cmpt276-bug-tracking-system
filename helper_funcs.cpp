@@ -15,7 +15,7 @@ using namespace std;
 // register new customer
 bool register_customer(){
     system("clear");
-    string cus_fname, cus_lname, cus_email, emp_department, phone_number;
+    string cus_name, cus_email, emp_department, phone_number;
     bool employee = false;
     // long int phone_number;
 
@@ -33,18 +33,17 @@ bool register_customer(){
         sleep(2);
         return true;
     }
-    cout << "\n\nAre you an employee of AAA Inc.? (Y/N): ";
+    cout << "\n\nAre you an employee of the company? (Y/N): ";
     string emp;
     cin >> emp;
     if(emp[0] == 'Y' || emp[0] == 'y'){
         employee = true;
     }
     
-    cout << "\n\nPlease Enter Your Name:" << endl;
-    cout << "\nFirst Name: ";
-    cin >> cus_fname;
-    cout << "Last Name: ";
-    cin >> cus_lname;
+    cout << "\n\nPlease Enter Your Full Name:" << endl;
+    cout << "\nName: ";
+    getline(cin >> ws,cus_name);
+    cout << "\n\nHello: " << cus_name << "!\n";
     cout << "\nPlease enter your email address" << endl;
     cout << "Email: ";
     cin >> cus_email;
@@ -55,9 +54,11 @@ bool register_customer(){
     if(employee){
         cout << "\nPlease enter your department: ";
         cin >> emp_department;
-    } 
+    } else {
+        emp_department = "";
+    }
     cout << "\n\nPlease confirm the following information:" << endl;
-    cout << "\n\nName: " << cus_fname << " " << cus_lname << endl;
+    cout << "\n\nName: " << cus_name << endl;
     cout << "Email: " << cus_email << endl;
     cout << "Phone: " << phone_number << endl;
     if(employee){
@@ -67,6 +68,7 @@ bool register_customer(){
     char confirm;
     cin >> confirm;
     if(confirm == 'Y' || confirm == 'y'){
+        check_customer(cus_name);
         cout << "\nThank you for registering with us!" << endl;
         cout << "Please enter (0) to return to Main Menu: ";
         string return_main;
@@ -77,6 +79,13 @@ bool register_customer(){
         }
     } else{
         cout << "\nUnable to register new Customer, please try again" << endl;
+        cout << "Please enter (0) to return to Main Menu: ";
+        string return_main;
+        cin >> return_main;
+        if(return_main[0] == '0'){
+            sleep(1);
+            return true;
+        }
     }
     return true;
 }

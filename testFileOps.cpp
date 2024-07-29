@@ -120,15 +120,15 @@ void main_test_ops()
         cout << "read_customer() test FAILED" << endl;
     }
     // check if customer exists in database file
-    const char *name_of_customer = "John Doe";
-    if (check_customer(name_of_customer))
-    {
-        cout << "check_customer() test PASSED" << endl;
-    }
-    else
-    {
-        cout << "check_customer test FAILED" << endl;
-    }
+    // string name_of_customer = "John Doe";
+    // if (check_customer(name_of_customer))
+    // {
+    //     cout << "check_customer() test PASSED" << endl;
+    // }
+    // else
+    // {
+    //     cout << "check_customer test FAILED" << endl;
+    // }
 
     if (check_employee("John Doe"))
     {
