@@ -21,36 +21,37 @@ using namespace std;
 class Customer
 {
 private:
-    char name[MAX_NAME];
-    char email[MAX_EMAIL];
-    char phone[MAX_PHONE];
-    char department[MAX_NAME];
+    string name;
+    string email;
+    string phone;
+    string department;
 
 public:
     // constructor
-    Customer();
+    Customer(const string name, const string email, const string phone_number, const string department);
     // destructor
     ~Customer();
     // get name
-    char *get_name();
+    string get_name();
     // get email
-    char *get_email();
+    string get_email();
     // get phone
-    char *get_phone();
+    string get_phone();
     // get department
-    char *get_department();
+    string get_department();
     // set name
-    void set_name(const char *new_name);
+    void set_name(const string new_name);
     // set email
-    void set_email(const char *new_email);
+    void set_email(const string new_email);
     // set phone
-    void set_phone(const char *new_phone);
+    void set_phone(const string new_phone);
     // set department
-    void set_department(const char *new_department);
+    void set_department(const string new_department);
     // print customer info
     void print_customer_info();
     // register new customer
-    void register_customer();
+    //void register_customer();
+    
 };
 
 // helper functions
@@ -62,22 +63,23 @@ bool init_customer();
 bool check_customer(const string name // name of the customer
 );
 
-bool check_employee(const char *name);
+bool check_employee(const string name);
 
-// add customer to file
-bool write_customer(Customer &customer // customer to initialize
-);
+// // add customer to file
+// bool write_customer(Customer &customer // customer to initialize
+// );
+void add_customer(const string name, const string email, const string phone_num, const string department);
 
 // read customer from file
 bool read_customer(int index, Customer &customer);
 
-bool delete_customer(int index);
+//bool delete_customer(int index);
 
 // closes customer database file
 bool close_customer();
 
 // select customer
-Customer select_customer(const char *name);
+Customer select_customer(const string name);
 
         
 

@@ -28,18 +28,22 @@ bool init_customer()
         return true;
     }
     else
-    { // otherwise return false
+    { // otherwise try opening again
+        customerFile.clear();
+        customerFile.open(CUSTOMER_FILE, ios::out | ios::binary);
+        if (customerFile.is_open()) {
+            customerFile.close();
+            customerFile.open(CUSTOMER_FILE, ios::in | ios::out | ios::binary);
+            return true;
+        }
+        //and if it doesn't work, return false
         return false;
     }
 }
 //-----------------------------------------------------------------------------
 // Constructor
-Customer::Customer()
-{
-    strcpy(name, "NOT_SET");
-    strcpy(email, "NOT_SET");
-    strcpy(phone, "NOT_SET");
-    strcpy(department, "NOT_SET");
+Customer::Customer(const string name, const string email, const string phone_num, const string department)
+    : name(name), email(email), phone(phone_num), department(department) {
 }
 //-----------------------------------------------------------------------------
 // Destructor
@@ -49,48 +53,52 @@ Customer::~Customer()
 }
 //-----------------------------------------------------------------------------
 // Getters
-char *Customer::get_name()
+string Customer::get_name()
 {
     return name;
 }
 
-char *Customer::get_email()
+string Customer::get_email()
 {
     return email;
 }
 
-char *Customer::get_phone()
+string Customer::get_phone()
 {
     return phone;
 }
 
-char *Customer::get_department()
+string Customer::get_department()
 {
     return department;
 }
 //-----------------------------------------------------------------------------
 // Setters
-void Customer::set_name(const char *new_name)
+void Customer::set_name(const string new_name)
 {
-    strncpy(name, new_name, MAX_NAME - 1);
+    name = new_name;
+    //strncpy(name, new_name, MAX_NAME - 1);
     name[MAX_NAME - 1] = '\0'; // Ensure null-terminated
 }
 
-void Customer::set_email(const char *new_email)
+void Customer::set_email(const string new_email)
 {
-    strncpy(email, new_email, MAX_EMAIL - 1);
+    email = new_email;
+    //strncpy(email, new_email, MAX_EMAIL - 1);
     email[MAX_EMAIL - 1] = '\0'; // Ensure null-terminated
 }
 
-void Customer::set_phone(const char *new_phone)
+void Customer::set_phone(const string new_phone)
 {
-    strncpy(phone, new_phone, MAX_PHONE - 1);
+    phone = new_phone;
+    //strncpy(phone, new_phone, MAX_PHONE - 1);
     phone[MAX_PHONE - 1] = '\0'; // Ensure null-terminated
 }
 
-void Customer::set_department(const char *new_department)
+void Customer::set_department(const string new_department)
 {
-    strncpy(department, new_department, MAX_NAME - 1);
+    department = new_department;
+    //strncpy(department, new_department, MAX_NAME - 1);
     department[MAX_NAME - 1] = '\0'; // Ensure null-terminated
 }
 //-----------------------------------------------------------------------------
@@ -104,79 +112,97 @@ void Customer::print_customer_info()
 }
 //-----------------------------------------------------------------------------
 // Register new customer
-void Customer::register_customer()
+void add_customer(const string name, const string email, const string phone_num, const string department)
 {
-    char input[MAX_NAME];
+    Customer new_customer(name, email, phone_num, department);
+    customerFile.seekp(0, ios::end);
+    customerFile.write(reinterpret_cast<char*>(&new_customer), sizeof(Customer));
 
-    cout << "Enter customer name: ";
-    cin.getline(input, MAX_NAME);
-    set_name(input);
+    if (customerFile.fail()) {
+        cerr << "Error writing to the customer file." << endl;
+    }
+    // customerFile.write((char *)&name, MAX_NAME);
+    // customerFile.seekp(0, ios::end);
+    // customerFile.write((char *)&email, MAX_EMAIL);
+    // customerFile.seekp(0, ios::end);
+    // customerFile.write((char *)&phone_num, MAX_PHONE);
+    // customerFile.seekp(0, ios::end);
+    // customerFile.write((char *)&department, MAX_DEPARTMENT);
 
-    cout << "Enter customer email: ";
-    cin.getline(input, MAX_EMAIL);
-    set_email(input);
-
-    cout << "Enter customer phone: ";
-    cin.getline(input, MAX_PHONE);
-    set_phone(input);
-
-    cout << "Enter customer department: ";
-    cin.getline(input, MAX_NAME);
-    set_department(input);
-    write_customer(*this);
+    //new_customer.set_name(name);
+    //write_customer(new_customer);
 }
 //-----------------------------------------------------------------------------
 // Check if customer exists in database file
 bool check_customer(const string name)
 {
-    if (!customerFile)
-    {
-        //cerr << "Error opening customer database file!" << endl;
-        return false;
-    }
-    
-    string line;
-    while (getline(customerFile, line))
-    {
-        //if the name already exists, the function returns false
-        if (line == name) {
-            return false;
-        }
-    }
-    //otherwise the function returns true
-    return true;
-}
-//-----------------------------------------------------------------------------
-// Check if employee exists
-bool check_employee(const char *name)
-{
-    if (!customerFile)
+    if (!customerFile.is_open())
     {
         cerr << "Error opening customer database file!" << endl;
         return false;
     }
 
-    Customer customer;
-    while (customerFile.read(reinterpret_cast<char *>(&customer), sizeof(Customer)))
-    {
-        if (strcmp(customer.get_name(), name) == 0)
-        {
+    Customer temp_customer("", "", "", "");
+
+    // Move the file pointer to the beginning of the file
+    customerFile.seekg(0, ios::beg);
+
+    // Read through the file
+    while (customerFile.read(reinterpret_cast<char*>(&temp_customer), sizeof(Customer))) {
+        if (temp_customer.get_name() == name) {
+            cout << "Oh no! A customer with this name already exists. Please try again with a different name" << endl;
             return true;
         }
     }
+
+    // Reset the file pointer for future operations
+    customerFile.clear(); // Clear the EOF flag
+    customerFile.seekg(0, ios::beg);
     return false;
+
+    // string line;
+    // while (getline(customerFile, line))
+    // {
+    //     //if the name already exists, the function returns false
+    //     if (line == name) {
+    //         cout << "\nA customer is already registered under this name! Please try again." << endl;
+    //         return false;
+    //     }
+    // }
+    // // otherwise the function returns true
+    // return true;
 }
 //-----------------------------------------------------------------------------
+// Check if employee exists
+// bool check_employee(const string name)
+// {
+//     if (!customerFile)
+//     {
+//         cerr << "Error opening customer database file!" << endl;
+//         return false;
+//     }
+
+//     Customer customer;
+//     while (customerFile.read(reinterpret_cast<string >(&customer), sizeof(Customer)))
+//     {
+//         if (strcmp(customer.get_name(), name) == 0)
+//         {
+//             return true;
+//         }
+//     }
+//     return false;
+// }
+//-----------------------------------------------------------------------------
 // Add customer to file
-bool write_customer(Customer &customer)
-{
-    // assume file is open
-    // seek to the end of the file
-    customerFile.seekp(0, ios::end);
-    // write the change item to the file
-    customerFile.write((char *)&customer, sizeof(Customer));
-    return true;
-}
+// bool write_customer(Customer &customer)
+// {
+//     // assume file is open
+//     // seek to the end of the file
+//     customerFile.seekp(0, ios::end);
+//     // write the change item to the file
+//     customerFile.write((char *)&customer, sizeof(Customer));
+//     return true;
+// }
 //-----------------------------------------------------------------------------
 bool read_customer(int index, Customer &customer)
 {
@@ -189,45 +215,45 @@ bool read_customer(int index, Customer &customer)
 }
 
 //-----------------------------------------------------------------------------
-bool delete_customer(int index)
-{
-    fstream tempFile("temp_Customer.dat", ios::out | ios::binary);
+// bool delete_customer(int index)
+// {
+//     fstream tempFile("temp_Customer.dat", ios::out | ios::binary);
 
-    // Seek to the start of the file
-    customerFile.seekg(0, std::ios::beg);
+//     // Seek to the start of the file
+//     customerFile.seekg(0, std::ios::beg);
 
-    // Read all Customers into memory except the one to be deleted
-    Customer tempCustomer;
-    int currentIndex = 0;
-    while (customerFile.read(reinterpret_cast<char *>(&tempCustomer), sizeof(Customer)))
-    {
-        if (currentIndex != index)
-        {
-            tempFile.write(reinterpret_cast<const char *>(&tempCustomer), sizeof(Customer));
-        }
-        currentIndex++;
-    }
+//     // Read all Customers into memory except the one to be deleted
+//     Customer tempCustomer;
+//     int currentIndex = 0;
+//     while (customerFile.read(reinterpret_cast<string >(&tempCustomer), sizeof(Customer)))
+//     {
+//         if (currentIndex != index)
+//         {
+//             tempFile.write(reinterpret_cast<const string >(&tempCustomer), sizeof(Customer));
+//         }
+//         currentIndex++;
+//     }
 
-    // Clear the file (truncate to 0 and seek to the beginning)
-    customerFile.close();
-    customerFile.open(CUSTOMER_FILE, std::ios::out | std::ios::trunc);
-    customerFile.close();
-    customerFile.open(CUSTOMER_FILE, std::ios::in | std::ios::out | std::ios::binary);
+//     // Clear the file (truncate to 0 and seek to the beginning)
+//     customerFile.close();
+//     customerFile.open(CUSTOMER_FILE, std::ios::out | std::ios::trunc);
+//     customerFile.close();
+//     customerFile.open(CUSTOMER_FILE, std::ios::in | std::ios::out | std::ios::binary);
 
-    // Copy the temp file back to the original file
-    tempFile.seekg(0, std::ios::beg);
-    while (tempFile.read(reinterpret_cast<char *>(&tempCustomer), sizeof(Customer)))
-    {
-        customerFile.write(reinterpret_cast<const char *>(&tempCustomer), sizeof(Customer));
-    }
+//     // Copy the temp file back to the original file
+//     tempFile.seekg(0, std::ios::beg);
+//     while (tempFile.read(reinterpret_cast<string >(&tempCustomer), sizeof(Customer)))
+//     {
+//         customerFile.write(reinterpret_cast<const string >(&tempCustomer), sizeof(Customer));
+//     }
 
-    // Close the temp file
-    tempFile.close();
-    tempFile.open("temp_Customer.dat", std::ios::out | std::ios::trunc);
-    tempFile.close();
+//     // Close the temp file
+//     tempFile.close();
+//     tempFile.open("temp_Customer.dat", std::ios::out | std::ios::trunc);
+//     tempFile.close();
 
-    return true;
-}
+//     return true;
+// }
 //-----------------------------------------------------------------------------
 // Close customer file
 bool close_customer()
@@ -239,29 +265,34 @@ bool close_customer()
     return true;
 }
 //-----------------------------------------------------------------------------
-Customer select_customer(const char *name)
+Customer select_customer(const string name)
 {
     ifstream customerFile(CUSTOMER_FILE, ios::in | ios::binary);
+    string empty_name, empty_email, empty_phone, empty_department;
     if (!customerFile)
     {
         cerr << "Error opening customer database file!" << endl;
         // Handle the error, e.g., throw an exception or return a default customer
-        return Customer(); // Return a default-constructed Customer object
+        return Customer(empty_name, empty_email, empty_phone, empty_department); // Return a default-constructed Customer object
     }
 
-    Customer customer;
-    while (customerFile.read(reinterpret_cast<char *>(&customer), sizeof(Customer)))
+    string line;
+    while (getline(customerFile, line))
     {
-        if (strcmp(customer.get_name(), name) == 0)
+        if (line == name)
         {
-            customerFile.close(); // Close the file after successful find
-            return customer;
+            string email_line, phone_line, department_line;
+            getline(customerFile, email_line);
+            getline(customerFile, phone_line);
+            getline(customerFile, department_line);
+            Customer cus(line, email_line, phone_line, department_line);
+            //return customer;
         }
     }
 
     // Customer not found in file, handle this case accordingly
-    customerFile.close(); // Close the file if customer not found
+    //customerFile.close(); // Close the file if customer not found
     // Depending on your design, return a default or throw an exception
-    return Customer(); // Return a default-constructed Customer object
+    return Customer(empty_name, empty_email, empty_phone, empty_department); // Return a default-constructed Customer object
 }
 //-----------------------------------------------------------------------------

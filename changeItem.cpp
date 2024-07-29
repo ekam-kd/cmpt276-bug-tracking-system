@@ -162,10 +162,10 @@ bool create_report(long int ch_id){
         }
         long int id = changeRequest.get_id();
         if(id == ch_id){
-            char* customerName = changeRequest.get_customer_name();
+            string customerName = changeRequest.get_customer_name();
             // find customer name in customer file + get their email
             Customer customer = select_customer(customerName);
-            char* customerEmail = customer.get_email();
+            string customerEmail = customer.get_email();
 
             // write customer name and email to report.txt
             ofstream reportFile;

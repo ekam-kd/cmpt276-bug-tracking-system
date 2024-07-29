@@ -1,6 +1,6 @@
 // /* 
 //  * File:   helper_funcs.cpp
-//  * Author: Qiraa Qadri
+//  * Authors: Qiraa Qadri, Ekam Dhanoa
 //  * Created: June 2024
 //  * Version: 2
 //  * Purpose: additional functions for the Bug Tracking System control flow
@@ -67,10 +67,9 @@ bool register_customer(){
     char confirm;
     cin >> confirm;
     if(confirm == 'Y' || confirm == 'y'){
-        if (check_customer(cus_name) == false) {
-            cout << "\nA customer is already registered under this name! Please try again." << endl;
+        if (check_customer(cus_name) == true) {
         } else {
-            
+            add_customer(cus_name, cus_email, phone_number, emp_department);
             cout << "\nThank you for registering with us!" << endl;
         }
         cout << "Please enter (0) to return to Main Menu: ";
