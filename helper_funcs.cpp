@@ -67,8 +67,7 @@ bool register_customer(){
     char confirm;
     cin >> confirm;
     if(confirm == 'Y' || confirm == 'y'){
-        if (check_customer(cus_name) == true) {
-        } else {
+        if (check_customer(cus_name) == false) {
             add_customer(cus_name, cus_email, phone_number, emp_department);
             cout << "\nThank you for registering with us!" << endl;
         }
