@@ -43,7 +43,6 @@ bool register_customer(){
     cout << "\n\nPlease Enter Your Full Name:" << endl;
     cout << "\nName: ";
     getline(cin >> ws,cus_name);
-    cout << "\n\nHello: " << cus_name << "!\n";
     cout << "\nPlease enter your email address" << endl;
     cout << "Email: ";
     cin >> cus_email;
@@ -58,18 +57,22 @@ bool register_customer(){
         emp_department = "";
     }
     cout << "\n\nPlease confirm the following information:" << endl;
-    cout << "\n\nName: " << cus_name << endl;
+    cout << "\nName: " << cus_name << endl;
     cout << "Email: " << cus_email << endl;
     cout << "Phone: " << phone_number << endl;
     if(employee){
         cout << "Department: " << emp_department << endl;
     }
-    cout << "\n\nIs this information correct? (Y/N): ";
+    cout << "\nIs this information correct? (Y/N): ";
     char confirm;
     cin >> confirm;
     if(confirm == 'Y' || confirm == 'y'){
-        check_customer(cus_name);
-        cout << "\nThank you for registering with us!" << endl;
+        if (check_customer(cus_name) == false) {
+            cout << "\nA customer is already registered under this name! Please try again." << endl;
+        } else {
+            
+            cout << "\nThank you for registering with us!" << endl;
+        }
         cout << "Please enter (0) to return to Main Menu: ";
         string return_main;
         cin >> return_main;

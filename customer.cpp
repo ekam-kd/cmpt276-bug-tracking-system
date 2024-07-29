@@ -127,18 +127,39 @@ void Customer::register_customer()
 }
 //-----------------------------------------------------------------------------
 // Check if customer exists in database file
-bool check_customer(string name)
+bool check_customer(const string name)
 {
     if (!customerFile)
     {
         //cerr << "Error opening customer database file!" << endl;
         return false;
     }
-
+    
     string line;
     while (getline(customerFile, line))
     {
-        if (line.find(name) != string::npos)
+        //if the name already exists, the function returns false
+        if (line == name) {
+            return false;
+        }
+    }
+    //otherwise the function returns true
+    return true;
+}
+//-----------------------------------------------------------------------------
+// Check if employee exists
+bool check_employee(const char *name)
+{
+    if (!customerFile)
+    {
+        cerr << "Error opening customer database file!" << endl;
+        return false;
+    }
+
+    Customer customer;
+    while (customerFile.read(reinterpret_cast<char *>(&customer), sizeof(Customer)))
+    {
+        if (strcmp(customer.get_name(), name) == 0)
         {
             return true;
         }
@@ -166,26 +187,7 @@ bool read_customer(int index, Customer &customer)
     customerFile.read((char *)&customer, sizeof(Customer));
     return true;
 }
-//-----------------------------------------------------------------------------
-// Check if employee exists
-bool check_employee(const char *name)
-{
-    if (!customerFile)
-    {
-        cerr << "Error opening customer database file!" << endl;
-        return false;
-    }
 
-    Customer customer;
-    while (customerFile.read(reinterpret_cast<char *>(&customer), sizeof(Customer)))
-    {
-        if (strcmp(customer.get_name(), name) == 0)
-        {
-            return true;
-        }
-    }
-    return false;
-}
 //-----------------------------------------------------------------------------
 bool delete_customer(int index)
 {

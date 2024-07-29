@@ -59,7 +59,7 @@ public:
 bool init_customer();
 
 // check if customer exists in database file
-bool check_customer(string name // name of the customer
+bool check_customer(const string name // name of the customer
 );
 
 bool check_employee(const char *name);
