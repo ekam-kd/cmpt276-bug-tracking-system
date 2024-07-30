@@ -63,7 +63,8 @@ bool init_customer();
 bool check_customer(const string name // name of the customer
 );
 
-//bool check_employee(const string name);
+// check if the customer exists and is an employee
+bool check_employee(const string name);
 
 // // add customer to file
 // bool write_customer(Customer &customer // customer to initialize

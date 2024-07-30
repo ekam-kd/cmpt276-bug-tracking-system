@@ -124,6 +124,37 @@ bool check_customer(const string name)
 }
 
 //-----------------------------------------------------------------------------
+// Check if employee exists
+bool check_employee(const string name)
+{
+    if (!customerFile.is_open())
+    {
+        cerr << "Error opening customer database file!" << endl;
+        return false;
+    }
+    Customer temp_customer("", "", "", "");
+
+    // Move the file pointer to the beginning of the file
+    customerFile.seekg(0, ios::beg);
+
+    // Read through the file
+    while (customerFile.read(reinterpret_cast<char*>(&temp_customer), sizeof(Customer))) {
+        if (temp_customer.get_name() == name) {
+            if (temp_customer.get_department() != "") {
+                cout << "Valid employee detected." << endl;
+                return true;
+            }
+            cout << "Not an employee. Access denied." << endl;
+            return false;
+        }
+    }
+    cout << "This customer does not exist." << endl;
+    // Reset the file pointer for future operations
+    customerFile.clear(); // Clear the EOF flag
+    customerFile.seekg(0, ios::beg);
+    return false;
+}
+//-----------------------------------------------------------------------------
 // Register new customer
 void create_customer(const string name, const string email, const string phone_num, const string department)
 {
@@ -136,37 +167,8 @@ void create_customer(const string name, const string email, const string phone_n
     }
 }
 
-//-----------------------------------------------------------------------------
-// Check if employee exists
-// bool check_employee(const string name)
-// {
-//     if (!customerFile)
-//     {
-//         cerr << "Error opening customer database file!" << endl;
-//         return false;
-//     }
 
-//     Customer customer;
-//     while (customerFile.read(reinterpret_cast<string >(&customer), sizeof(Customer)))
-//     {
-//         if (strcmp(customer.get_name(), name) == 0)
-//         {
-//             return true;
-//         }
-//     }
-//     return false;
-// }
-//-----------------------------------------------------------------------------
-// Add customer to file
-// bool write_customer(Customer &customer)
-// {
-//     // assume file is open
-//     // seek to the end of the file
-//     customerFile.seekp(0, ios::end);
-//     // write the change item to the file
-//     customerFile.write((char *)&customer, sizeof(Customer));
-//     return true;
-// }
+
 //-----------------------------------------------------------------------------
 // bool read_customer(int index, Customer &customer)
 // {
