@@ -54,6 +54,7 @@ bool send_report();
 // shutdown the system
 bool shut_down();
 
+
 // checks to ensure the string only contains numeric characters.
 // used to check phone number attribute for customer class
 bool is_digits(string &str);

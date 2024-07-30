@@ -10,7 +10,26 @@
 #include "helper_funcs.hpp"
 using namespace std;
 
-//todo change the return type of the functions to bool
+//system start up
+bool start_up() {
+    //this function starts up the system by opening all the files
+    //opening file for customer records:
+    init_customer();
+
+    //opening file for product records:
+    init_product();
+
+    //opening file for product release records:
+    init_release();
+
+    //opening file for changeRequest records:
+    init_change_request();
+
+    //opening file for changeItem records:
+    init_change_item();
+    return true;
+}
+
 //-----------------------------------------------------------------------------
 // register new customer
 bool register_customer(){
@@ -54,7 +73,7 @@ bool register_customer(){
     getline(cin >> ws,cus_email);
     while (cus_email.length() >= 64) {
         cout << "Email is too long. Please try again." << endl;
-        cout << "Email: " << endl;
+        cout << "Email: ";
         getline(cin >> ws,cus_email); 
     }
 
@@ -89,7 +108,7 @@ bool register_customer(){
     } else {
         emp_department = "";
     }
-    
+
     cout << "\n\nPlease confirm the following information:" << endl;
     cout << "\nName: " << cus_name << endl;
     cout << "Email: " << cus_email << endl;
@@ -122,22 +141,6 @@ bool register_customer(){
             return true;
         }
     }
-    return true;
-}
-
-//-----------------------------------------------------------------------------
-// register new product
-bool register_product(){
-    string product_name, product_version;
-    system("clear");
-    cout << "-----------------------------------\n";
-    cout << "Please enter the product name: ";
-    cin >> product_name;
-    cout << "\nPlease enter the product version: ";
-    cin >> product_version;
-    cout << "\n\nProduct " << product_name << " version " << product_version << " has been registered." << endl;
-    cout << "You will be returned to main menu" << endl;
-    sleep(2);
     return true;
 }
 
@@ -209,6 +212,21 @@ bool check_change_item(){
     return true;
 }
 
+//-----------------------------------------------------------------------------
+// register new product
+bool register_product(){
+    string product_name, product_version;
+    system("clear");
+    cout << "-----------------------------------\n";
+    cout << "Please enter the product name: ";
+    cin >> product_name;
+    cout << "\nPlease enter the product version: ";
+    cin >> product_version;
+    cout << "\n\nProduct " << product_name << " version " << product_version << " has been registered." << endl;
+    cout << "You will be returned to main menu" << endl;
+    sleep(2);
+    return true;
+}
 
 //-----------------------------------------------------------------------------
 // edit change item
@@ -472,25 +490,6 @@ bool send_report(){
     }
     return true;
 
-}
-
-bool start_up() {
-    //this function starts up the system by opening all the files
-    //opening file for customer records:
-    init_customer();
-
-    //opening file for product records:
-    init_product();
-
-    //opening file for product release records:
-    init_release();
-
-    //opening file for changeRequest records:
-    init_change_request();
-
-    //opening file for changeItem records:
-    init_change_item();
-    return true;
 }
 
 bool shut_down() {
