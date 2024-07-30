@@ -106,7 +106,7 @@ bool register_customer(){
             getline(cin >> ws,emp_department);
         }  
     } else {
-        emp_department = "";
+        emp_department = " ";
     }
 
     cout << "\n\nPlease confirm the following information:" << endl;
@@ -145,7 +145,8 @@ bool register_customer(){
 }
 
 //-----------------------------------------------------------------------------
-// report a bug
+// create a change request
+// calls check_customer, select_product, make_change_request, and then make_change_item
 bool create_change_request(){
     char cus_name[MAX_NAME], bug_description[MAX_DESCRIPTION]; // [1000] and [100] are arbitrary values, can be changed to [10000] or [1000000
     system("clear");
@@ -214,10 +215,14 @@ bool check_change_item(){
 
 //-----------------------------------------------------------------------------
 // register new product
+// calls check_employee and then add_product
 bool register_product(){
-    string product_name, product_version;
+    string product_name, product_version, emp_name;
     system("clear");
     cout << "-----------------------------------\n";
+    cout << "Please enter employee name: ";
+    getline(cin >> ws,emp_name);
+    check_employee(emp_name);
     cout << "Please enter the product name: ";
     cin >> product_name;
     cout << "\nPlease enter the product version: ";

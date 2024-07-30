@@ -139,8 +139,8 @@ bool check_employee(const string name)
 
     // Read through the file
     while (customerFile.read(reinterpret_cast<char*>(&temp_customer), sizeof(Customer))) {
-        if (temp_customer.get_name() == name) {
-            if (temp_customer.get_department() != "") {
+        if (temp_customer.get_name() == name && temp_customer.get_department() != " ") {
+            if (temp_customer.get_department() != " ") {
                 cout << "Valid employee detected." << endl;
                 return true;
             }
@@ -238,9 +238,6 @@ Customer select_customer(const string name)
             return temp_customer;
         }
     }
-    // Customer not found in file, handle this case accordingly
-    //customerFile.close(); // Close the file if customer not found
-    // Depending on your design, return a default or throw an exception
     return Customer(empty_name, empty_email, empty_phone, empty_department); // Return a default-constructed Customer object
 }
 //-----------------------------------------------------------------------------
