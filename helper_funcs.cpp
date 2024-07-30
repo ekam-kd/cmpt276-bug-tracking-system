@@ -48,9 +48,16 @@ bool register_customer(){
         cout << "Name: " << endl;
         getline(cin >> ws,cus_name); 
     }
+
     cout << "\nPlease enter your email address" << endl;
     cout << "Email: ";
-    cin >> cus_email;
+    getline(cin >> ws,cus_email);
+    while (cus_email.length() >= 64) {
+        cout << "Email is too long. Please try again." << endl;
+        cout << "Email: " << endl;
+        getline(cin >> ws,cus_email); 
+    }
+
     cout << "\nPlease enter your phone number" << endl;
     cout << "Note that phone number must be in the format of +1(234)-567-8910 -> 12345678910" << endl;
     cout << "Phone: ";
@@ -70,12 +77,19 @@ bool register_customer(){
             getline(cin >> ws,phone_number);
         }  
     }
+
     if(employee){
         cout << "\nPlease enter your department: ";
-        cin >> emp_department;
+        getline(cin >> ws,emp_department);
+        while (emp_department.length() >= 30) {
+            cout << "Department name is too long." << endl;
+            cout << "Please enter your department: ";
+            getline(cin >> ws,emp_department);
+        }  
     } else {
         emp_department = "";
     }
+    
     cout << "\n\nPlease confirm the following information:" << endl;
     cout << "\nName: " << cus_name << endl;
     cout << "Email: " << cus_email << endl;
