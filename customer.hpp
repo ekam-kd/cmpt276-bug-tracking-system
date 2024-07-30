@@ -63,23 +63,25 @@ bool init_customer();
 bool check_customer(const string name // name of the customer
 );
 
-bool check_employee(const string name);
+//bool check_employee(const string name);
 
 // // add customer to file
 // bool write_customer(Customer &customer // customer to initialize
 // );
-void add_customer(const string name, const string email, const string phone_num, const string department);
+void create_customer(const string name, const string email, const string phone_num, const string department);
 
 // read customer from file
-bool read_customer(int index, Customer &customer);
+//bool read_customer(int index, Customer &customer);
 
 //bool delete_customer(int index);
+
+// select customer
+Customer select_customer(const string name);
 
 // closes customer database file
 bool close_customer();
 
-// select customer
-Customer select_customer(const string name);
+
 
         
 

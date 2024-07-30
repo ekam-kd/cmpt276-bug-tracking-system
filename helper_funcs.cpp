@@ -67,9 +67,9 @@ bool register_customer(){
     char confirm;
     cin >> confirm;
     if(confirm == 'Y' || confirm == 'y'){
-        if (check_customer(cus_name) == false) {
-            add_customer(cus_name, cus_email, phone_number, emp_department);
+        if (!check_customer(cus_name)) {
             cout << "\nThank you for registering with us!" << endl;
+            create_customer(cus_name, cus_email, phone_number, emp_department);
         }
         cout << "Please enter (0) to return to Main Menu: ";
         string return_main;
@@ -461,6 +461,8 @@ bool start_up() {
 
 bool shut_down() {
     //this function shuts down the system by closing all the files
+    //MAKE THIS FUNCTION DELETE THE FILES TOO
+        //to justify, say that the clients load the files from backup to the system every time it starts up
     close_customer();
     close_product();
     close_product_release();

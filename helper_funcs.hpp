@@ -15,6 +15,7 @@
 #include <unistd.h>
 #include <ios>
 #include <limits>
+#include <cstdio>
 #include "customer.hpp"
 #include "product.hpp"
 #include "changeItem.hpp"
