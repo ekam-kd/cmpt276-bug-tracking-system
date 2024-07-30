@@ -43,6 +43,11 @@ bool register_customer(){
     cout << "\n\nPlease Enter Your Full Name:" << endl;
     cout << "\nName: ";
     getline(cin >> ws,cus_name);
+    while (cus_name.length() >= 30) {
+        cout << "Name is too long. Please try again." << endl;
+        cout << "Name: " << endl;
+        getline(cin >> ws,cus_name); 
+    }
     cout << "\nPlease enter your email address" << endl;
     cout << "Email: ";
     cin >> cus_email;
@@ -50,6 +55,21 @@ bool register_customer(){
     cout << "Note that phone number must be in the format of +1(234)-567-8910 -> 12345678910" << endl;
     cout << "Phone: ";
     cin >> phone_number;
+    //the following while loop checks to make sure the inputted phone number is valid, in length and character
+    while (!is_digits(phone_number) || phone_number.length() != 11) {
+        if (!is_digits(phone_number)) {
+            cout << "\nPhone number contains alphabetic characters. Please try again with only numeric characters." << endl;
+            cout << "Note that phone number must be in the format of +1(234)-567-8910 -> 12345678910" << endl;
+            cout << "Phone: ";
+            getline(cin >> ws,phone_number); 
+        }
+        if (phone_number.length() != 11) {
+            cout << "Phone number must be 11 characters." << endl;
+            cout << "Note that phone number must be in the format of +1(234)-567-8910 -> 12345678910" << endl;
+            cout << "Phone: ";
+            getline(cin >> ws,phone_number);
+        }  
+    }
     if(employee){
         cout << "\nPlease enter your department: ";
         cin >> emp_department;
@@ -469,4 +489,14 @@ bool shut_down() {
     close_change_request();
     close_change_item();
     return true;
+}
+
+bool is_digits(string &str) {
+    for (char ch : str) {
+        if (!isdigit(ch)){
+            return false;
+        }
+    }
+    return true;
+
 }

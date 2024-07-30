@@ -54,6 +54,10 @@ bool send_report();
 // shutdown the system
 bool shut_down();
 
+// checks to ensure the string only contains numeric characters.
+// used to check phone number attribute for customer class
+bool is_digits(string &str);
+
 /* Note: Iterator functions seekToBeginningOfFile() and getRecord() can be included in the 
    corresponding header files once the file access functions are being implemented. As this
    has not yet been started, the iterator functions have not been included in any hpp file */
