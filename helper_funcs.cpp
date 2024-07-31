@@ -107,7 +107,7 @@ bool register_customer(){
     strcpy(cus_phone, temp_phone.c_str());
     cout << "your name is still: " << cus_name << "!" << endl;
 
-    char temp[MAX_DEPARTMENT] = " ";
+    //char temp[MAX_DEPARTMENT] = " ";
 
     if(employee){
         cout << "\nPlease enter your department: ";
@@ -119,7 +119,7 @@ bool register_customer(){
         }
         strcpy(emp_department, temp_dep.c_str());
     } else {
-        strcpy(temp, emp_department);
+        strcpy(emp_department, "");
     }
     cout << "Thanks, your name is: " << cus_name << "!" << endl;
 
