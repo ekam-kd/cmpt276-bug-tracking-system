@@ -99,15 +99,17 @@ bool check_customer(const string name)
 
     // Read through the file
     while (customerFile.read(reinterpret_cast<char*>(&temp_customer), sizeof(Customer))) {
+        cout << "Checking employee: " << temp_customer.get_name() << " and their department:" << temp_customer.get_department() << endl;
         if (temp_customer.get_name() == name) {
             cout << "Oh no! A customer with this name already exists. Please try again with a different name" << endl;
+            //customerFile.clear();
             return true;
         }
     }
 
     // Reset the file pointer for future operations
     customerFile.clear(); // Clear the EOF flag
-    customerFile.seekg(0, ios::beg);
+    //customerFile.seekg(0, ios::beg);
     return false;
 
     // string line;
@@ -136,10 +138,12 @@ bool check_employee(const string name)
 
     // Move the file pointer to the beginning of the file
     customerFile.seekg(0, ios::beg);
+    const string temp = "sales";
 
     // Read through the file
     while (customerFile.read(reinterpret_cast<char*>(&temp_customer), sizeof(Customer))) {
-        if (temp_customer.get_name() == name && temp_customer.get_department() != " ") {
+        cout << "Checking employee: " << temp_customer.get_name() << " and their department:" << temp_customer.get_department() << endl;
+        if (temp_customer.get_department() == temp) {
             if (temp_customer.get_department() != " ") {
                 cout << "Valid employee detected." << endl;
                 return true;
@@ -151,7 +155,7 @@ bool check_employee(const string name)
     cout << "This customer does not exist." << endl;
     // Reset the file pointer for future operations
     customerFile.clear(); // Clear the EOF flag
-    customerFile.seekg(0, ios::beg);
+    //customerFile.seekg(0, ios::beg);
     return false;
 }
 //-----------------------------------------------------------------------------
@@ -161,6 +165,7 @@ void create_customer(const string name, const string email, const string phone_n
     Customer new_customer(name, email, phone_num, department);
     customerFile.seekp(0, ios::end);
     customerFile.write(reinterpret_cast<char*>(&new_customer), sizeof(Customer));
+    customerFile.clear();
 
     if (customerFile.fail()) {
         cerr << "Error writing to the customer file." << endl;
