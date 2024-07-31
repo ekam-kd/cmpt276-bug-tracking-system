@@ -164,13 +164,13 @@ bool create_report(long int ch_id){
         if(id == ch_id){
             string customerName = changeRequest.get_customer_name();
             // find customer name in customer file + get their email
-            Customer customer = select_customer(customerName);
-            string customerEmail = customer.get_email();
+           // Customer customer = select_customer(customerName);
+           // string customerEmail = customer.get_email();
 
             // write customer name and email to report.txt
             ofstream reportFile;
             reportFile.open("report.txt", ios::app);
-            reportFile << customerName << ", "<< customerEmail << endl;
+           // reportFile << customerName << ", "<< customerEmail << endl;
             reportFile.close();
             return true;
         } else {

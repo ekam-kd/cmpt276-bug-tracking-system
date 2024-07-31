@@ -34,7 +34,9 @@ bool start_up() {
 // register new customer
 bool register_customer(){
     system("clear");
-    string cus_name, cus_email, emp_department, phone_number;
+    string temp_name, temp_email, temp_phone, temp_dep;
+    char cus_name[MAX_NAME], cus_email[MAX_EMAIL], emp_department[MAX_DEPARTMENT], cus_phone[MAX_PHONE];
+    
     bool employee = false;
     // long int phone_number;
     cout << "-----------------------------------\n";
@@ -57,61 +59,74 @@ bool register_customer(){
     if(emp[0] == 'Y' || emp[0] == 'y'){
         employee = true;
     }
+
     
     cout << "\n\nPlease Enter Your Full Name:" << endl;
     cout << "\nName: ";
-    getline(cin >> ws,cus_name);
-    while (cus_name.length() >= 30) {
+    getline(cin >> ws,temp_name);
+    while (temp_name.length() >= 30) {
         cout << "Name is too long. Please try again." << endl;
         cout << "Name: " << endl;
-        getline(cin >> ws,cus_name); 
+        getline(cin >> ws,temp_name);
     }
+    strcpy(cus_name, temp_name.c_str());
+    cout << "Thanks, your name is: " << cus_name << "!" << endl;
 
     cout << "\nPlease enter your email address" << endl;
     cout << "Email: ";
-    getline(cin >> ws,cus_email);
-    while (cus_email.length() >= 64) {
+    getline(cin >> ws,temp_email); 
+    while (temp_email.length() >= 64) {
         cout << "Email is too long. Please try again." << endl;
         cout << "Email: ";
-        getline(cin >> ws,cus_email); 
+        getline(cin >> ws,temp_email); 
     }
+    strcpy(cus_email, temp_email.c_str());
+    cout << "Thanks, your name is: " << cus_name << "!" << endl;
 
     cout << "\nPlease enter your phone number" << endl;
     cout << "Note that phone number must be in the format of +1(234)-567-8910 -> 12345678910" << endl;
     cout << "Phone: ";
-    cin >> phone_number;
+    getline(cin >> ws,temp_phone);
+    cout << "your name is still: " << cus_name << "!" << endl;
     //the following while loop checks to make sure the inputted phone number is valid, in length and character
-    while (!is_digits(phone_number) || phone_number.length() != 11) {
-        if (!is_digits(phone_number)) {
+    while (!is_digits(temp_phone) || temp_phone.length() != 11) {
+        if (!is_digits(temp_phone)) {
             cout << "\nPhone number contains alphabetic characters. Please try again with only numeric characters." << endl;
             cout << "Note that phone number must be in the format of +1(234)-567-8910 -> 12345678910" << endl;
             cout << "Phone: ";
-            getline(cin >> ws,phone_number); 
+            getline(cin >> ws,temp_phone); 
         }
-        if (phone_number.length() != 11) {
+        if (temp_phone.length() != 11) {
             cout << "Phone number must be 11 characters." << endl;
             cout << "Note that phone number must be in the format of +1(234)-567-8910 -> 12345678910" << endl;
             cout << "Phone: ";
-            getline(cin >> ws,phone_number);
+            getline(cin >> ws,temp_phone);
         }  
     }
+    cout << "your name is still: " << cus_name << "!" << endl;
+    strcpy(cus_phone, temp_phone.c_str());
+    cout << "your name is still: " << cus_name << "!" << endl;
+
+    char temp[MAX_DEPARTMENT] = " ";
 
     if(employee){
         cout << "\nPlease enter your department: ";
-        getline(cin >> ws,emp_department);
-        while (emp_department.length() >= 30) {
+        getline(cin >> ws,temp_dep);
+        while (temp_dep.length() >= 30) {
             cout << "Department name is too long." << endl;
             cout << "Please enter your department: ";
-            getline(cin >> ws,emp_department);
-        }  
+            getline(cin >> ws,temp_dep);
+        }
+        strcpy(emp_department, temp_dep.c_str());
     } else {
-        emp_department = " ";
+        strcpy(temp, emp_department);
     }
+    cout << "Thanks, your name is: " << cus_name << "!" << endl;
 
     cout << "\n\nPlease confirm the following information:" << endl;
     cout << "\nName: " << cus_name << endl;
     cout << "Email: " << cus_email << endl;
-    cout << "Phone: " << phone_number << endl;
+    cout << "Phone: " << cus_phone << endl;
     if(employee){
         cout << "Department: " << emp_department << endl;
     }
@@ -121,7 +136,7 @@ bool register_customer(){
     if(confirm == 'Y' || confirm == 'y'){
         if (!check_customer(cus_name)) {
             cout << "\nThank you for registering with us!" << endl;
-            create_customer(cus_name, cus_email, phone_number, emp_department);
+            create_customer(cus_name, cus_email, cus_phone, emp_department);
         }
         cout << "Please enter (0) to return to Main Menu: ";
         string return_main;
@@ -148,7 +163,7 @@ bool register_customer(){
 // calls check_customer, select_product, make_change_request, and then make_change_item
 bool create_change_request(){
     system("clear");
-    string cus_name, bug_description;
+    char cus_name[MAX_NAME];
     cout << "-----------------------------------\n";
     cout << "Change Request Menu:" << endl;
     cout << "Please enter (0) to return to Main Menu, or (1) to Continue: ";
@@ -163,12 +178,13 @@ bool create_change_request(){
         return true;
     }
     cout << "Please enter your name: ";
-    getline(cin >> ws,cus_name);
-    while (check_customer(cus_name) || cus_name.length() >= 30) {
-        cout << "Invalid customer name. Please try again." << endl;
-        cout << "Name: " << endl;
-        getline(cin >> ws,cus_name);
-    }
+    cin.getline(cus_name, MAX_NAME);
+    // getline(cin >> ws,cus_name);
+    // while (check_customer(cus_name) || cus_name.length() >= 30) {
+    //     cout << "Invalid customer name. Please try again." << endl;
+    //     cout << "Name: " << endl;
+    //     getline(cin >> ws,cus_name);
+    // }
     cout << "Hello " << cus_name << ", please select the product for the report or request you wish to make: " << endl;
     //select_product(); //this function will display a list of the products, the user types in a number and that product is then chosen
     //
@@ -226,6 +242,12 @@ bool check_change_item(){
 bool register_product(){
     system("clear");
     char product_name[MAX_NAME];
+    char emp_name[MAX_NAME];
+    cout << "\nEnter Name: ";
+    cin.getline(emp_name, MAX_NAME);
+    cout << "Name is: " << emp_name;
+    check_employee(emp_name);
+
     cout << "-----------------------------------\n";
     cout << "New Product Menu:" << endl;
     cout << "Please enter (0) to return to Main Menu, or (1) to Continue: ";

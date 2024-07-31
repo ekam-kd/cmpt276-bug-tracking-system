@@ -15,8 +15,12 @@ fstream customerFile; // global filestream for customer file so it stays open fo
 
 //-----------------------------------------------------------------------------
 // Constructor
-Customer::Customer(const string name, const string email, const string phone_num, const string department)
-    : name(name), email(email), phone(phone_num), department(department) {
+Customer::Customer(const char new_name[MAX_NAME], const char new_email[MAX_EMAIL], const char new_num[MAX_PHONE], 
+const char new_dep[MAX_DEPARTMENT]){
+    set_name(new_name);
+    set_email(new_email);
+    set_phone(new_num);
+    set_department(new_dep);
 }
 //-----------------------------------------------------------------------------
 // Destructor
@@ -26,23 +30,44 @@ Customer::~Customer()
 }
 //-----------------------------------------------------------------------------
 // Getters
-string Customer::get_name() { return name; }
-
-string Customer::get_email() { return email; }
-
-string Customer::get_phone() { return phone; }
-
-string Customer::get_department() { return department; }
-
+char *Customer::get_name()
+{
+    return name;
+}
+char *Customer::get_email()
+{
+    return email;
+}
+char *Customer::get_phone()
+{
+    return phone;
+}
+char *Customer::get_department()
+{
+    return department;
+}
 //-----------------------------------------------------------------------------
 // Setters
-void Customer::set_name(const string new_name) { name = new_name; }
-
-void Customer::set_email(const string new_email) { email = new_email; }
-
-void Customer::set_phone(const string new_phone) { phone = new_phone; }
-
-void Customer::set_department(const string new_department) { department = new_department; }
+void Customer::set_name(const char *new_name)
+{
+    strncpy(name, new_name, MAX_NAME - 1);
+    name[MAX_NAME - 1] = '\0'; // Ensure null-terminated
+}
+void Customer::set_email(const char *new_email)
+{
+    strncpy(email, new_email, MAX_EMAIL - 1);
+    email[MAX_EMAIL - 1] = '\0'; // Ensure null-terminated
+}
+void Customer::set_phone(const char *new_phone)
+{
+    strncpy(phone, new_phone, MAX_PHONE - 1);
+    phone[MAX_PHONE - 1] = '\0'; // Ensure null-terminated
+}
+void Customer::set_department(const char *new_department)
+{
+    strncpy(department, new_department, MAX_NAME - 1);
+    department[MAX_NAME - 1] = '\0'; // Ensure null-terminated
+}
 
 //-----------------------------------------------------------------------------
 // Print customer info
@@ -84,7 +109,7 @@ bool init_customer()
 
 //-----------------------------------------------------------------------------
 // Check if customer exists in database file
-bool check_customer(const string name)
+bool check_customer(const char name[MAX_NAME])
 {
     if (!customerFile.is_open())
     {
@@ -100,9 +125,8 @@ bool check_customer(const string name)
     // Read through the file
     while (customerFile.read(reinterpret_cast<char*>(&temp_customer), sizeof(Customer))) {
         cout << "Checking customer: " << temp_customer.get_name() << " and their department:" << temp_customer.get_department() << endl;
-        if (temp_customer.get_name() == name) {
+        if (strcmp(temp_customer.get_name(),name)) {
             cout << "Oh no! A customer with this name already exists. Please try again with a different name" << endl;
-            //customerFile.clear();
             return true;
         }
     }
@@ -111,23 +135,11 @@ bool check_customer(const string name)
     customerFile.clear(); // Clear the EOF flag
     //customerFile.seekg(0, ios::beg);
     return false;
-
-    // string line;
-    // while (getline(customerFile, line))
-    // {
-    //     //if the name already exists, the function returns false
-    //     if (line == name) {
-    //         cout << "\nA customer is already registered under this name! Please try again." << endl;
-    //         return false;
-    //     }
-    // }
-    // // otherwise the function returns true
-    // return true;
 }
 
 //-----------------------------------------------------------------------------
 // Check if employee exists
-bool check_employee(const string name)
+bool check_employee(const char name[MAX_NAME])
 {
     if (!customerFile.is_open())
     {
@@ -138,18 +150,17 @@ bool check_employee(const string name)
 
     // Move the file pointer to the beginning of the file
     customerFile.seekg(0, ios::beg);
-    const string temp = "sales";
 
     // Read through the file
     while (customerFile.read(reinterpret_cast<char*>(&temp_customer), sizeof(Customer))) {
         cout << "Checking employee: " << temp_customer.get_name() << " and their department:" << temp_customer.get_department() << endl;
-        if (temp_customer.get_department() == temp) {
-            if (temp_customer.get_department() != " ") {
-                cout << "Valid employee detected." << endl;
+        if (strcmp(temp_customer.get_name(),name)) {
+            if (strcmp(temp_customer.get_department(), " ")) {
+                cout << "Valid employee." << endl;
                 return true;
             }
-            cout << "Not an employee. Access denied." << endl;
-            return false;
+            cout << "Not valid employee\n";
+            return true;
         }
     }
     cout << "This customer does not exist." << endl;
@@ -160,7 +171,8 @@ bool check_employee(const string name)
 }
 //-----------------------------------------------------------------------------
 // Register new customer
-void create_customer(const string name, const string email, const string phone_num, const string department)
+void create_customer(const char name[MAX_NAME], const char email[MAX_EMAIL], 
+const char phone_num[MAX_PHONE], const char department[MAX_DEPARTMENT])
 {
     Customer new_customer(name, email, phone_num, department);
     customerFile.seekp(0, ios::end);
@@ -227,14 +239,13 @@ void create_customer(const string name, const string email, const string phone_n
 // }
 
 //-----------------------------------------------------------------------------
-Customer select_customer(const string name)
+Customer select_customer(const char name[MAX_NAME])
 {
     ifstream customerFile(CUSTOMER_FILE, ios::in | ios::binary);
-    string empty_name, empty_email, empty_phone, empty_department;
     if (!customerFile)
     {
         cerr << "Error opening customer database file!" << endl;
-        return Customer(empty_name, empty_email, empty_phone, empty_department); // Return a default-constructed Customer object
+        return Customer("", "", "", ""); // Return a default-constructed Customer object
     }
 
     Customer temp_customer("", "", "", "");
@@ -243,7 +254,7 @@ Customer select_customer(const string name)
             return temp_customer;
         }
     }
-    return Customer(empty_name, empty_email, empty_phone, empty_department); // Return a default-constructed Customer object
+    return Customer("", "", "", ""); // Return a default-constructed Customer object
 }
 //-----------------------------------------------------------------------------
 // Close customer file

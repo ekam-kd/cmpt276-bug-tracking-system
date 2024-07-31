@@ -21,32 +21,34 @@ using namespace std;
 class Customer
 {
 private:
-    string name;
-    string email;
-    string phone;
-    string department;
+    char name[MAX_NAME];
+    char email[MAX_EMAIL];
+    char phone[MAX_PHONE];
+    char department[MAX_DEPARTMENT];
 
 public:
     // constructor
-    Customer(const string name, const string email, const string phone_number, const string department);
+    Customer(const char name[MAX_NAME], const char email[MAX_EMAIL], const char phone_number[MAX_PHONE], 
+    const char department[MAX_DEPARTMENT]);
     // destructor
     ~Customer();
     // get name
-    string get_name();
+    char *get_name();
     // get email
-    string get_email();
+    char *get_email();
     // get phone
-    string get_phone();
+    char *get_phone();
     // get department
-    string get_department();
+    char *get_department();
     // set name
-    void set_name(const string new_name);
+    void set_name(const char *new_name);
     // set email
-    void set_email(const string new_email);
+    void set_email(const char *new_email);
     // set phone
-    void set_phone(const string new_phone);
+    void set_phone(const char *new_phone);
     // set department
-    void set_department(const string new_department);
+    void set_department(const char *new_department);
+    // print customer info
     // print customer info
     void print_customer_info();
     // register new customer
@@ -60,16 +62,16 @@ public:
 bool init_customer();
 
 // check if customer exists in database file
-bool check_customer(const string name // name of the customer
+bool check_customer(const char name[MAX_NAME] // name of the customer
 );
 
 // check if the customer exists and is an employee
-bool check_employee(const string name);
+bool check_employee(const char name[MAX_NAME]);
 
 // // add customer to file
 // bool write_customer(Customer &customer // customer to initialize
 // );
-void create_customer(const string name, const string email, const string phone_num, const string department);
+void create_customer(const char name[MAX_NAME], const char email[MAX_EMAIL], const char phone_num[MAX_PHONE], const char department[MAX_DEPARTMENT]);
 
 // read customer from file
 //bool read_customer(int index, Customer &customer);
@@ -77,7 +79,7 @@ void create_customer(const string name, const string email, const string phone_n
 //bool delete_customer(int index);
 
 // select customer
-Customer select_customer(const string name);
+Customer select_customer(const char* name);
 
 // closes customer database file
 bool close_customer();
