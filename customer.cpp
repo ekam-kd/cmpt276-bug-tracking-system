@@ -125,7 +125,7 @@ bool check_customer(const char name[MAX_NAME])
     // Read through the file
     while (customerFile.read(reinterpret_cast<char*>(&temp_customer), sizeof(Customer))) {
         cout << "Checking customer: " << temp_customer.get_name() << " and their department:" << temp_customer.get_department() << endl;
-        if (strcmp(temp_customer.get_name(),name)) {
+        if (strcmp(temp_customer.get_name(),name) == 0) {
             cout << "Oh no! A customer with this name already exists. Please try again with a different name" << endl;
             return true;
         }
@@ -154,8 +154,8 @@ bool check_employee(const char name[MAX_NAME])
     // Read through the file
     while (customerFile.read(reinterpret_cast<char*>(&temp_customer), sizeof(Customer))) {
         cout << "Checking employee: " << temp_customer.get_name() << " and their department:" << temp_customer.get_department() << endl;
-        if (strcmp(temp_customer.get_name(),name)) {
-            if (strcmp(temp_customer.get_department(), " ")) {
+        if (strcmp(temp_customer.get_name(),name) == 0) {
+            if (strcmp(temp_customer.get_department(), " ") == 0) {
                 cout << "Valid employee." << endl;
                 return true;
             }
@@ -264,14 +264,5 @@ bool close_customer()
     {
         customerFile.close();
     }
-    if (remove(CUSTOMER_FILE) == 0)
-    {
-        //cout << "File successfully deleted." << endl;
-        return true;
-    }
-    else
-    {
-        cerr << "Error deleting the file." << endl;
-        return false;
-    }
+    return true;
 }

@@ -70,7 +70,7 @@ bool register_customer(){
         getline(cin >> ws,temp_name);
     }
     strcpy(cus_name, temp_name.c_str());
-    cout << "Thanks, your name is: " << cus_name << "!" << endl;
+    cout << "ur name is still: " << cus_name << "!" << endl;
 
     cout << "\nPlease enter your email address" << endl;
     cout << "Email: ";
@@ -81,7 +81,7 @@ bool register_customer(){
         getline(cin >> ws,temp_email); 
     }
     strcpy(cus_email, temp_email.c_str());
-    cout << "Thanks, your name is: " << cus_name << "!" << endl;
+    cout << "your name is still: " << cus_name << "!" << endl;
 
     cout << "\nPlease enter your phone number" << endl;
     cout << "Note that phone number must be in the format of +1(234)-567-8910 -> 12345678910" << endl;
@@ -240,7 +240,7 @@ bool check_change_item(){
 // register new product
 // calls check_employee and then add_product
 bool register_product(){
-    system("clear");
+    system("clear"); //clears the screen
     char product_name[MAX_NAME];
     char emp_name[MAX_NAME];
     cout << "\nEnter Name: ";
