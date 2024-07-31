@@ -9,7 +9,7 @@
 
 //global filestream for change request file so it stays open for program duration
 fstream changeRequestFile;
-
+long int id_official;
 //-----------------------------------------------------------------------------
 // constructor
 ChangeRequest::ChangeRequest(const long int new_id, const char new_name[MAX_NAME], 

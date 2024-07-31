@@ -9,7 +9,7 @@
 //global filestream for change item file so it stays open for program duration
 fstream changeItemFile;
 
-long int changeRequestID;
+long int crid_official;
 
 //-----------------------------------------------------------------------------
 bool init_change_item() {
@@ -27,7 +27,7 @@ bool init_change_item() {
             }
             i++;
         }
-        changeRequestID = changeItem.get_id();
+        crid_official = changeItem.get_id();
         return true;
     } else { //otherwise return false
         return false;
