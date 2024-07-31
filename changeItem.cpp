@@ -179,20 +179,6 @@ bool get_pending_change_items(char* prod_name) {
 }
 
 
-//-----------------------------------------------------------------------------
-bool create_report(long int ch_id){
-    // if found, add customerName to a .txt file
-    ChangeItem temp_changeitem;
-    changeItemFile.seekg(0, ios::beg);
-    while (changeItemFile.read((char*)&temp_changeitem, sizeof(ChangeItem))) {
-        if (temp_changeitem.get_id() == ch_id) { 
-            cout << "Change Id: " << temp_changeitem.get_id() << ". Description: " << temp_changeitem.get_description() << "." << endl;
-        }
-    }
-    changeItemFile.clear();
-    return false;
-
-}
 
 //-----------------------------------------------------------------------------
 //close change item file

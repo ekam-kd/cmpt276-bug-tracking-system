@@ -96,9 +96,6 @@ bool modify_change_item(long int ch_id // id of the change item
 bool see_all_change_items(char* productName // name of the product
                     );
 
-// takes a change item ID and generates a report for relevent users
-bool create_report(long int ch_id // id of the change item
-                    );
 
 // takes product name and lists all pending change items for a product
 bool get_pending_change_items(char* prod_name);

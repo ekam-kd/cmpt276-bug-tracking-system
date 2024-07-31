@@ -172,6 +172,20 @@ bool close_change_request() {
     return false;
 }
 
+//-----------------------------------------------------------------------------
+bool create_report(long int ch_id){
+    // if found, add customerName to a .txt file
+    ChangeRequest temp_changerequest;
+    changeRequestFile.seekg(0, ios::beg);
+    while (changeRequestFile.read((char*)&temp_changerequest, sizeof(ChangeRequest))) {
+        if (temp_changerequest.get_id() == ch_id) { 
+            cout << "Name: " << temp_changerequest.get_customer_name() << endl;
+        }
+    }
+    changeRequestFile.clear();
+    return false;
+
+}
 
 //-----------------------------------------------------------------------------
 // write change request to file
