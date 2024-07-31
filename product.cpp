@@ -79,11 +79,11 @@ Product select_product()
 // Add product to file
 bool add_product(const string prod_name)
 {
-    if (!productFile.is_open())
-    {
-        cerr << "Product database file is not open!" << endl;
-        return false;
-    }
+    // if (!productFile.is_open())
+    // {
+    //     cerr << "Product database file is not open!" << endl;
+    //     return false;
+    // }
     Product new_product(prod_name);
     productFile.seekp(0, ios::end);
     // Write product to file

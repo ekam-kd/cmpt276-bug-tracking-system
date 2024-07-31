@@ -225,48 +225,32 @@ bool check_change_item(){
 // calls check_employee and then add_product
 bool register_product(){
     system("clear");
-    string cus_name;
-    bool employee = false;
-    // long int phone_number;
+    char product_name[MAX_NAME];
     cout << "-----------------------------------\n";
-    cout << "New Customer Menu:" << endl;
-    cout << "Continue New Customer Registration? (Y/N): ";
-    string confirm_register;
-    cin >> confirm_register;
-    if(confirm_register[0] == 'N' || confirm_register[0] == 'n'){
-        cout << "\nYou will be returned to main menu" << endl;
+    cout << "New Product Menu:" << endl;
+    cout << "Please enter (0) to return to Main Menu, or (1) to Continue: ";
+    string return_m;
+    cin >> return_m;
+    if(return_m[0] == '0'){
+        sleep(1);
+        return true;
+    } else if(return_m[0] != '1'){
+        cout << "Invalid selection, please try again" << endl;
         sleep(2);
         return true;
-    } else if (confirm_register[0] != 'Y' && confirm_register[0] != 'y'){
-        cout << "\nInvalid selection, please try again" << endl;
-        sleep(2);
-        return true;
     }
-    cout << "\n\nAre you an employee of the company? (Y/N): ";
-    string emp;
-    cin >> emp;
-    if(emp[0] == 'Y' || emp[0] == 'y'){
-        employee = true;
-    }
-    
-    cout << "\n\nPlease Enter Your Full Name:" << endl;
-    cout << "\nName: ";
-    getline(cin >> ws,cus_name);
-    while (cus_name.length() >= 30) {
-        cout << "Name is too long. Please try again." << endl;
-        cout << "Name: " << endl;
-        getline(cin >> ws,cus_name); 
-    }
-
-    
+    cout << "\nPlease enter the product name: ";
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    cin.get(product_name, MAX_NAME-1);
+    cout << "\n\nPlease confirm the following information:" << endl;
+    cout << "Product Name: " << product_name << endl;
     cout << "\nIs this information correct? (Y/N): ";
     char confirm;
     cin >> confirm;
     if(confirm == 'Y' || confirm == 'y'){
-        if (!check_customer(cus_name)) {
-            cout << "\nThank you for registering with us!" << endl;
-            //add_product(cus_email);
-            //create_customer(cus_name, cus_email, phone_number, emp_department);
+        cout << "\nThank you for registering the new product!" << endl;
+        if(add_product(product_name)){
+            cout << "Product " << product_name << " has been added to the system." << endl;
         }
         cout << "Please enter (0) to return to Main Menu: ";
         string return_main;
@@ -274,9 +258,11 @@ bool register_product(){
         if(return_main[0] == '0'){
             sleep(1);
             return true;
+        } else {
+            return false;
         }
     } else{
-        cout << "\nUnable to register new Customer, please try again" << endl;
+        cout << "\nUnable to register new Product, please try again" << endl;
         cout << "Please enter (0) to return to Main Menu: ";
         string return_main;
         cin >> return_main;
@@ -285,7 +271,7 @@ bool register_product(){
             return true;
         }
     }
-    return true;
+    return false;
 }
 
 //-----------------------------------------------------------------------------
