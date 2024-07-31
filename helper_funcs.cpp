@@ -156,7 +156,6 @@ bool register_customer(){
 // calls check_customer, select_product, make_change_request, and then make_change_item
 bool create_change_request(){
     system("clear");
-    char cus_name[MAX_NAME];
     cout << "-----------------------------------\n";
     cout << "Change Request Menu:" << endl;
     cout << "Please enter (0) to return to Main Menu, or (1) to Continue: ";
@@ -170,21 +169,50 @@ bool create_change_request(){
         sleep(2);
         return true;
     }
+    string temp_name;
+    string temp_description;
+    string temp_date;
+    char cus_name[MAX_NAME];
+    char change_description[MAX_DESCRIPTION];
+    char date[11];
+    
     cout << "Please enter your name: ";
-    cin.getline(cus_name, MAX_NAME);
-    // getline(cin >> ws,cus_name);
-    // while (check_customer(cus_name) || cus_name.length() >= 30) {
-    //     cout << "Invalid customer name. Please try again." << endl;
-    //     cout << "Name: " << endl;
-    //     getline(cin >> ws,cus_name);
-    // }
-    cout << "Hello " << cus_name << ", please select the product for the report or request you wish to make: " << endl;
-    //select_product(); //this function will display a list of the products, the user types in a number and that product is then chosen
-    //
+    getline(cin>>ws, temp_name);
+    strcpy(cus_name, temp_name.c_str());
+    while (check_customer(cus_name) || temp_name.length() >= 30) {
+        cout << "Invalid customer name. Please try again." << endl;
+        cout << "Name: " << endl;
+        getline(cin >> ws,temp_name);
+        strcpy(cus_name, temp_name.c_str());
+    }
+    cout << "Please select the product for the report or request you wish to make: " << endl;
+    char *selected_product = select_product();
+
+    cout << "Select product release that report/request is being made for: ";
+    //char *selected_release = select_product_release(); //function in release.cpp that should display releases for a particular product and user picks one
 
 
-    cout << "\n\nHello " << cus_name << ", please enter the change description:\n";
-    //cin.get(bug_description, MAX_DESCRIPTION-1);
+    cout << "\nPlease describe the bug report or feature request [in less than 280 characters]: ";
+    getline(cin>>ws, temp_description);
+    while (temp_description.length() >= MAX_DESCRIPTION) {
+        cout << "Description too long. Try again." << endl;
+        cout << "Describe the bug report or feature request: ";
+        getline(cin>>ws, temp_description);
+    }
+    strcpy(change_description, temp_description.c_str());
+
+    cout << "Enter today's date with the format of 'mm/dd/yyy': ";
+    getline(cin>>ws, temp_date);
+    while (temp_date.length() != 10) {
+        cout << "Invalid date format. Try again: ";
+        getline(cin>>ws, temp_date);
+    }
+    strcpy(date, temp_date.c_str());
+
+    //long int change_id = generate_id(); //generate_id is function in changeRequest.cpp that generates a random/pseudo random number
+    //make_change_request(change_id, cus_name, selected_release, date);
+    //make_change_item(change_id, selected_product, selected_release, change_description, "Unchecked", 0, 1);
+    
     cout << "\n\nChange has been reported." << endl;
     cout << "Thank you for reporting the change! This change ID is XXXXX" << endl;  
     cout << "Please enter (0) to return to Main Menu: ";

@@ -11,46 +11,14 @@
 fstream changeRequestFile;
 
 //-----------------------------------------------------------------------------
-//initialize change request database
-bool init_change_request() {
-    //open file for reading/writing and create it if it doesn't exist
-    changeRequestFile.open(CHANGE_ITEM_FILE, ios::in | ios::out | ios::binary);
-    
-    //if file opened successfully, return true
-    if(changeRequestFile.is_open()) {
-        return true;
-    } else { //otherwise return false
-        return false;
-    }
-
-}
-
-//-----------------------------------------------------------------------------
-// add change request to file
-bool make_change_request(ChangeRequest* changeRequest) {
-    //write change request to file
-    write_change_request(*changeRequest);
-    return true;
-}
-
-//-----------------------------------------------------------------------------
-// close change request database file
-bool close_change_request() {
-    if (changeRequestFile.is_open()) {
-        changeRequestFile.close();
-        return true;
-    }
-    return false;
-}
-
-//-----------------------------------------------------------------------------
 // constructor
-ChangeRequest::ChangeRequest() {
+ChangeRequest::ChangeRequest(const long int new_id, const char new_name[MAX_NAME], 
+        const char new_release[MAX_NAME], const char new_date[MAX_DATE]) {
     //initialize all member variables to empty strings
-    id = 0;
-    strcpy(customer_name, "");
-    strcpy(reported_release, "");
-    strcpy(request_date, "");
+    set_id(new_id);
+    set_customer_name(new_name);
+    set_reported_release(new_release);
+    set_request_date(new_date);
 }
 
 //-----------------------------------------------------------------------------
@@ -115,7 +83,6 @@ void ChangeRequest::print_change_request_info() {
     cout << "Reported Release: " << reported_release << endl;
     cout << "Request Date: " << request_date << endl;
 }
-
 //-----------------------------------------------------------------------------
 // register new change request
 void ChangeRequest::register_change_request() {
@@ -136,14 +103,56 @@ void ChangeRequest::register_change_request() {
     cin >> request_date;
     set_request_date(request_date);
 }
+//-----------------------------------------------------------------------------
+//initialize change request database
+bool init_change_request() {
+    //open file for reading/writing and create it if it doesn't exist
+    changeRequestFile.open(CHANGE_ITEM_FILE, ios::in | ios::out | ios::binary);
+    
+    //if file opened successfully, return true
+    if(changeRequestFile.is_open()) {
+        return true;
+    } else { //otherwise return false
+        return false;
+    }
 
-// file operations
+}
+
+long int generate_id() {
+    
+}
+
+//-----------------------------------------------------------------------------
+// add change request to file
+bool make_change_request(const long int id, const char customer_name[MAX_NAME], 
+const char reported_release[MAX_NAME], const char request_date[MAX_DATE]) {
+    ChangeRequest temp_request(id, customer_name, reported_release, request_date);
+    //write change request to file
+    write_change_request(temp_request);
+    return true;
+}
+
+//-----------------------------------------------------------------------------
+// close change request database file
+bool close_change_request() {
+    if (changeRequestFile.is_open()) {
+        changeRequestFile.close();
+        return true;
+    }
+    return false;
+}
+
 
 //-----------------------------------------------------------------------------
 // write change request to file
 bool write_change_request(ChangeRequest &changeRequest){
     changeRequestFile.seekp(0, ios::end); 
     changeRequestFile.write((char*)&changeRequest, sizeof(ChangeRequest));
+    changeRequestFile.clear();
+    if (changeRequestFile.fail()) {
+        cout << "Error writing to change request file." << endl;
+        return false;
+    }
     return true;
 }
 
@@ -155,41 +164,41 @@ bool read_change_request(int index, ChangeRequest &changeRequest){
     return true;
 }
 
-//-----------------------------------------------------------------------------
-// delete change request from file
-bool delete_change_request(int index){
-    fstream tempFile("temp_changereq.dat", ios::out | ios::binary);
-    // seek to start of file
+// //-----------------------------------------------------------------------------
+// // delete change request from file
+// bool delete_change_request(int index){
+//     fstream tempFile("temp_changereq.dat", ios::out | ios::binary);
+//     // seek to start of file
 
-    changeRequestFile.seekg(0, ios::beg);
+//     changeRequestFile.seekg(0, ios::beg);
 
-    // copy all records except the one to be deleted
-    ChangeRequest tempChangeRequest;
-    int i = 0;
-    while (changeRequestFile.read((char*)&tempChangeRequest, sizeof(ChangeRequest))) {
-        if (i != index) {
-            tempFile.write((char*)&tempChangeRequest, sizeof(ChangeRequest));
-        }
-        i++;
-    }
+//     // copy all records except the one to be deleted
+//     ChangeRequest tempChangeRequest;
+//     int i = 0;
+//     while (changeRequestFile.read((char*)&tempChangeRequest, sizeof(ChangeRequest))) {
+//         if (i != index) {
+//             tempFile.write((char*)&tempChangeRequest, sizeof(ChangeRequest));
+//         }
+//         i++;
+//     }
 
-    // Clear the file (truncate to 0 and seek to the beginning)
-    changeRequestFile.close();
-    changeRequestFile.open(CHANGE_ITEM_FILE, ios::out | ios::trunc);
-    changeRequestFile.close();
-    changeRequestFile.open(CHANGE_ITEM_FILE, ios::in | ios::out | ios::binary);
+//     // Clear the file (truncate to 0 and seek to the beginning)
+//     changeRequestFile.close();
+//     changeRequestFile.open(CHANGE_ITEM_FILE, ios::out | ios::trunc);
+//     changeRequestFile.close();
+//     changeRequestFile.open(CHANGE_ITEM_FILE, ios::in | ios::out | ios::binary);
 
-    // copy all records back
-    tempFile.seekg(0, ios::beg);
-    while (tempFile.read((char*)&tempChangeRequest, sizeof(ChangeRequest))) {
-        changeRequestFile.write((char*)&tempChangeRequest, sizeof(ChangeRequest));
-    }
+//     // copy all records back
+//     tempFile.seekg(0, ios::beg);
+//     while (tempFile.read((char*)&tempChangeRequest, sizeof(ChangeRequest))) {
+//         changeRequestFile.write((char*)&tempChangeRequest, sizeof(ChangeRequest));
+//     }
 
-    // clear and close temp file
-    tempFile.close();
-    tempFile.open("temp_changereq.dat", ios::out | ios::trunc);
-    tempFile.close();
+//     // clear and close temp file
+//     tempFile.close();
+//     tempFile.open("temp_changereq.dat", ios::out | ios::trunc);
+//     tempFile.close();
 
-    return true;
-}
+//     return true;
+// }
     

@@ -28,7 +28,8 @@ class ChangeRequest{
         char request_date[MAX_DATE];
     public:
         // constructor
-        ChangeRequest();
+        ChangeRequest(const long int id, const char customer_name[MAX_NAME], 
+        const char reported_release[MAX_NAME], const char request_date[MAX_DATE]);
         // destructor
         ~ChangeRequest();
         // get id
@@ -59,9 +60,12 @@ class ChangeRequest{
 // initialize change request database
 bool init_change_request();
 
+long int generate_id ();
+
 // add change request to file
-bool make_change_request(ChangeRequest* changeRequest // change request to add
-                        );
+bool make_change_request(const long int id, const char customer_name[MAX_NAME], 
+        const char reported_release[MAX_NAME], const char request_date[MAX_DATE]
+);
 
 // close change request database file
 bool close_change_request();
@@ -77,8 +81,8 @@ bool read_change_request(int index, ChangeRequest &changeRequest // index of cha
                         );
 
 // delete change request from file
-bool delete_change_request(int index // index of change request to delete
-                        );
+// bool delete_change_request(int index // index of change request to delete
+//                         );
 
 
 #endif
