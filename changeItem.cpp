@@ -9,6 +9,8 @@
 //global filestream for change item file so it stays open for program duration
 fstream changeItemFile;
 
+long int changeRequestID;
+
 //-----------------------------------------------------------------------------
 bool init_change_item() {
     //open file for reading/writing and create it if it doesn't exist
@@ -16,6 +18,16 @@ bool init_change_item() {
     
     //if file opened successfully, return true
     if(changeItemFile.is_open()) {
+        // read to last change item to get the id
+        ChangeItem changeItem;
+        int i = 0;
+        while(1){
+            if(!read_change_item(i, changeItem)){
+                break;
+            }
+            i++;
+        }
+        changeRequestID = changeItem.get_id();
         return true;
     } else { //otherwise return false
         return false;
@@ -322,16 +334,27 @@ bool write_change_item(ChangeItem &changeItem) {
 bool read_change_item(int index, ChangeItem &changeItem) {
     // assume file is open
     // make sure index is valid
-    changeItemFile.seekg(0, ios::end);
-    int numItems = changeItemFile.tellg() / sizeof(ChangeItem);
-    if(index >= numItems || index < 0) {
-        return false;
+    // changeItemFile.seekg(0, ios::end);
+    // int numItems = changeItemFile.tellg() / sizeof(ChangeItem);
+    // if(index >= numItems || index < 0) {
+    //     return false;
+    // }
+    // // seek to the correct position in the file
+    // changeItemFile.seekg(index * sizeof(ChangeItem), ios::beg);
+    // // read the change item from the file
+    // changeItemFile.read((char*)&changeItem, sizeof(ChangeItem));
+    // return true;
+    ChangeItem tempChangeItem;
+    changeItemFile.seekg(0, ios::beg);
+    while (changeItemFile.read((char*)&tempChangeItem, sizeof(ChangeItem))) {
+        if (tempChangeItem.get_id() == index) {
+            changeItem = tempChangeItem;
+            return true;
+        }
     }
-    // seek to the correct position in the file
-    changeItemFile.seekg(index * sizeof(ChangeItem), ios::beg);
-    // read the change item from the file
-    changeItemFile.read((char*)&changeItem, sizeof(ChangeItem));
-    return true;
+
+    changeItemFile.clear();
+    return false;
 }
 
 //-----------------------------------------------------------------------------

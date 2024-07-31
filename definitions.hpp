@@ -28,8 +28,4 @@
 #define PRODUCT_FILE "products.bin"
 
 
-// //global filestream for customer file so it stays open for program duration
-// extern std::fstream releaseFile, changeItemFile, changeRequestFile, productFile;
-
-
 #endif

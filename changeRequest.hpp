@@ -30,6 +30,7 @@ class ChangeRequest{
         // constructor
         ChangeRequest(const long int id, const char customer_name[MAX_NAME], 
         const char reported_release[MAX_NAME], const char request_date[MAX_DATE]);
+        ChangeRequest();
         // destructor
         ~ChangeRequest();
         // get id

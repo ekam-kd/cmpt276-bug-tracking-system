@@ -21,6 +21,9 @@ ChangeRequest::ChangeRequest(const long int new_id, const char new_name[MAX_NAME
     set_request_date(new_date);
 }
 
+ChangeRequest::ChangeRequest() {
+    //nothing to do here
+}
 //-----------------------------------------------------------------------------
 // destructor
 ChangeRequest::~ChangeRequest() {
@@ -118,9 +121,9 @@ bool init_change_request() {
 
 }
 
-long int generate_id() {
+// long int generate_id() {
     
-}
+// }
 
 //-----------------------------------------------------------------------------
 // add change request to file

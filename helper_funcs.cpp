@@ -179,7 +179,7 @@ bool create_change_request(){
     cout << "Please enter your name: ";
     getline(cin>>ws, temp_name);
     strcpy(cus_name, temp_name.c_str());
-    while (check_customer(cus_name) || temp_name.length() >= 30) {
+    while (!check_customer(cus_name) || temp_name.length() >= 30) {
         cout << "Invalid customer name. Please try again." << endl;
         cout << "Name: " << endl;
         getline(cin >> ws,temp_name);
