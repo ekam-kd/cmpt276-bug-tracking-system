@@ -21,17 +21,17 @@ using namespace std;
 class Product
 {
 private:
-    string product_name;
+    char product_name[MAX_PRODUCT_NAME];
 
 public:
     // constructor
-    Product(const string name);
+    Product(const char name[MAX_PRODUCT_NAME]);
     // destructor
     ~Product();
     // get name
-    string get_name() const; // Declaration with const qualifier
+    char* get_name();
     // set name
-    void set_name(string name);
+    void set_name(const char name[MAX_PRODUCT_NAME]);
     // print product info
     void print_product_info() const;
 };
@@ -41,16 +41,17 @@ public:
 // initialize product database
 bool init_product();
 
-// displays list of products, allows user to select one
-string select_product();
+bool check_product(const char prod_name[MAX_PRODUCT_NAME]);
 
 // add product to file
-bool add_product(const string prod_name // product to add
-);
+bool add_product(const char prod_name[MAX_PRODUCT_NAME]);
+
+// displays list of products, allows user to select one
+char* select_product();
 
 bool read_product(int index, Product &product);
 
-bool delete_product(int index);
+//bool delete_product(int index);
 
 // close product database file
 bool close_product();

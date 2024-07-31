@@ -84,8 +84,4 @@ Customer select_customer(const char* name);
 // closes customer database file
 bool close_customer();
 
-
-
-        
-
 #endif

@@ -18,6 +18,7 @@
 #define MAX_PHONE 12
 #define MAX_DATE 12
 #define MAX_DEPARTMENT 30
+#define MAX_PRODUCT_NAME 30
 
 // database file names
 #define CUSTOMER_FILE "customers.bin"

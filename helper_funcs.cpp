@@ -235,15 +235,13 @@ bool check_change_item(){
 bool register_product(){
     system("clear"); //clears the screen
     cout << "-----------------------------------\n";
-    cout << "New Product Menu:" << endl;
-    string temp_name;
-    char product_name[MAX_NAME];
-    char emp_name[MAX_NAME];
-    cout << "\nEnter Name: ";
-    getline(cin >> ws, temp_name);
-    strcpy(emp_name, temp_name.c_str());
-    cout << "Name is: " << emp_name;
-    check_employee(emp_name);
+    cout << "Register Product Menu:" << endl;
+    string temp_product;
+    char product_name[MAX_PRODUCT_NAME];
+    cout << "\nEnter Product Name: ";
+    getline(cin >> ws, temp_product);
+    strcpy(product_name, temp_product.c_str());
+    add_product(product_name);
 
     
     cout << "Please enter (0) to return to Main Menu, or (1) to Continue: ";
@@ -257,9 +255,6 @@ bool register_product(){
         sleep(2);
         return true;
     }
-    cout << "\nPlease enter the product name: ";
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    cin.get(product_name, MAX_NAME-1);
     cout << "\n\nPlease confirm the following information:" << endl;
     cout << "Product Name: " << product_name << endl;
     cout << "\nIs this information correct? (Y/N): ";
