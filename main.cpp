@@ -46,14 +46,27 @@ int main()
             
             // check if user is an employee, loops for possible invalid input
             while(1){
-                system("clear"); // clear the screen
+                // system("clear"); // clear the screen
                 cout << "\nAre you an employee of AAA Inc.? (Y/N): ";
 
                 // get user input and check if they are an employee
                 string emp1;
                 cin >> emp1;  
                 if(emp1[0] == 'Y' || emp1[0] == 'y'){
-                    employee = true;
+                    // check if user is an employee
+                    // get name
+                    string name;
+                    cout << "Enter your name: ";
+                    cin >> name;
+                    // // check if employee exists
+                    // if(check_employee(name)){
+                    //     cout << "Welcome back " << name << "!" << endl;
+                    //     employee = true;
+                    // } else{
+                    //     cout << "Employee not found, please try again" << endl;
+                    //     employee = false;
+                    //     continue;
+                    // }
                     break;
                 } else if(emp1[0] == 'N' || emp1[0] == 'n'){
                     employee = false;
