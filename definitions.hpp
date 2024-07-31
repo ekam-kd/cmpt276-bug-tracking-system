@@ -15,7 +15,7 @@
 #define MAX_NAME 30 
 #define MAX_DESCRIPTION 280
 #define MAX_EMAIL 64
-#define MAX_PHONE 11
+#define MAX_PHONE 12
 #define MAX_DATE 12
 #define MAX_DEPARTMENT 30
 
