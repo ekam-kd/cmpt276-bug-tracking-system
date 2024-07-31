@@ -27,5 +27,7 @@
 #define CHANGE_REQUEST_FILE "changeRequests.bin"
 #define PRODUCT_FILE "products.bin"
 
+#define CHANGE_ID_FILE "change_id.txt"
+
 
 #endif

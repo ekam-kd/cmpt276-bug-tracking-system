@@ -9,6 +9,7 @@
 
 //global filestream for change request file so it stays open for program duration
 fstream changeRequestFile;
+fstream changeIdFile;
 long int id_official;
 //-----------------------------------------------------------------------------
 // constructor
@@ -120,10 +121,36 @@ bool init_change_request() {
     }
 
 }
+//-----------------------------------------------------------------------------
+//generates change id
+long int generate_id() {
+    changeIdFile.open(CHANGE_ID_FILE, ios::in | ios::out);
+    long change_id = 1;
 
-// long int generate_id() {
-    
-// }
+    // Check if the file exists and can be opened for reading and writing
+    if (changeIdFile) {
+        // Read the current change_id from the file
+        changeIdFile >> change_id;
+
+        // Move the file pointer to the beginning for writing the new value
+        changeIdFile.seekp(0, std::ios::beg);
+    } else {
+        // If the file doesn't exist, create it and set change_id to 1
+        changeIdFile.open(CHANGE_ID_FILE, std::ios::out);
+    }
+
+    long old_value = change_id;
+
+    // Increment the change_id
+    change_id++;
+
+    // Write the new change_id back to the file
+    changeIdFile << change_id;
+    changeIdFile.close();
+
+    // Return the old value (before the increment)
+    return old_value;
+}
 
 //-----------------------------------------------------------------------------
 // add change request to file

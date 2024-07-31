@@ -41,6 +41,13 @@ bool make_change_item(ChangeItem* changeItem) {
     write_change_item(*changeItem);
     return true;
 }
+bool make_change_item(const long int id, const char prod_name[MAX_PRODUCT_NAME], const char prod_release[MAX_NAME], 
+const char description[MAX_DESCRIPTION], const char status[MAX_NAME], const int priority, const int requests) {
+    ChangeItem temp_changeItem(id, prod_name, prod_release, description, status, priority, requests);
+    write_change_item(temp_changeItem);
+    return true;
+}
+
 
 //-----------------------------------------------------------------------------
 // need to test this function
@@ -204,7 +211,7 @@ bool close_change_item() {
 }
 
 //-----------------------------------------------------------------------------
-// constructor
+// default constructor
 ChangeItem::ChangeItem() {
     //initialize all member variables to empty strings
     strcpy(productName, "");
@@ -214,6 +221,18 @@ ChangeItem::ChangeItem() {
     priority = 0;
     requests = 0;
     id = 0;
+}
+//-----------------------------------------------------------------------------
+// constructor
+ChangeItem::ChangeItem(const long int id, const char prod_name[MAX_PRODUCT_NAME], const char prod_release[MAX_NAME], 
+const char description[MAX_DESCRIPTION], const char status[MAX_NAME], const int priority, const int requests) {
+    set_id(id);
+    set_productName(prod_name);
+    set_productReleaseID(prod_release);
+    set_description(description);
+    set_status(status);
+    set_priority(priority);
+    set_requests(requests);
 }
 
 //-----------------------------------------------------------------------------
@@ -326,6 +345,7 @@ bool write_change_item(ChangeItem &changeItem) {
     changeItemFile.seekp(0, ios::end);
     // write the change item to the file
     changeItemFile.write((char*)&changeItem, sizeof(ChangeItem));
+    changeItemFile.clear();
     return true;
 }
 

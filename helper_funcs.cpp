@@ -189,7 +189,7 @@ bool create_change_request(){
     char *selected_product = select_product();
 
     cout << "Select product release that report/request is being made for: ";
-    //char *selected_release = select_product_release(); //function in release.cpp that should display releases for a particular product and user picks one
+    char *selected_release = select_product_release(selected_product);
 
 
     cout << "\nPlease describe the bug report or feature request [in less than 280 characters]: ";
@@ -209,12 +209,13 @@ bool create_change_request(){
     }
     strcpy(date, temp_date.c_str());
 
-    //long int change_id = generate_id(); //generate_id is function in changeRequest.cpp that generates a random/pseudo random number
-    //make_change_request(change_id, cus_name, selected_release, date);
-    //make_change_item(change_id, selected_product, selected_release, change_description, "Unchecked", 0, 1);
+    long int change_id = generate_id();
+    cout << "Change id is: " << change_id << endl;
+    make_change_request(change_id, cus_name, selected_release, date);
+    make_change_item(change_id, selected_product, selected_release, change_description, "Unchecked", 0, 1);
     
-    cout << "\n\nChange has been reported." << endl;
-    cout << "Thank you for reporting the change! This change ID is XXXXX" << endl;  
+    cout << "\nChange has been reported." << endl;
+    cout << "Thank you for reporting the change! This change ID is " << change_id << endl;  
     cout << "Please enter (0) to return to Main Menu: ";
     string return_main;
     cin >> return_main;

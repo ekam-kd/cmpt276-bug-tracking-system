@@ -34,6 +34,9 @@ class ChangeItem{
     public:
         // constructor
         ChangeItem();
+        //constructor
+        ChangeItem(const long int id, const char prod_name[MAX_PRODUCT_NAME], const char prod_release[MAX_NAME], 
+        const char description[MAX_DESCRIPTION], const char status[MAX_NAME], const int priority, const int requests);
         // destructor
         ~ChangeItem();
         // get id
@@ -74,8 +77,8 @@ class ChangeItem{
 bool init_change_item();
 
 // create a new change item and add to file
-bool make_change_item(ChangeItem* changeItem // change item to initialize
-                );
+bool make_change_item(const long int id, const char prod_name[MAX_PRODUCT_NAME], const char prod_release[MAX_NAME], 
+const char description[MAX_DESCRIPTION], const char status[MAX_NAME], const int priority, const int requests);
 
 // display to user all the pending change items for a product
 bool get_change_items(char* productName // name of the product
