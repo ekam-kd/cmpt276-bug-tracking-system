@@ -70,7 +70,6 @@ bool register_customer(){
         getline(cin >> ws,temp_name);
     }
     strcpy(cus_name, temp_name.c_str());
-    cout << "ur name is still: " << cus_name << "!" << endl;
 
     cout << "\nPlease enter your email address" << endl;
     cout << "Email: ";
@@ -81,13 +80,11 @@ bool register_customer(){
         getline(cin >> ws,temp_email); 
     }
     strcpy(cus_email, temp_email.c_str());
-    cout << "your name is still: " << cus_name << "!" << endl;
 
     cout << "\nPlease enter your phone number" << endl;
     cout << "Note that phone number must be in the format of +1(234)-567-8910 -> 12345678910" << endl;
     cout << "Phone: ";
     getline(cin >> ws,temp_phone);
-    cout << "your name is still: " << cus_name << "!" << endl;
     //the following while loop checks to make sure the inputted phone number is valid, in length and character
     while (!is_digits(temp_phone) || temp_phone.length() != 11) {
         if (!is_digits(temp_phone)) {
@@ -103,11 +100,7 @@ bool register_customer(){
             getline(cin >> ws,temp_phone);
         }  
     }
-    cout << "your name is still: " << cus_name << "!" << endl;
     strcpy(cus_phone, temp_phone.c_str());
-    cout << "your name is still: " << cus_name << "!" << endl;
-
-    //char temp[MAX_DEPARTMENT] = " ";
 
     if(employee){
         cout << "\nPlease enter your department: ";
