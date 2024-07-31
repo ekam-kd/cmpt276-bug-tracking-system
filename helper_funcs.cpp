@@ -241,15 +241,18 @@ bool check_change_item(){
 // calls check_employee and then add_product
 bool register_product(){
     system("clear"); //clears the screen
+    cout << "-----------------------------------\n";
+    cout << "New Product Menu:" << endl;
+    string temp_name;
     char product_name[MAX_NAME];
     char emp_name[MAX_NAME];
     cout << "\nEnter Name: ";
-    cin.getline(emp_name, MAX_NAME);
+    getline(cin >> ws, temp_name);
+    strcpy(emp_name, temp_name.c_str());
     cout << "Name is: " << emp_name;
     check_employee(emp_name);
 
-    cout << "-----------------------------------\n";
-    cout << "New Product Menu:" << endl;
+    
     cout << "Please enter (0) to return to Main Menu, or (1) to Continue: ";
     string return_m;
     cin >> return_m;

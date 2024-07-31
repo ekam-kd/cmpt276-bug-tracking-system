@@ -155,7 +155,7 @@ bool check_employee(const char name[MAX_NAME])
     while (customerFile.read(reinterpret_cast<char*>(&temp_customer), sizeof(Customer))) {
         cout << "Checking employee: " << temp_customer.get_name() << " and their department:" << temp_customer.get_department() << endl;
         if (strcmp(temp_customer.get_name(),name) == 0) {
-            if (strcmp(temp_customer.get_department(), " ") == 0) {
+            if (strcmp(temp_customer.get_department(), "") != 0) {
                 cout << "Valid employee." << endl;
                 return true;
             }
