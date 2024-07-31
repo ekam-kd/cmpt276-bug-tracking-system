@@ -227,11 +227,11 @@ bool create_change_request(){
 
 //-----------------------------------------------------------------------------
 // check bug status
+// check_customer(), select_product(), select_product_release(), get_change_items(), select_change_item()
 bool check_change_item(){
-    long int bug_id;
     system("clear");
     cout << "-----------------------------------\n";
-    cout << "Change Item Status Menu:" << endl;
+    cout << "Change Item Status Mernu:" << endl;
     cout << "Please enter (0) to return to Main Menu, or (1) to Continue: ";
     string return_m;
     cin >> return_m;
@@ -243,10 +243,30 @@ bool check_change_item(){
         sleep(2);
         return true;
     }
-    cout << "\nPlease enter the change ID: ";
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    cin >> bug_id;
-    cout << "\n\nChange ID " << bug_id << " is currently in <STATE> state." << endl;
+    string temp_name;
+    char cus_name[MAX_NAME];
+    long int change_id;
+    
+    cout << "Please enter your name: ";
+    getline(cin>>ws, temp_name);
+    strcpy(cus_name, temp_name.c_str());
+    while (check_customer(cus_name) || temp_name.length() >= 30) {
+        cout << "Invalid customer name. Please try again." << endl;
+        cout << "Name: " << endl;
+        getline(cin >> ws,temp_name);
+        strcpy(cus_name, temp_name.c_str());
+    }
+    cout << "Please select the product that the change item is for: " << endl;
+    char *selected_product = select_product();
+
+    cout << "Select product release that the change item is for: ";
+    //char *selected_release = select_product_release(); //function in release.cpp that should display releases for a particular product and user picks one
+    // get_change_items(selected_release)
+    // cout << "Enter change id of the change item you wish to view" << endl;
+    // cin >> ws;
+    // cin >> change_id;
+    // select_change_item(change_id);
+
     cout << "Please enter (0) to return to Main Menu: ";
     string return_main;
     cin >> return_main;
@@ -317,8 +337,8 @@ bool register_product(){
 
 //-----------------------------------------------------------------------------
 // edit change item
+// select_product(), select_product_release(), get_change_items(), modify_change_item()
 bool edit_change_item(){
-    char product_name[MAX_NAME], product_version[MAX_NAME];
     system("clear");
     cout << "-----------------------------------\n";
     cout << "Edit Change Items Menu:" << endl;
@@ -333,12 +353,17 @@ bool edit_change_item(){
         sleep(2);
         return true;
     }
-    cout << "\nPlease enter the product name: ";
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    cin.get(product_name, MAX_NAME-1);
-    cout << "\nPlease enter the product version: ";
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    cin.get(product_version, MAX_NAME-1);
+    cout << "Please select the product that the change item is for: " << endl;
+    char *selected_product = select_product();
+
+    cout << "Select product release that the change item is for: ";
+    //char *selected_release = select_product_release(); //function in release.cpp that should display releases for a particular product and user picks one
+    // get_change_items(selected_release)
+    // cout << "Enter change id of the change item you wish to view" << endl;
+    // cin >> ws;
+    // cin >> change_id;
+    // select_change_item(change_id);
+    
     cout << "\n\nThe following change items are pending for " << product_name << " Version " << product_version << ":" << endl;
     cout << "-----------------------------------\n";
     cout << "Change Item ID: XXXXX, Description {...}" << endl;
