@@ -42,7 +42,7 @@ public:
 bool init_product();
 
 // displays list of products, allows user to select one
-Product select_product();
+string select_product();
 
 // add product to file
 bool add_product(const string prod_name // product to add

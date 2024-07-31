@@ -67,13 +67,45 @@ void Product::print_product_info() const
 }
 //-----------------------------------------------------------------------------
 // Displays list of products, allows user to select one
-Product select_product()
+string select_product()
 {
     // Placeholder for actual implementation
     // For simplicity, we will return a product with a hardcoded name
-    Product product("");
-    product.set_name("Sample Product");
-    return product;
+
+    //open product file, then read through it and print each product, customer will have to enter
+    //its name. then we have to read through the file again and get the name. then we return the product.
+    Product temp_product("");
+
+    // Move the file pointer to the beginning of the file
+    productFile.seekg(0, ios::beg);
+
+    int count = 0;
+
+    // Read through the file
+    while (productFile.read(reinterpret_cast<char*>(&temp_product), sizeof(Product))) {
+        cout << count << ". " << temp_product.get_name() << endl;
+        count++;
+    }
+    string choice;
+    cout << "Enter product name: ";
+    getline(cin >> ws,choice);
+    while (choice.length() >= 30) {
+        cout << "Product name is too long. Please try again." << endl;
+        cout << "Product name: " << endl;
+        getline(cin >> ws,choice); 
+    }
+    Product temp2("");
+    productFile.seekg(0, ios::beg);
+    while (productFile.read(reinterpret_cast<char*>(&temp_product), sizeof(Product))) {
+        if (temp2.get_name() == choice) {
+            productFile.clear(); // Clear the EOF flag
+            return choice;
+        }
+    }
+    cout << "You entered a product that does not exist. try again" << endl;
+    // Reset the file pointer for future operations
+    productFile.clear(); // Clear the EOF flag
+    return "invalid selection";
 }
 //-----------------------------------------------------------------------------
 // Add product to file
