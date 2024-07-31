@@ -227,11 +227,11 @@ bool create_change_request(){
 
 //-----------------------------------------------------------------------------
 // check bug status
+// check_customer(), select_product(), select_product_release(), get_change_items(), select_change_item()
 bool check_change_item(){
-    long int bug_id;
     system("clear");
     cout << "-----------------------------------\n";
-    cout << "Change Item Status Menu:" << endl;
+    cout << "Change Item Status Mernu:" << endl;
     cout << "Please enter (0) to return to Main Menu, or (1) to Continue: ";
     string return_m;
     cin >> return_m;
@@ -243,10 +243,30 @@ bool check_change_item(){
         sleep(2);
         return true;
     }
-    cout << "\nPlease enter the change ID: ";
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    cin >> bug_id;
-    cout << "\n\nChange ID " << bug_id << " is currently in <STATE> state." << endl;
+    string temp_name;
+    char cus_name[MAX_NAME];
+    long int change_id;
+    
+    cout << "Please enter your name: ";
+    getline(cin>>ws, temp_name);
+    strcpy(cus_name, temp_name.c_str());
+    while (check_customer(cus_name) || temp_name.length() >= 30) {
+        cout << "Invalid customer name. Please try again." << endl;
+        cout << "Name: " << endl;
+        getline(cin >> ws,temp_name);
+        strcpy(cus_name, temp_name.c_str());
+    }
+    cout << "Please select the product that the change item is for: " << endl;
+    char *selected_product = select_product();
+
+    cout << "Select product release that the change item is for: ";
+    //char *selected_release = select_product_release(); //function in release.cpp that should display releases for a particular product and user picks one
+    // get_change_items(selected_release)
+    // cout << "Enter change id of the change item you wish to view" << endl;
+    // cin >> ws;
+    // cin >> change_id;
+    // select_change_item(change_id);
+
     cout << "Please enter (0) to return to Main Menu: ";
     string return_main;
     cin >> return_main;
@@ -317,8 +337,8 @@ bool register_product(){
 
 //-----------------------------------------------------------------------------
 // edit change item
+// select_product(), select_product_release(), get_change_items(), modify_change_item()
 bool edit_change_item(){
-    char product_name[MAX_NAME], product_version[MAX_NAME];
     system("clear");
     cout << "-----------------------------------\n";
     cout << "Edit Change Items Menu:" << endl;
@@ -333,94 +353,18 @@ bool edit_change_item(){
         sleep(2);
         return true;
     }
-    cout << "\nPlease enter the product name: ";
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    cin.get(product_name, MAX_NAME-1);
-    cout << "\nPlease enter the product version: ";
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    cin.get(product_version, MAX_NAME-1);
-    cout << "\n\nThe following change items are pending for " << product_name << " Version " << product_version << ":" << endl;
-    cout << "-----------------------------------\n";
-    cout << "Change Item ID: XXXXX, Description {...}" << endl;
-    cout << "Change Item ID: YXXXX, Description {...}" << endl;
-    cout << "Change Item ID: YYXXX, Description {...}" << endl;
-    cout << "Change Item ID: YYYXX, Description {...}" << endl;
-    cout << "Change Item ID: YYYYY, Description {...}" << endl;
-    cout << "-----------------------------------\n";
+    cout << "Please select the product that the change item is for: " << endl;
+    char *selected_product = select_product();
 
-    while(1){
-        cout << "Enter (N) to see more change items, or (P) to see previous, or enter the \nchange id of the item you wish to query: ";
-        string change_id;
-        cin >> change_id;
-        if(change_id[0] == 'N' || change_id[0] == 'n'){
-            // flip to next page
-            system("clear");
-            cout << "\n\nThe following change items are pending for " << product_name << ":" << endl;
-            cout << "-----------------------------------\n";
-            cout << "this is the next page i promise" << endl;
-            cout << "-----------------------------------\n";
-            cout << "Change Item ID: XXXXX, Description {...}" << endl;
-            cout << "Change Item ID: YXXXX, Description {...}" << endl;
-            cout << "Change Item ID: YYXXX, Description {...}" << endl;
-            cout << "Change Item ID: YYYXX, Description {...}" << endl;
-            cout << "Change Item ID: YYYYY, Description {...}" << endl;
-            cout << "-----------------------------------\n";
-        } else if(change_id[0] == 'P' || change_id[0] == 'p'){
-            // flip to previous page
-            system("clear");
-            cout << "\n\nThe following change requests are pending for " << product_name << ":" << endl;
-            cout << "-----------------------------------\n";
-            cout << "this is the previous page i promise" << endl;
-            cout << "-----------------------------------\n";
-            cout << "Change Item ID: XXXXX, Description {...}" << endl;
-            cout << "Change Item ID: YXXXX, Description {...}" << endl;
-            cout << "Change Item ID: YYXXX, Description {...}" << endl;
-            cout << "Change Item ID: YYYXX, Description {...}" << endl;
-            cout << "Change Item ID: YYYYY, Description {...}" << endl;
-            cout << "-----------------------------------\n";
-        } else{
-            // query change item id
-            while(1){
-                cout << "-----------------------------------\n";
-                cout << "Change Item: " << change_id << " has the following details:" << endl;
-                cout << "Description: {...}" << endl;
-                cout << "Enter the field you would like to modify: " << endl;
-                cout << "-----------------------------------\n";
-                cout << "0. Exit" << endl;
-                cout << "1. Priority" << endl;
-                cout << "2. Description" << endl;
-                cout << "3. Status" << endl;
-                cout << "-----------------------------------\n";
-                cout << "Selection: ";
-                string selection;
-                cin >> selection;
-                if(selection[0] == '1'){
-                    cout << "Enter the new priority level (1-5): ";
-                    int new_priority;
-                    cin >> new_priority;
-                    cout << "Priority level has been updated to " << new_priority << endl;
-                } else if(selection[0] == '2'){
-                    cout << "Enter the new description: ";
-                    char new_description[MAX_DESCRIPTION];
-                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                    cin.get(new_description, MAX_DESCRIPTION-1);
-                    cout << "Description has been updated to " << new_description << endl;
-                } else if(selection[0] == '3'){
-                    cout << "Enter the new status: ";
-                    char new_status[MAX_NAME];
-                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                    cin.get(new_status, MAX_NAME-1);
-                    cout << "Status has been updated to " << new_status << endl;
-                } else if(selection[0] == '0'){
-                    break;
-                }
-                else{
-                    cout << "Invalid selection, please try again" << endl;
-                }
-            }
-            break;
-        }
-    }
+    cout << "Select product release that the change item is for: ";
+    //char *selected_release = select_product_release(); //function in release.cpp that should display releases for a particular product and user picks one
+    // get_change_items(selected_release)
+    // cout << "Enter change id of the change item you wish to view" << endl;
+    // cin >> ws;
+    // cin >> change_id;
+    // modify_change_item(change_id);
+
+    
     return true;
 }
 
