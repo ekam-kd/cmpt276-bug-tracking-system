@@ -21,17 +21,17 @@ using namespace std;
 class Product
 {
 private:
-    char name[MAX_NAME];
+    string product_name;
 
 public:
     // constructor
-    Product();
+    Product(const string name);
     // destructor
     ~Product();
     // get name
-    const char *get_name() const; // Declaration with const qualifier
+    string get_name() const; // Declaration with const qualifier
     // set name
-    void set_name(const char *name);
+    void set_name(string name);
     // print product info
     void print_product_info() const;
 };
@@ -45,7 +45,7 @@ bool init_product();
 Product select_product();
 
 // add product to file
-bool add_product(const Product &product // product to add
+bool add_product(const string prod_name // product to add
 );
 
 bool read_product(int index, Product &product);

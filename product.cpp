@@ -16,25 +16,30 @@ fstream productFile;
 //-----------------------------------------------------------------------------
 bool init_product()
 {
-    // Open file for reading/writing and create it if it doesn't exist
     productFile.open(PRODUCT_FILE, ios::in | ios::out | ios::binary);
 
-    // If file opened successfully, return true
+    // if file opened successfully, return true
     if (productFile.is_open())
     {
         return true;
     }
     else
-    { // Otherwise return false
-        cerr << "Error initializing product database!" << endl;
+    { // otherwise try opening again
+        productFile.clear();
+        productFile.open(PRODUCT_FILE, ios::out | ios::binary);
+        if (productFile.is_open()) {
+            productFile.close();
+            productFile.open(PRODUCT_FILE, ios::in | ios::out | ios::binary);
+            return true;
+        }
+        //and if it doesn't work, return false
         return false;
     }
 }
 //-----------------------------------------------------------------------------
 // Constructor
-Product::Product()
-{
-    strcpy(name, "NOT_SET");
+Product::Product(const string name)
+: product_name(name) {
 }
 //-----------------------------------------------------------------------------
 // Destructor
@@ -44,22 +49,21 @@ Product::~Product()
 }
 //-----------------------------------------------------------------------------
 // Get name
-const char *Product::get_name() const
+string Product::get_name() const
 {
-    return name;
+    return product_name;
 }
 //-----------------------------------------------------------------------------
 // Set name
-void Product::set_name(const char *newName)
+void Product::set_name(string newName)
 {
-    strncpy(name, newName, MAX_NAME - 1);
-    name[MAX_NAME - 1] = '\0'; // Ensure null-terminated
+    product_name = newName;
 }
 //-----------------------------------------------------------------------------
 // Print product info
 void Product::print_product_info() const
 {
-    std::cout << "Product Name: " << name << std::endl;
+    std::cout << "Product Name: " << product_name << std::endl;
 }
 //-----------------------------------------------------------------------------
 // Displays list of products, allows user to select one
@@ -67,22 +71,29 @@ Product select_product()
 {
     // Placeholder for actual implementation
     // For simplicity, we will return a product with a hardcoded name
-    Product product;
+    Product product("");
     product.set_name("Sample Product");
     return product;
 }
 //-----------------------------------------------------------------------------
 // Add product to file
-bool add_product(const Product &product)
+bool add_product(const string prod_name)
 {
     if (!productFile.is_open())
     {
         cerr << "Product database file is not open!" << endl;
         return false;
     }
-
+    Product new_product(prod_name);
+    productFile.seekp(0, ios::end);
     // Write product to file
-    productFile.write(reinterpret_cast<const char *>(&product), sizeof(Product));
+    productFile.write(reinterpret_cast<const char *>(&new_product), sizeof(Product));
+    productFile.clear();
+
+    if (productFile.fail()) {
+        cerr << "Error writing to the product file." << endl;
+        return false;
+    }
     return true;
 }
 //-----------------------------------------------------------------------------
@@ -121,7 +132,7 @@ bool delete_product(int index)
         return false;
     }
 
-    Product product;
+    Product product("");
     int currentIndex = 0;
     bool deleted = false;
 
@@ -163,8 +174,16 @@ bool close_product()
     if (productFile.is_open())
     {
         productFile.close();
+    }
+    if (remove(PRODUCT_FILE) == 0)
+    {
+        //cout << "File successfully deleted." << endl;
         return true;
     }
-    return false;
+    else
+    {
+        cerr << "Error deleting the file." << endl;
+        return false;
+    }
 }
 //-----------------------------------------------------------------------------
