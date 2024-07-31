@@ -99,7 +99,7 @@ bool check_customer(const string name)
 
     // Read through the file
     while (customerFile.read(reinterpret_cast<char*>(&temp_customer), sizeof(Customer))) {
-        cout << "Checking employee: " << temp_customer.get_name() << " and their department:" << temp_customer.get_department() << endl;
+        cout << "Checking customer: " << temp_customer.get_name() << " and their department:" << temp_customer.get_department() << endl;
         if (temp_customer.get_name() == name) {
             cout << "Oh no! A customer with this name already exists. Please try again with a different name" << endl;
             //customerFile.clear();
