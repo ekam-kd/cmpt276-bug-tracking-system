@@ -370,8 +370,8 @@ bool edit_change_item(){
 
 //-----------------------------------------------------------------------------
 // send out new product release
+// select_product(), create_product_release
 bool send_new_product_release(){
-    char product_name[MAX_NAME], product_version[MAX_NAME];
     system("clear");
     cout << "-----------------------------------\n";
     cout << "Product Release Menu:" << endl;
@@ -386,14 +386,11 @@ bool send_new_product_release(){
         sleep(2);
         return true;
     }
-    cout << "\nPlease enter the product name: ";
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    cin.get(product_name, MAX_NAME-1);
-    cout << "\nPlease enter the product version: ";
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    cin.get(product_version, MAX_NAME-1);
-    cout << "\nProduct " << product_name << " version " << product_version << " has been released." << endl;
-    cout << "\nThank you for releasing the product!" << endl;
+    cout << "Please select the product that the change item is for: " << endl;
+    char *selected_product = select_product();
+
+    //create_product_release(selected_product);
+
     cout << "Please enter (0) to return to Main Menu: ";
     string return_main;
     cin >> return_main;
@@ -405,8 +402,8 @@ bool send_new_product_release(){
 }
 
 //-----------------------------------------------------------------------------
+//select_product(), get_change_items()
 bool see_all_pending_change_items(){
-    char product_name[MAX_NAME];
     system("clear");
     cout << "-----------------------------------\n";
     cout << "Pending Change Items Menu:" << endl;
@@ -421,13 +418,9 @@ bool see_all_pending_change_items(){
         sleep(2);
         return true;
     }
-    cout << "\nPlease enter the product name: ";
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    cin.get(product_name, MAX_NAME-1);
-    cout << "\n\nThe following change requests are pending for " << product_name << ":" << endl;
-    cout << "Change Request ID: XXXXX" << endl;
-    cout << "{...}" << endl;
-    cout << "Change Request ID: YYYYY" << endl;
+    cout << "Please select the product that the change item is for: " << endl;
+    char *selected_product = select_product();
+    //get_pending_change_items(selected_product);
 
     cout << "\n\nPlease enter (0) to return to Main Menu: ";
     string return_main;
@@ -440,8 +433,8 @@ bool see_all_pending_change_items(){
 }
 
 //-----------------------------------------------------------------------------
+//select_product(), see_all_change_items(), create_report()
 bool send_report(){
-    char product_name[MAX_NAME], product_version[MAX_NAME];
     system("clear");
     cout << "-----------------------------------\n";
     cout << "Search Change Items Menu:" << endl;
@@ -456,20 +449,11 @@ bool send_report(){
         sleep(2);
         return true;
     }
-    cout << "\nPlease enter the product name: ";
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    cin.get(product_name, MAX_NAME-1);
-    cout << "\nPlease enter the product version: ";
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    cin.get(product_version, MAX_NAME-1);
-    cout << "\n\nThe following change items are pending for " << product_name << " Version " << product_version << ":" << endl;
-    cout << "-----------------------------------\n";
-    cout << "Change Item ID: XXXXX, Description {...}" << endl;
-    cout << "Change Item ID: YXXXX, Description {...}" << endl;
-    cout << "Change Item ID: YYXXX, Description {...}" << endl;
-    cout << "Change Item ID: YYYXX, Description {...}" << endl;
-    cout << "Change Item ID: YYYYY, Description {...}" << endl;
-    cout << "-----------------------------------\n";
+    cout << "Please select the product that the change item is for: " << endl;
+    char *selected_product = select_product();
+    //long int chosen_item = see_all_pending_change_items(selected_product);
+    //create_report(chosen_item);
+    
 
 //     // flip through pages?
 //     // enter change item id to see more details?
