@@ -48,9 +48,9 @@ bool close_change_request() {
 ChangeRequest::ChangeRequest() {
     //initialize all member variables to empty strings
     id = 0;
-    strcpy(customer_name, "");
-    strcpy(reported_release, "");
-    strcpy(request_date, "");
+    customer_name = "";
+    reported_release = "";
+    request_date = "";
 }
 
 //-----------------------------------------------------------------------------
@@ -67,19 +67,19 @@ long int ChangeRequest::get_id() {
 
 //-----------------------------------------------------------------------------
 // get customer name
-char* ChangeRequest::get_customer_name() {
+string ChangeRequest::get_customer_name() {
     return customer_name;
 }   
 
 //-----------------------------------------------------------------------------
 // get reported release
-char* ChangeRequest::get_reported_release() {
+string ChangeRequest::get_reported_release() {
     return reported_release;
 }
 
 //-----------------------------------------------------------------------------
 // get request date
-char* ChangeRequest::get_request_date() {
+string ChangeRequest::get_request_date() {
     return request_date;
 }
 
@@ -91,20 +91,20 @@ void ChangeRequest::set_id(long int id) {
 
 //-----------------------------------------------------------------------------
 // set customer name
-void ChangeRequest::set_customer_name(string customer_name) {
-    strcpy(this->customer_name, customer_name.c_str());
+void ChangeRequest::set_customer_name(string name) {
+    customer_name = name;
 }
 
 //-----------------------------------------------------------------------------
 // set reported release
-void ChangeRequest::set_reported_release(string reported_release) {
-    strcpy(this->reported_release, reported_release.c_str());
+void ChangeRequest::set_reported_release(string release) {
+    reported_release = release;
 }
 
 //-----------------------------------------------------------------------------
 // set request date
-void ChangeRequest::set_request_date(string request_date) {
-    strcpy(this->request_date, request_date.c_str());
+void ChangeRequest::set_request_date(string date) {
+    request_date = date;
 }
 
 //-----------------------------------------------------------------------------
