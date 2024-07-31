@@ -362,90 +362,9 @@ bool edit_change_item(){
     // cout << "Enter change id of the change item you wish to view" << endl;
     // cin >> ws;
     // cin >> change_id;
-    // select_change_item(change_id);
-    
-    cout << "\n\nThe following change items are pending for " << product_name << " Version " << product_version << ":" << endl;
-    cout << "-----------------------------------\n";
-    cout << "Change Item ID: XXXXX, Description {...}" << endl;
-    cout << "Change Item ID: YXXXX, Description {...}" << endl;
-    cout << "Change Item ID: YYXXX, Description {...}" << endl;
-    cout << "Change Item ID: YYYXX, Description {...}" << endl;
-    cout << "Change Item ID: YYYYY, Description {...}" << endl;
-    cout << "-----------------------------------\n";
+    // modify_change_item(change_id);
 
-    while(1){
-        cout << "Enter (N) to see more change items, or (P) to see previous, or enter the \nchange id of the item you wish to query: ";
-        string change_id;
-        cin >> change_id;
-        if(change_id[0] == 'N' || change_id[0] == 'n'){
-            // flip to next page
-            system("clear");
-            cout << "\n\nThe following change items are pending for " << product_name << ":" << endl;
-            cout << "-----------------------------------\n";
-            cout << "this is the next page i promise" << endl;
-            cout << "-----------------------------------\n";
-            cout << "Change Item ID: XXXXX, Description {...}" << endl;
-            cout << "Change Item ID: YXXXX, Description {...}" << endl;
-            cout << "Change Item ID: YYXXX, Description {...}" << endl;
-            cout << "Change Item ID: YYYXX, Description {...}" << endl;
-            cout << "Change Item ID: YYYYY, Description {...}" << endl;
-            cout << "-----------------------------------\n";
-        } else if(change_id[0] == 'P' || change_id[0] == 'p'){
-            // flip to previous page
-            system("clear");
-            cout << "\n\nThe following change requests are pending for " << product_name << ":" << endl;
-            cout << "-----------------------------------\n";
-            cout << "this is the previous page i promise" << endl;
-            cout << "-----------------------------------\n";
-            cout << "Change Item ID: XXXXX, Description {...}" << endl;
-            cout << "Change Item ID: YXXXX, Description {...}" << endl;
-            cout << "Change Item ID: YYXXX, Description {...}" << endl;
-            cout << "Change Item ID: YYYXX, Description {...}" << endl;
-            cout << "Change Item ID: YYYYY, Description {...}" << endl;
-            cout << "-----------------------------------\n";
-        } else{
-            // query change item id
-            while(1){
-                cout << "-----------------------------------\n";
-                cout << "Change Item: " << change_id << " has the following details:" << endl;
-                cout << "Description: {...}" << endl;
-                cout << "Enter the field you would like to modify: " << endl;
-                cout << "-----------------------------------\n";
-                cout << "0. Exit" << endl;
-                cout << "1. Priority" << endl;
-                cout << "2. Description" << endl;
-                cout << "3. Status" << endl;
-                cout << "-----------------------------------\n";
-                cout << "Selection: ";
-                string selection;
-                cin >> selection;
-                if(selection[0] == '1'){
-                    cout << "Enter the new priority level (1-5): ";
-                    int new_priority;
-                    cin >> new_priority;
-                    cout << "Priority level has been updated to " << new_priority << endl;
-                } else if(selection[0] == '2'){
-                    cout << "Enter the new description: ";
-                    char new_description[MAX_DESCRIPTION];
-                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                    cin.get(new_description, MAX_DESCRIPTION-1);
-                    cout << "Description has been updated to " << new_description << endl;
-                } else if(selection[0] == '3'){
-                    cout << "Enter the new status: ";
-                    char new_status[MAX_NAME];
-                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                    cin.get(new_status, MAX_NAME-1);
-                    cout << "Status has been updated to " << new_status << endl;
-                } else if(selection[0] == '0'){
-                    break;
-                }
-                else{
-                    cout << "Invalid selection, please try again" << endl;
-                }
-            }
-            break;
-        }
-    }
+    
     return true;
 }
 
