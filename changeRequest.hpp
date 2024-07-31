@@ -23,9 +23,9 @@ using namespace std;
 class ChangeRequest{
     private:
         long int id;
-        string customer_name;
-        string reported_release;
-        string request_date;
+        char customer_name[MAX_NAME];
+        char reported_release[MAX_NAME];
+        char request_date[MAX_DATE];
     public:
         // constructor
         ChangeRequest();
@@ -34,11 +34,11 @@ class ChangeRequest{
         // get id
         long int get_id();
         // get customer name
-        string get_customer_name();
+        char* get_customer_name();
         // get reported release
-        string get_reported_release();
+        char* get_reported_release();
         // get request date
-        string get_request_date();
+        char* get_request_date();
         // set id
         void set_id(long int id);
         // set customer name
