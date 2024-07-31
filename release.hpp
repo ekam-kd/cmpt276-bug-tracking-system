@@ -28,6 +28,8 @@ class Release{
     public:
         // constructor
         Release();
+        Release(const char productName[MAX_NAME], const char version[MAX_NAME], 
+        const char description[MAX_DESCRIPTION], const char date[MAX_NAME]);
         // destructor
         ~Release();
         // get product name
@@ -61,6 +63,8 @@ bool create_product_release(Release* release // release to initialize
 
 // close release database file
 bool close_product_release();
+
+char* select_product_release(char product_name[MAX_PRODUCT_NAME]);
 
 // file operations
 bool write_release(Release &release);

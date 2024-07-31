@@ -45,6 +45,14 @@ Release::Release() {
     strcpy(date, "");
 }
 
+Release::Release(const char productName[MAX_NAME], const char version[MAX_NAME], 
+const char description[MAX_DESCRIPTION], const char date[MAX_NAME]) {
+    set_productName(productName);
+    set_version(version);
+    set_description(description);
+    set_date(date);
+}
+
 //-----------------------------------------------------------------------------
 // destructor
 Release::~Release() {
@@ -106,6 +114,38 @@ void Release::print_release_info() {
     cout << "Version: " << version << endl;
     cout << "Description: " << description << endl;
     cout << "Date: " << date << endl;
+}
+
+char* select_product_release(char product_name[MAX_PRODUCT_NAME]) {
+    if (!releaseFile.is_open())
+    {
+        cerr << "Error opening customer database file!" << endl;
+    }
+    Release temp_release("", "", "", "");
+    releaseFile.seekg(0, ios::beg);
+
+    while (releaseFile.read(reinterpret_cast<char*>(&temp_release), sizeof(Release))) {
+        if (strcmp(temp_release.get_productName(),product_name) == 0) {
+            cout << "Release: " << temp_release.get_version() << endl;
+        }
+    }
+    string temp_choice;
+    static char choice[MAX_PRODUCT_NAME];
+    cout << "Enter version: ";
+    getline(cin >> ws,temp_choice);
+    strcpy(choice, temp_choice.c_str());
+    //loop again to make sure the version entered by user exists
+    while (releaseFile.read(reinterpret_cast<char*>(&temp_release), sizeof(Release))) {
+        if ((strcmp(temp_release.get_productName(),product_name) == 0) && (strcmp(temp_release.get_version(), choice) == 0)) {
+            cout << "Version exists!" << endl;
+            releaseFile.clear();
+            return choice;
+        }
+    }
+    releaseFile.clear();
+    static char temp[30] = "Invalid version entered";
+    return temp;
+
 }
 
 //-----------------------------------------------------------------------------

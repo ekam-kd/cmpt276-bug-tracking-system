@@ -134,7 +134,7 @@ char* select_product()
     // Move the file pointer to the beginning of the file
     productFile.seekg(0, ios::beg);
 
-    int count = 0;
+    int count = 1;
 
     // Read through the file
     while (productFile.read(reinterpret_cast<char*>(&temp_product), sizeof(Product))) {
@@ -163,7 +163,7 @@ char* select_product()
     cout << "You entered a product that does not exist. try again" << endl;
     // Reset the file pointer for future operations
     productFile.clear(); // Clear the EOF flag
-    static char temp[30] = "Invalid selection";
+    static char temp[30] = "Invalid product selection";
     return temp;
 }
 
