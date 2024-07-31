@@ -170,48 +170,64 @@ bool read_release(int index, Release &release) {
     return true;
 }
 
-//-----------------------------------------------------------------------------
-// delete release from file
-bool delete_release(int index) {
-    fstream tempFile("temp_release.dat", ios::out | ios::binary);
+// //-----------------------------------------------------------------------------
+// // delete release from file
+// bool delete_release(int index) {
+//     fstream tempFile("temp_release.dat", ios::out | ios::binary);
 
-    // Seek to the start of the file
-    releaseFile.seekg(0, std::ios::beg);
+//     // Seek to the start of the file
+//     releaseFile.seekg(0, std::ios::beg);
 
-    // Read all releases into memory except the one to be deleted
-    Release tempRelease;
-    int currentIndex = 0;
-    while (releaseFile.read(reinterpret_cast<char*>(&tempRelease), sizeof(Release))) {
-        if (currentIndex != index) {
-            tempFile.write(reinterpret_cast<const char*>(&tempRelease), sizeof(Release));
-        }
-        currentIndex++;
-    }
+//     // Read all releases into memory except the one to be deleted
+//     Release tempRelease;
+//     int currentIndex = 0;
+//     while (releaseFile.read(reinterpret_cast<char*>(&tempRelease), sizeof(Release))) {
+//         if (currentIndex != index) {
+//             tempFile.write(reinterpret_cast<const char*>(&tempRelease), sizeof(Release));
+//         }
+//         currentIndex++;
+//     }
 
-    // Clear the file (truncate to 0 and seek to the beginning)
-    releaseFile.close();
-    releaseFile.open(RELEASE_FILE, ios::out | ios::trunc);
-    releaseFile.close();
-    releaseFile.open(RELEASE_FILE, ios::in | ios::out | ios::binary);
+//     // Clear the file (truncate to 0 and seek to the beginning)
+//     releaseFile.close();
+//     releaseFile.open(RELEASE_FILE, ios::out | ios::trunc);
+//     releaseFile.close();
+//     releaseFile.open(RELEASE_FILE, ios::in | ios::out | ios::binary);
 
-    // Copy the temp file back to the original file
-    tempFile.seekg(0, std::ios::beg);
-    while (tempFile.read(reinterpret_cast<char*>(&tempRelease), sizeof(Release))) {
-        releaseFile.write(reinterpret_cast<const char*>(&tempRelease), sizeof(Release));
-    }
+//     // Copy the temp file back to the original file
+//     tempFile.seekg(0, std::ios::beg);
+//     while (tempFile.read(reinterpret_cast<char*>(&tempRelease), sizeof(Release))) {
+//         releaseFile.write(reinterpret_cast<const char*>(&tempRelease), sizeof(Release));
+//     }
 
-    // Close the temp file
-    tempFile.close();
-    tempFile.open("temp_release.dat", std::ios::out | std::ios::trunc);
-    tempFile.close();
+//     // Close the temp file
+//     tempFile.close();
+//     tempFile.open("temp_release.dat", std::ios::out | std::ios::trunc);
+//     tempFile.close();
 
-    return true;
-}
+//     return true;
+// }
 
 //-----------------------------------------------------------------------------
 // create a new product release and add to file
-bool create_product_release(Release* release){
+bool create_product_release(char* prod_name){
     // write release to file
-    write_release(*release);
+    string temp_version, temp_description, temp_date;
+    char version[MAX_NAME], description[MAX_DESCRIPTION], date[MAX_NAME];
+
+    std::cout << "Enter the new version: ";
+    getline(cin >> ws,temp_version);
+    strcpy(version, temp_version.c_str());
+
+    std::cout << "Enter the description: ";
+    getline(cin >> ws,temp_description);
+    strcpy(description, temp_description.c_str());
+
+    std::cout << "Enter the date [format: mm/dd/yyyy]: ";
+    getline(cin >> ws,temp_date);
+    strcpy(date, temp_date.c_str());
+
+    Release temp_release(prod_name, version, description, date);
+    write_release(temp_release);
     return true;
 }

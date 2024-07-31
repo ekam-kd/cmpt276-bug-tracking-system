@@ -58,7 +58,7 @@ class Release{
 bool init_release();
 
 // create a new product release and add to file
-bool create_product_release(Release* release // release to initialize
+bool create_product_release(char* prod_name // release to initialize
                 );
 
 // close release database file

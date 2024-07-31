@@ -81,8 +81,7 @@ bool make_change_item(const long int id, const char prod_name[MAX_PRODUCT_NAME],
 const char description[MAX_DESCRIPTION], const char status[MAX_NAME], const int priority, const int requests);
 
 // display to user all the pending change items for a product
-bool get_change_items(char* productName // name of the product
-                );
+bool get_change_items(char* prod_name, char* prod_release);
 
 // search through changeItem file for a specific change item 
 // then print info to screen
@@ -101,6 +100,9 @@ bool see_all_change_items(char* productName // name of the product
 bool create_report(long int ch_id // id of the change item
                     );
 
+// takes product name and lists all pending change items for a product
+bool get_pending_change_items(char* prod_name);
+
 // close change item database file
 bool close_change_item();
 
@@ -108,4 +110,5 @@ bool close_change_item();
 bool write_change_item(ChangeItem &changeItem);
 bool read_change_item(int index, ChangeItem &changeItem);
 bool delete_change_item(int index);
+
 #endif

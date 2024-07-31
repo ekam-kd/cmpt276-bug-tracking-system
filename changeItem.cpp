@@ -51,45 +51,36 @@ const char description[MAX_DESCRIPTION], const char status[MAX_NAME], const int 
 
 //-----------------------------------------------------------------------------
 // need to test this function
-bool get_change_item(char* productName){
-    ChangeItem changeItem;
-    int i = 0;
-    bool found = false;
-    while(!found){
-        if(!read_change_item(i, changeItem)){
-            break;
-        }
-        char* name = changeItem.get_productName();
-        if(strcmp(name, productName) == 0){
-            found = true;
-            changeItem.print_change_item_info();
+bool get_change_items(char* prod_name, char* prod_release){
+    //
+    ChangeItem temp_changeItem;
+    changeItemFile.seekg(0, ios::beg);
+    while (changeItemFile.read((char*)&temp_changeItem, sizeof(ChangeItem))) {
+        if (strcmp(temp_changeItem.get_productName(), prod_name) == 0 && 
+        strcmp(temp_changeItem.get_productReleaseID(), prod_release) == 0) {
+            cout << "Change Id: " << temp_changeItem.get_id() << ". Description: " << temp_changeItem.get_description() << "." << endl;
+            changeItemFile.clear();
             return true;
-        } else {
-            i++;
         }
     }
+    changeItemFile.clear();
     return false;
 }
 
 //-----------------------------------------------------------------------------
 // need to test this function
 bool see_change_item(long int ch_id){
-    ChangeItem changeItem;
-    int i = 0;
-    bool found = false;
-    while(!found){
-        if(!read_change_item(i, changeItem)){
-            break;
-        }
-        long int id = changeItem.get_id();
-        if(id == ch_id){
-            found = true;
-            changeItem.print_change_item_info();
+    ChangeItem temp_changeItem;
+    changeItemFile.seekg(0, ios::beg);
+    while (changeItemFile.read((char*)&temp_changeItem, sizeof(ChangeItem))) {
+        if (temp_changeItem.get_id() == ch_id) {
+            cout << "Change Id: " << temp_changeItem.get_id() << ". Description: " << temp_changeItem.get_description() << "." << endl;
+            cout << "Status: " << temp_changeItem.get_status() << ". Number of Requests: " << temp_changeItem.get_requests() << "." << endl;
+            changeItemFile.clear();
             return true;
-        } else {
-            i++;
         }
     }
+    changeItemFile.clear();
     return false;
 }
 
@@ -170,34 +161,37 @@ bool see_all_change_items(char* productName){
 }
 
 //-----------------------------------------------------------------------------
-bool create_report(long int ch_id){
-    // open changeRequest file + search fo matching ch_id
-    // if found, add customerName to a .txt file
-    ChangeRequest changeRequest;
-    int i = 0;
-    while(1){
-        if(!read_change_request(i, changeRequest)){
-            break;
-        }
-        long int id = changeRequest.get_id();
-        if(id == ch_id){
-            string customerName = changeRequest.get_customer_name();
-            // find customer name in customer file + get their email
-           // Customer customer = select_customer(customerName);
-           // string customerEmail = customer.get_email();
+bool get_pending_change_items(char* prod_name) {
+    ChangeItem temp_changeItem;
+    changeItemFile.seekg(0, ios::beg);
+    while (changeItemFile.read((char*)&temp_changeItem, sizeof(ChangeItem))) {
 
-            // write customer name and email to report.txt
-            ofstream reportFile;
-            reportFile.open("report.txt", ios::app);
-           // reportFile << customerName << ", "<< customerEmail << endl;
-            reportFile.close();
+        if ((strcmp(temp_changeItem.get_productName(), prod_name) == 0) && 
+        ((strcmp(temp_changeItem.get_status(), "Assessed") == 0) || 
+        (strcmp(temp_changeItem.get_status(), "In Progress") == 0))) {
+            cout << "Change Id: " << temp_changeItem.get_id() << ". Description: " << temp_changeItem.get_description() << "." << endl;
+            changeItemFile.clear();
             return true;
-        } else {
-            i++;
         }
     }
+    changeItemFile.clear();
+    return false;
+}
 
-    return true;
+
+//-----------------------------------------------------------------------------
+bool create_report(long int ch_id){
+    // if found, add customerName to a .txt file
+    ChangeItem temp_changeitem;
+    changeItemFile.seekg(0, ios::beg);
+    while (changeItemFile.read((char*)&temp_changeitem, sizeof(ChangeItem))) {
+        if (temp_changeitem.get_id() == ch_id) { 
+            cout << "Change Id: " << temp_changeitem.get_id() << ". Description: " << temp_changeitem.get_description() << "." << endl;
+        }
+    }
+    changeItemFile.clear();
+    return false;
+
 }
 
 //-----------------------------------------------------------------------------
