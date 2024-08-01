@@ -48,20 +48,14 @@ int main()
             // check if user is an employee, loops for possible invalid input
             while(1){
                 cout << "\nAre you an employee of AAA Inc.? (Y/N): ";
-
-                // get user input and check if they are an employee
                 string emp1;
                 cin >> emp1;  
                 if(emp1[0] == 'Y' || emp1[0] == 'y'){
-                    // check if user is an employee
-                    // get name
                     string temp_name;
                     char emp_name[MAX_NAME];
                     cout << "Enter your name: ";
                     getline(cin >> ws, temp_name);
                     strcpy(emp_name, temp_name.c_str());
-                    cout << "Name is: " << emp_name;
-                    check_employee(emp_name);
                     if (!check_employee(emp_name)) {
                         employee = false;
                         continue;
@@ -69,12 +63,11 @@ int main()
                         employee = true;
                         break;
                     }
-                    
                 } else if(emp1[0] == 'N' || emp1[0] == 'n'){
                     employee = false;
                     break;
                 } else{
-                    cout << "Invalid selection, please try again" << endl;
+                    cout << "Invalid input, please try again" << endl;
                 }
             }
 
@@ -94,43 +87,45 @@ int main()
                 cout << "-> Send out Report for Change Item (7)" << endl;
             }
             cout << "-----------------------------------\n\n";
-            int selection_two = -1; // intialize selection variable
+            string selection_two; // intialize selection variable
             cout << "Selection: "; // prompt user for selection
             cin >> selection_two; // get user selection
 
             // check user selection -> call appropriate submenu / function
             if(employee){ // if user is an employee -> call employee functions
-                if(selection_two == 0){
+                if(selection_two == "0"){
                     cout << "Returning to main menu..." << endl;
                     sleep(1);
-                } else if(selection_two == 1){
+                } else if(selection_two == "1"){
                     create_change_request();
-                } else if(selection_two == 2){
+                } else if(selection_two == "2"){
                     check_change_item();
-                } else if(selection_two == 3){
+                } else if(selection_two == "3"){
                     register_product();
-                } else if(selection_two == 4){
+                } else if(selection_two == "4"){
                     edit_change_item();
-                } else if(selection_two == 5){
+                } else if(selection_two == "5"){
                     send_new_product_release();
-                } else if(selection_two == 6){
+                } else if(selection_two == "6"){
                     see_all_pending_change_items();
-                } else if(selection_two == 7){
+                } else if(selection_two == "7"){
                     send_report();
                 }
                 else{
-                    cout << "Invalid selection, please try again" << endl;
+                    cout << "Invalid selection. Returning to main menu." << endl;
+                    sleep(1);
                 }
             } else{ // if user is not an employee -> call customer functions
-                if(selection_two == 0){ 
+                if(selection_two == "0"){ 
                     cout << "Returning to main menu..." << endl;
                     sleep(1);
-                } else if(selection_two == 1){
+                } else if(selection_two == "1"){
                     create_change_request(); // create a change request
-                } else if(selection_two == 2){
+                } else if(selection_two == "2"){
                     check_change_item(); // check change items
                 } else{
-                    cout << "Invalid selection, please try again" << endl;
+                    cout << "Invalid selection. Returning to main menu." << endl;
+                    sleep(1);
                 }
             }
         } else if(selection_one == "3"){
