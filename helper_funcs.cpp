@@ -187,13 +187,14 @@ bool create_change_request(){
     cout << "Please select the product for the report or request you wish to make: " << endl;
     char *selected_product = select_product();
     //if no products even exist, simply return to main menu
-    if (selected_product == "Sorry, no products currently exist.") {
+    if (strcmp(selected_product, "no products") == 0) {
         cout << "Can not create change requests with no products registered." << endl;
         cout << "Returning to main menu: " << endl;
         sleep(1);
+        return false;
     }
     //if user inputted invalid selection, keep retrying until it is valid
-    while (selected_product == "Invalid product selection") {
+    while (strcmp(selected_product,"Invalid product selection") == 0) {
         cout << "Would you like to try again? (Y/N): ";
         string try_again;
         cin >> try_again;

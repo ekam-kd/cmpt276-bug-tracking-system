@@ -125,7 +125,7 @@ bool add_product(const char prod_name[MAX_PRODUCT_NAME])
 
 //-----------------------------------------------------------------------------
 // Displays list of products, allows user to select one
-// OOH it could return a struct, with a boolean value and a string
+// OOH it could return a struct, with
 char* select_product()
 {
     Product temp_product("");

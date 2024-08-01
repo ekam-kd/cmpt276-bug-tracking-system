@@ -15,7 +15,7 @@ using namespace std;
 int main()
 {   
     start_up(); // initialize the system and database files
-    int selection_one = -1; // intialize selection variable
+    string selection_one; // intialize selection variable
     bool sys_run = true; // boolean to keep the system running
 
     // main menu loop
@@ -34,13 +34,14 @@ int main()
         cout << "Selection: "; // prompt user for selection
 
         // get user selection
+
         cin >> selection_one;
 
         // check user selection -> call appropriate submenu / function
-        if(selection_one == 1){
+        if(selection_one == "1"){
             // register new customer
             register_customer();
-        } else if(selection_one == 2){
+        } else if(selection_one == "2"){
             // existing customer
             bool employee = false; // boolean to check if user is an employee
             system("clear"); // clear the screen
@@ -132,14 +133,16 @@ int main()
                     cout << "Invalid selection, please try again" << endl;
                 }
             }
-        } else if(selection_one == 3){
+        } else if(selection_one == "3"){
             system("clear"); // clear the screen
             cout << "-----------------------------------\n";
             cout << "Thank you for using the Bug Tracking System!" << endl;
             cout << "-----------------------------------\n\n";
             sys_run = false; // terminate UI loop
-        } else{
+        } else {
+            system("clear");
             cout << "Invalid selection, please try again" << endl;
+            sleep(1);
         }
 
     }
