@@ -127,8 +127,6 @@ bool add_product(const char prod_name[MAX_PRODUCT_NAME])
 // Displays list of products, allows user to select one
 char* select_product()
 {
-    //open product file, then read through it and print each product, customer will have to enter
-    //its name. then we have to read through the file again and get the name. then we return the product.
     Product temp_product("");
 
     // Move the file pointer to the beginning of the file
@@ -136,20 +134,25 @@ char* select_product()
 
     int count = 1;
 
-    // Read through the file
+    // print out all the products for user to see
     while (productFile.read(reinterpret_cast<char*>(&temp_product), sizeof(Product))) {
         cout << count << ". " << temp_product.get_name() << endl;
         count++;
+    }
+    static char no_products[50] = "Sorry, no products currently exist.";
+    if (count == 1) {
+        return no_products;
     }
     string temp_choice;
     static char choice[MAX_PRODUCT_NAME];
     cout << "Enter product name: ";
     getline(cin >> ws,temp_choice);
-    while (temp_choice.length() >= 30) {
-        cout << "Product name is too long. Please try again." << endl;
-        cout << "Product name: " << endl;
-        getline(cin >> ws,temp_choice); 
-    }
+    //cuz i feel like we should only check length when its being registered
+    // while (temp_choice.length() >= 30) {
+    //     cout << "Product name is too long. Please try again." << endl;
+    //     cout << "Product name: " << endl;
+    //     getline(cin >> ws,temp_choice); 
+    // }
     strcpy(choice, temp_choice.c_str());
 
     Product temp2("");
@@ -160,7 +163,7 @@ char* select_product()
             return choice;
         }
     }
-    cout << "You entered a product that does not exist. try again" << endl;
+    cout << "You entered a product that does not exist." << endl;
     // Reset the file pointer for future operations
     productFile.clear(); // Clear the EOF flag
     static char temp[30] = "Invalid product selection";

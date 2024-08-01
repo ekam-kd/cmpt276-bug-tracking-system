@@ -180,12 +180,33 @@ bool create_change_request(){
     strcpy(cus_name, temp_name.c_str());
     while (!check_customer(cus_name) || temp_name.length() >= 30) {
         cout << "Invalid customer name. Please try again." << endl;
-        cout << "Name: " << endl;
+        cout << "Name: ";
         getline(cin >> ws,temp_name);
         strcpy(cus_name, temp_name.c_str());
     }
     cout << "Please select the product for the report or request you wish to make: " << endl;
     char *selected_product = select_product();
+    //if no products even exist, simply return to main menu
+    if (selected_product == "Sorry, no products currently exist.") {
+        cout << "Can not create change requests with no products registered." << endl;
+        cout << "Returning to main menu: " << endl;
+        sleep(1);
+    }
+    //if user inputted invalid selection, keep retrying until it is valid
+    while (selected_product == "Invalid product selection") {
+        cout << "Would you like to try again? (Y/N): ";
+        string try_again;
+        cin >> try_again;
+        if (try_again[0] == 'Y' || try_again[0] == 'y') {
+            char *selected_product = select_product();
+        } else if (try_again[0] == 'N' || try_again[0] == 'n') {
+            cout << "Returning to main menu: " << endl;
+            sleep(1);
+        } else {
+            cout << "Invalid selection. Please try again." << endl;
+        }
+        
+    }
 
     cout << "Select product release that report/request is being made for: ";
     char *selected_release = select_product_release(selected_product);

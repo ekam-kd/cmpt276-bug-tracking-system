@@ -20,6 +20,14 @@ bool init_release() {
     if(releaseFile.is_open()) {
         return true;
     } else { //otherwise return false
+        releaseFile.clear();
+        releaseFile.open(PRODUCT_FILE, ios::out | ios::binary);
+        if (releaseFile.is_open()) {
+            releaseFile.close();
+            releaseFile.open(PRODUCT_FILE, ios::in | ios::out | ios::binary);
+            return true;
+        }
+        //and if it doesn't work, return false
         return false;
     }
 
