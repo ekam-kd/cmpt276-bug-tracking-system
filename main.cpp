@@ -101,6 +101,7 @@ int main()
             if(employee){ // if user is an employee -> call employee functions
                 if(selection_two == 0){
                     cout << "Returning to main menu..." << endl;
+                    sleep(1);
                 } else if(selection_two == 1){
                     create_change_request();
                 } else if(selection_two == 2){
@@ -122,6 +123,7 @@ int main()
             } else{ // if user is not an employee -> call customer functions
                 if(selection_two == 0){ 
                     cout << "Returning to main menu..." << endl;
+                    sleep(1);
                 } else if(selection_two == 1){
                     create_change_request(); // create a change request
                 } else if(selection_two == 2){
