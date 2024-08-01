@@ -142,7 +142,6 @@ char* select_product()
     }
     static char no_products[20] = "no products";
     if (count == 1) {
-        cout << "Sorry, no products are registered. " << endl;
         return no_products;
     }
     string temp_choice;
