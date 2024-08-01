@@ -125,6 +125,7 @@ bool add_product(const char prod_name[MAX_PRODUCT_NAME])
 
 //-----------------------------------------------------------------------------
 // Displays list of products, allows user to select one
+// OOH it could return a struct, with a boolean value and a string
 char* select_product()
 {
     Product temp_product("");
@@ -139,8 +140,9 @@ char* select_product()
         cout << count << ". " << temp_product.get_name() << endl;
         count++;
     }
-    static char no_products[50] = "Sorry, no products currently exist.";
+    static char no_products[20] = "no products";
     if (count == 1) {
+        cout << "Sorry, no products are registered. " << endl;
         return no_products;
     }
     string temp_choice;
