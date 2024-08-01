@@ -19,17 +19,25 @@ bool init_change_item() {
     //if file opened successfully, return true
     if(changeItemFile.is_open()) {
         // read to last change item to get the id
-        ChangeItem changeItem;
-        int i = 0;
-        while(1){
-            if(!read_change_item(i, changeItem)){
-                break;
-            }
-            i++;
-        }
-        crid_official = changeItem.get_id();
+        // ChangeItem changeItem;
+        // int i = 0;
+        // while(1){
+        //     if(!read_change_item(i, changeItem)){
+        //         break;
+        //     }
+        //     i++;
+        // }
+        // crid_official = changeItem.get_id();
         return true;
-    } else { //otherwise return false
+    } else { //otherwise try opening/creating again
+        changeItemFile.clear();
+        changeItemFile.open(PRODUCT_FILE, ios::out | ios::binary);
+        if (changeItemFile.is_open()) {
+            changeItemFile.close();
+            changeItemFile.open(PRODUCT_FILE, ios::in | ios::out | ios::binary);
+            return true;
+        }
+        //and if it doesn't work, return false
         return false;
     }
 

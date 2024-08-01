@@ -117,6 +117,14 @@ bool init_change_request() {
     if(changeRequestFile.is_open()) {
         return true;
     } else { //otherwise return false
+        changeRequestFile.clear();
+        changeRequestFile.open(PRODUCT_FILE, ios::out | ios::binary);
+        if (changeRequestFile.is_open()) {
+            changeRequestFile.close();
+            changeRequestFile.open(PRODUCT_FILE, ios::in | ios::out | ios::binary);
+            return true;
+        }
+        //and if it doesn't work, return false
         return false;
     }
 
