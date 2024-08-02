@@ -148,6 +148,7 @@ bool modify_change_item(const long int ch_id, const int selection){
     // int i = 0;
 
     ChangeItem temp1;
+    ChangeItem chosen_one;
     // Move the file pointer to the beginning of the files
     changeItemFile.seekg(0, ios::beg);
     temp_itemFile.clear();
@@ -157,6 +158,14 @@ bool modify_change_item(const long int ch_id, const int selection){
     while (changeItemFile.read(reinterpret_cast<char*>(&temp1), sizeof(ChangeItem))) {
         if (temp1.get_id() != ch_id) {
             temp_itemFile.write(reinterpret_cast<const char *>(&temp1), sizeof(ChangeItem));
+        } else {
+            chosen_one.set_id(temp1.get_id());
+            chosen_one.set_productName(temp1.get_productName());
+            chosen_one.set_productReleaseID(temp1.get_productReleaseID());
+            chosen_one.set_description(temp1.get_description());
+            chosen_one.set_status(temp1.get_status());
+            chosen_one.set_priority(temp1.get_priority());
+            chosen_one.set_requests(temp1.get_requests());
         }
     }
     changeItemFile.close();
@@ -177,21 +186,21 @@ bool modify_change_item(const long int ch_id, const int selection){
     changeItemFile.close();
     changeItemFile.open(CHANGE_ITEM_FILE, ios::in | ios::out | ios::binary);
 
-
     // Now delete the temp file
     if (remove(TEMP_CHANGE_ITEM_FILE) != 0) {
         std::cerr << "Error: Could not delete temporary file." << std::endl;
         return false;
     }
-    return true;
 
-    while (changeItemFile.read(reinterpret_cast<char*>(&temp1), sizeof(ChangeItem))) {
+    ChangeItem temp3;
+
+    while (changeItemFile.read(reinterpret_cast<char*>(&temp3), sizeof(ChangeItem))) {
         if (selection == 0) {
             changeItemFile.clear();
             return true;
         } else if (selection == 1) {
-            string temp_release;
-            char release[MAX_NAME];
+            string temp_release, temp_date;
+            char release[MAX_NAME], date[MAX_DATE];
             cout << "Enter the new release: ";
             getline(cin>>ws, temp_release);
             while (temp_release.length() >= MAX_NAME) {
@@ -199,13 +208,23 @@ bool modify_change_item(const long int ch_id, const int selection){
                 getline(cin>>ws, temp_release);
             }
             strcpy(release, temp_release.c_str());
-            temp1.set_productReleaseID(release);
+            cout << "Enter today's date with the format of 'mm/dd/yyy': ";
+            getline(cin>>ws, temp_date);
+            while (temp_date.length() != 10) {
+                cout << "Invalid date format. Try again: ";
+                getline(cin>>ws, temp_date);
+            }
+            strcpy(date, temp_date.c_str());
+            chosen_one.set_productReleaseID(release);
             changeItemFile.clear();
-            return true;
+            create_product_release(chosen_one.get_productName(), release, chosen_one.get_description(), date);
+            cout << "Release successfully updated!" << endl;
+            break;
         } else if (selection == 2) {
 
         }
     }
+    changeItemFile.write(reinterpret_cast<const char *>(&chosen_one), sizeof(ChangeItem));
     changeItemFile.clear();
     return false;
 

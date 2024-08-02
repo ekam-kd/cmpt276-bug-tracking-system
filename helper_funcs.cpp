@@ -425,7 +425,7 @@ bool edit_change_item(){
         cin >> ws >> change_id;
     }
     see_change_item(change_id);
-    cout << "Enter the field you would like to modify: " << endl;
+    cout << "\nEnter the field you would like to modify: " << endl;
     cout << "------------------------------------------" << endl;
     cout << "0. Exit" << endl << "1. Anticipated Release" << endl << "2. Description" << endl << "3. Status" << endl;
     cout << "4. Priority" << endl << "5. Number of Requests" << endl;
@@ -435,6 +435,7 @@ bool edit_change_item(){
     int selection;
     cin >> selection;
     modify_change_item(change_id, selection);
+    cout << "New results: " << endl;
     see_change_item(change_id);
 
     sleep(10);
