@@ -74,14 +74,20 @@ class ChangeItem{
 // helper functions
 
 // initialize change item database
+// APPROVED
 bool init_change_item();
 
 // create a new change item and add to file
+// APPROVED
 bool make_change_item(const long int id, const char productName[MAX_PRODUCT_NAME], const char productReleaseID[MAX_NAME], 
 const char description[MAX_DESCRIPTION], const char status[MAX_NAME], const int priority, const int requests);
 
 // display to user all the pending change items for a product
+// APPROVED
 bool display_change_items(const char prod_name[MAX_PRODUCT_NAME], const char release_name[MAX_NAME]);
+
+// checks to see if change item with given id, product name, and releaseid actually exists
+bool check_change_item(const long int id, const char productName[MAX_PRODUCT_NAME], const char productReleaseID[MAX_NAME]);
 
 // search through changeItem file for a specific change item 
 // then print info to screen
@@ -93,6 +99,7 @@ bool modify_change_item(long int ch_id // id of the change item
                     );
 
 // see all change items (pending AND completed) for a product
+// SHOULD PROLLY DELETE CUS display_change_items DOES SAME THING
 bool see_all_change_items(char* productName // name of the product
                     );
 

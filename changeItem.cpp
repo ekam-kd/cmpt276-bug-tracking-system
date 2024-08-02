@@ -82,6 +82,34 @@ bool display_change_items(const char prod_name[MAX_PRODUCT_NAME], const char rel
 }
 
 //-----------------------------------------------------------------------------
+bool check_change_item(const long int id, const char productName[MAX_PRODUCT_NAME], const char productReleaseID[MAX_NAME]) {
+    //check to make sure productFile is open
+    if (!changeItemFile.is_open())
+    {
+        cerr << "Change Item database file is not open!" << endl;
+        return false;
+    }
+
+    ChangeItem temp_item;
+    changeItemFile.clear();
+    changeItemFile.seekg(0, ios::beg);
+
+    // Read through the file
+    while (changeItemFile.read(reinterpret_cast<char*>(&temp_item), sizeof(ChangeItem))) {
+        if (strcmp(temp_item.get_productName(), productName) == 0 
+        && strcmp(temp_item.get_productReleaseID(), productReleaseID) == 0 
+        && temp_item.get_id() == id) {
+            changeItemFile.clear();
+            return true;
+        }
+    }
+
+    // Reset the file pointer for future operations
+    changeItemFile.clear(); // Clear the EOF flag
+    return false;
+}
+
+//-----------------------------------------------------------------------------
 bool see_change_item(long int ch_id){
     ChangeItem temp_changeItem;
     // Move the file pointer to the beginning of the file
