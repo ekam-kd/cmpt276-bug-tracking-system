@@ -67,8 +67,6 @@ class ChangeItem{
         void set_priority(const int priority);
         // set requests
         void set_requests(const int requests);
-        // print change item info
-        void print_change_item_info();
 };
 
 // helper functions
@@ -85,6 +83,7 @@ const char description[MAX_DESCRIPTION], const char status[MAX_NAME], const int 
 // display to user all the change items for a product
 // APPROVED
 bool display_change_items(const char prod_name[MAX_PRODUCT_NAME], const char release_name[MAX_NAME]);
+
 
 // checks to see if change item with given id, product name, and releaseid actually exists
 // APPROVED
@@ -107,14 +106,11 @@ bool see_pending_change_items(const char prod_name[MAX_PRODUCT_NAME]
                     );
 
 // takes a change item ID and generates a report for relevent users
-bool create_report(long int ch_id // id of the change item
+bool create_report(const long int ch_id // id of the change item
                     );
 
 // close change item database file
+// APPROVED
 bool close_change_item();
 
-// file operations
-bool write_change_item(ChangeItem &changeItem);
-bool read_change_item(int index, ChangeItem &changeItem);
-bool delete_change_item(int index);
 #endif

@@ -66,6 +66,8 @@ bool make_change_request(const long int id, const char customer_name[MAX_NAME],
         const char reported_release[MAX_NAME], const char request_date[MAX_DATE]
 );
 
+
+
 // close change request database file
 bool close_change_request();
 

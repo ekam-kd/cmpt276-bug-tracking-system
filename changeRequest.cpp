@@ -161,8 +161,10 @@ const char reported_release[MAX_NAME], const char request_date[MAX_DATE]) {
     return true;
 }
 
+
 //-----------------------------------------------------------------------------
 // close change request database file
+// APPROVED
 bool close_change_request() {
     if (changeRequestFile.is_open()) {
         changeRequestFile.close();

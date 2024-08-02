@@ -9,24 +9,43 @@
 //global filestream for change item file so it stays open for program duration
 fstream changeItemFile;
 fstream temp_itemFile;
+fstream changeRequestFile2;
+fstream customerFile2;
 
 //-----------------------------------------------------------------------------
 bool init_change_item() {
     //open file for reading/writing and create it if it doesn't exist
     changeItemFile.open(CHANGE_ITEM_FILE, ios::in | ios::out | ios::binary);
     temp_itemFile.open(TEMP_CHANGE_ITEM_FILE, ios::in | ios::out | ios::binary);
+    changeRequestFile2.open(CHANGE_REQUEST_FILE, ios::in | ios::out | ios::binary);
+    customerFile2.open(CUSTOMER_FILE, ios::in | ios::out | ios::binary);
 
     //if file opened successfully, return true
-    if(changeItemFile.is_open() && temp_itemFile.is_open()) {
+    if(changeItemFile.is_open() && temp_itemFile.is_open() && changeRequestFile2.is_open() && customerFile2.is_open()) {
         return true;
     } else { //otherwise try opening again
         changeItemFile.clear();
         temp_itemFile.clear();
+        changeRequestFile2.clear();
+        customerFile2.clear();
+
         changeItemFile.open(CHANGE_ITEM_FILE, ios::out | ios::binary);
         temp_itemFile.open(TEMP_CHANGE_ITEM_FILE, ios::out | ios::binary);
+        changeRequestFile2.open(CHANGE_REQUEST_FILE, ios::out | ios::binary);
+        customerFile2.open(CUSTOMER_FILE, ios::in | ios::out | ios::binary);
+
+
         if (changeItemFile.is_open()) {
             changeItemFile.close();
             changeItemFile.open(CHANGE_ITEM_FILE, ios::in | ios::out | ios::binary);
+        }
+        if (changeRequestFile2.is_open()) {
+            changeRequestFile2.close();
+            changeRequestFile2.open(CHANGE_REQUEST_FILE, ios::in | ios::out | ios::binary);
+        }
+        if (customerFile2.is_open()) {
+            customerFile2.close();
+            customerFile2.open(CUSTOMER_FILE, ios::in | ios::out | ios::binary);
         }
         if (temp_itemFile.is_open()) {
             temp_itemFile.close();
@@ -65,7 +84,7 @@ const char description[MAX_DESCRIPTION], const char status[MAX_NAME], const int 
 }
 
 //-----------------------------------------------------------------------------
-// need to test this function
+// 
 bool display_change_items(const char prod_name[MAX_PRODUCT_NAME], const char release_name[MAX_NAME]){
     ChangeItem temp_changeItem;
     // Move the file pointer to the beginning of the file
@@ -88,6 +107,7 @@ bool display_change_items(const char prod_name[MAX_PRODUCT_NAME], const char rel
         return true;
     }
 }
+
 
 //-----------------------------------------------------------------------------
 bool check_change_item(const long int id, const char productName[MAX_PRODUCT_NAME], const char productReleaseID[MAX_NAME]) {
@@ -304,32 +324,28 @@ bool see_pending_change_items(const char prod_name[MAX_PRODUCT_NAME]) {
 }
 
 //-----------------------------------------------------------------------------
-bool create_report(long int ch_id){
+bool create_report(const long int ch_id){
     // open changeRequest file + search fo matching ch_id
     // if found, add customerName to a .txt file
-    ChangeRequest changeRequest;
-    int i = 0;
-    while(1){
-        if(!read_change_request(i, changeRequest)){
-            break;
-        }
-        long int id = changeRequest.get_id();
-        if(id == ch_id){
-            string customerName = changeRequest.get_customer_name();
-            // find customer name in customer file + get their email
-           // Customer customer = select_customer(customerName);
-           // string customerEmail = customer.get_email();
+    ChangeRequest temp_request;
+    char temp_name[MAX_NAME];
+    changeRequestFile2.seekg(0, ios::beg);
+    customerFile2.seekg(0, ios::beg);
+    
 
-            // write customer name and email to report.txt
-            ofstream reportFile;
-            reportFile.open("report.txt", ios::app);
-           // reportFile << customerName << ", "<< customerEmail << endl;
-            reportFile.close();
-            return true;
-        } else {
-            i++;
+    while (changeRequestFile2.read(reinterpret_cast<char*>(&temp_request), sizeof(ChangeRequest))) {
+        if (temp_request.get_id() == ch_id) {
+            strcpy(temp_name, temp_request.get_customer_name());
         }
     }
+    Customer temp_customer("", "", "", "");
+    while (customerFile2.read(reinterpret_cast<char*>(&temp_customer), sizeof(Customer))) {
+        if (strcmp(temp_customer.get_name(), temp_name) == 0) {
+            cout << "Customer name: " << temp_customer.get_name() << " and email: " << temp_customer.get_email() << endl;
+        }
+    }
+    changeRequestFile2.clear();
+    customerFile2.clear();
 
     return true;
 }
@@ -451,78 +467,4 @@ void ChangeItem::set_priority(const int new_priority) {
 // set requests
 void ChangeItem::set_requests(const int new_requests) {
     this->requests = new_requests;
-}
-
-//-----------------------------------------------------------------------------
-// print change item info
-void ChangeItem::print_change_item_info() {
-    cout << "Change Item ID: " << id << endl;
-    cout << "Product Name: " << productName << endl;
-    cout << "Product Release ID: " << productReleaseID << endl;
-    cout << "Description: " << description << endl;
-    cout << "Status: " << status << endl;
-    cout << "Priority: " << priority << endl;
-    cout << "Requests: " << requests << endl;
-}
-
-//-----------------------------------------------------------------------------
-// write change item to file
-bool write_change_item(ChangeItem &changeItem) {
-    // assume file is open
-    // seek to the end of the file
-    changeItemFile.seekp(0, ios::end);
-    // write the change item to the file
-    changeItemFile.write((char*)&changeItem, sizeof(ChangeItem));
-    return true;
-}
-
-//-----------------------------------------------------------------------------
-// read change item from file
-bool read_change_item(int index, ChangeItem &changeItem) {
-    // assume file is open
-    // make sure index is valid
-    changeItemFile.seekg(0, ios::end);
-    int numItems = changeItemFile.tellg() / sizeof(ChangeItem);
-    if(index >= numItems || index < 0) {
-        return false;
-    }
-    // seek to the correct position in the file
-    changeItemFile.seekg(index * sizeof(ChangeItem), ios::beg);
-    // read the change item from the file
-    changeItemFile.read((char*)&changeItem, sizeof(ChangeItem));
-    return true;
-}
-
-//-----------------------------------------------------------------------------
-// delete change item from file
-bool delete_change_item(int index) {
-   fstream tempFile("temp_changeitem.dat", ios::out | ios::binary);
-    // assume file is open
-    // seek to the correct position in the file
-    changeItemFile.seekg(0, ios::beg);
-    // read the change item from the file
-    ChangeItem tempChangeItem;
-    int i = 0;
-    while(changeItemFile.read((char*)&tempChangeItem, sizeof(ChangeItem))) {
-        if(i != index) {
-            tempFile.write((char*)&tempChangeItem, sizeof(ChangeItem));
-        }
-        i++;
-    }
-    changeItemFile.close();
-    changeItemFile.open(CHANGE_ITEM_FILE, ios::out | ios::trunc);
-    changeItemFile.close();
-    changeItemFile.open(CHANGE_ITEM_FILE, ios::in | ios::out | ios::binary);
-
-    tempFile.seekg(0, ios::beg);
-    while(tempFile.read((char*)&tempChangeItem, sizeof(ChangeItem))) {
-        changeItemFile.write((char*)&tempChangeItem, sizeof(ChangeItem));
-    }
-
-    tempFile.close();
-    tempFile.open("temp_changeitem.dat", ios::out | ios::trunc);
-    tempFile.close();
-
-    return true;
-
 }

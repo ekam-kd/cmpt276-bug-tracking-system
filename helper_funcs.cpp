@@ -567,52 +567,42 @@ bool send_report(){
         sleep(2);
         return true;
     }
-    cout << "Please select the product that the change item is for: " << endl;
-    //char *selected_product = select_product();
-    //long int chosen_item = see_all_pending_change_items(selected_product);
-    //create_report(chosen_item);
+    long int change_id;
+    string temp_prod_name, temp_release;
+    char prod_name[MAX_PRODUCT_NAME], release[MAX_NAME];
+    
+    if (!display_products()) {
+        sleep(2);
+        return false;
+    }
+    cout << "Based on the products above, enter the product that the report/request you wish to see is for: ";
+    getline(cin>>ws, temp_prod_name);
+    strcpy(prod_name, temp_prod_name.c_str());
+    while (!check_product(prod_name)) {
+        cout << "Invalid product name. Please try again: ";
+        getline(cin >> ws,temp_prod_name);
+        strcpy(prod_name, temp_prod_name.c_str());
+    }
+    if (!display_product_releases(prod_name)) {
+        sleep(2);
+        return false;
+    }
+    cout << "Based on the releases above, choose and enter a release: ";
+    getline(cin>>ws, temp_release);
+    strcpy(release, temp_release.c_str());
+    while (!check_release(prod_name, release)) {
+        cout << "Invalid release. Please try again: ";
+        getline(cin >> ws,temp_release);
+        strcpy(release, temp_release.c_str());
+    }
+    display_change_items(prod_name, release);
+
+    cout << "Please enter the change item that the report is for: ";
+    cin >> ws >> change_id;
+
+    create_report(change_id);
     
 
-//     // flip through pages?
-//     // enter change item id to see more details?
-//     while(1){
-//         cout << "Enter (N) to see more change items, or (P) to see previous, or enter the \nchange id of the item you wish to query: ";
-//         string change_id;
-//         cin >> change_id;
-//         if(change_id[0] == 'N' || change_id[0] == 'n'){
-//             // flip to next page
-//             system("clear");
-//             cout << "\n\nThe following change requests are pending for " << product_name << ":" << endl;
-//             cout << "-----------------------------------\n";
-//             cout << "this is the next page i promise" << endl;
-//             cout << "-----------------------------------\n";
-//             cout << "Change Item ID: XXXXX, Description {...}" << endl;
-//             cout << "Change Item ID: YXXXX, Description {...}" << endl;
-//             cout << "Change Item ID: YYXXX, Description {...}" << endl;
-//             cout << "Change Item ID: YYYXX, Description {...}" << endl;
-//             cout << "Change Item ID: YYYYY, Description {...}" << endl;
-//             cout << "-----------------------------------\n";
-//         } else if(change_id[0] == 'P' || change_id[0] == 'p'){
-//             // flip to previous page
-//             system("clear");
-//             cout << "\n\nThe following change items are pending for " << product_name << ":" << endl;
-//             cout << "-----------------------------------\n";
-//             cout << "this is the previous page i promise" << endl;
-//             cout << "-----------------------------------\n";
-//             cout << "Change Item ID: XXXXX, Description {...}" << endl;
-//             cout << "Change Item ID: YXXXX, Description {...}" << endl;
-//             cout << "Change Item ID: YYXXX, Description {...}" << endl;
-//             cout << "Change Item ID: YYYXX, Description {...}" << endl;
-//             cout << "Change Item ID: YYYYY, Description {...}" << endl;
-//             cout << "-----------------------------------\n";
-//         } else{
-//             // query change item id
-//             cout << "-----------------------------------\n";
-//             cout << "Change Item: " << change_id << " has the following details:" << endl;
-//             cout << "Description: {...}" << endl;
-//             break;
-//         }
-//     }
 
     cout << "\n\nPlease enter (0) to return to Main Menu: ";
     string return_main;
