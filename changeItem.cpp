@@ -50,8 +50,8 @@ const char description[MAX_DESCRIPTION], const char status[MAX_NAME], const int 
         sleep(2);
         return false;
     }
-    cout << "Id is: " << temp_item.get_id() << " and product name is: " << temp_item.get_productName();
-    cout << " and release is: " << temp_item.get_productReleaseID() << " and priority is: " << temp_item.get_priority() << endl;
+    // cout << "Id is: " << temp_item.get_id() << " and product name is: " << temp_item.get_productName();
+    // cout << " and release is: " << temp_item.get_productReleaseID() << " and priority is: " << temp_item.get_priority() << endl;
     cout << "Change Item successfully created!" << endl;
     return true;
 }

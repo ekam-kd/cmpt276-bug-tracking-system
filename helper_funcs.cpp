@@ -234,18 +234,8 @@ bool create_change_request(){
     make_change_request(temp_changeid, cus_name, release, date);
     make_change_item(temp_changeid, prod_name, release, change_description, "Unchecked", 1, 1);
 
-
-    sleep(5);
-    return true;
-
-
-
-
-
-    //make_change_item(change_id, selected_product, selected_release, change_description, "Unchecked", 0, 1);
     
-    cout << "\n\nChange has been reported." << endl;
-    cout << "Thank you for reporting the change! This change ID is XXXXX" << endl;  
+    cout << "Thank you for reporting the change! This change ID is: " << temp_changeid << endl;  
     cout << "Please enter (0) to return to Main Menu: ";
     string return_main;
     cin >> return_main;

@@ -155,8 +155,8 @@ const char reported_release[MAX_NAME], const char request_date[MAX_DATE]) {
         sleep(2);
         return false;
     }
-    cout << "Id is: " << temp_request.get_id() << " and name is: " << temp_request.get_customer_name();
-    cout << " and release is: " << temp_request.get_reported_release() << " and date is: " << temp_request.get_request_date() << endl;
+    // cout << "Id is: " << temp_request.get_id() << " and name is: " << temp_request.get_customer_name();
+    // cout << " and release is: " << temp_request.get_reported_release() << " and date is: " << temp_request.get_request_date() << endl;
     cout << "Change Request successfully created!" << endl;
     return true;
 }
