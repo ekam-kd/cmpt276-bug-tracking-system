@@ -149,17 +149,11 @@ char* select_product()
     static char choice[MAX_PRODUCT_NAME];
     cout << "Enter product name: ";
     getline(cin >> ws,temp_choice);
-    //cuz i feel like we should only check length when its being registered
-    // while (temp_choice.length() >= 30) {
-    //     cout << "Product name is too long. Please try again." << endl;
-    //     cout << "Product name: " << endl;
-    //     getline(cin >> ws,temp_choice); 
-    // }
     strcpy(choice, temp_choice.c_str());
 
     Product temp2("");
     productFile.seekg(0, ios::beg);
-    while (productFile.read(reinterpret_cast<char*>(&temp_product), sizeof(Product))) {
+    while (productFile.read(reinterpret_cast<char*>(&temp2), sizeof(Product))) {
         if (temp2.get_name() == choice) {
             productFile.clear(); // Clear the EOF flag
             return choice;
