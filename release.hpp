@@ -58,6 +58,8 @@ bool init_release();
 
 bool display_product_releases(const char prod_name[MAX_PRODUCT_NAME]);
 
+bool check_release(const char productName[MAX_PRODUCT_NAME], const char version[MAX_NAME]);
+
 // create a new product release and add to file
 bool create_product_release(const char productName[MAX_PRODUCT_NAME], const char version[MAX_NAME], 
 const char description[MAX_DESCRIPTION], const char date[MAX_DATE]);

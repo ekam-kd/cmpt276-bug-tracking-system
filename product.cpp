@@ -90,6 +90,7 @@ bool check_product(const char prod_name[MAX_PRODUCT_NAME]) {
         //cout << "product with this name: " << temp_product.get_name() << " exists." << endl;
         if (strcmp(temp_product.get_name(), prod_name) == 0) {
             //cout << "product: " << temp_product.get_name() << " found." << endl;
+            productFile.clear();
             return true;
         }
     }

@@ -131,7 +131,7 @@ bool display_product_releases(const char prod_name[MAX_PRODUCT_NAME]) {
     // displays list of products
     while (releaseFile.read(reinterpret_cast<char*>(&temp_release), sizeof(Release))) {
         if (strcmp(temp_release.get_productName(), prod_name) == 0) {
-            cout << count << ". " << temp_release.get_productName() << ", release: " << temp_release.get_version() << endl;
+            cout << "Release " << count << ". " << temp_release.get_version() << "    Date: " << temp_release.get_date() << endl;
             count++;
         }
     }
@@ -206,6 +206,34 @@ bool delete_release(int index) {
 }
 
 //-----------------------------------------------------------------------------
+// check that a release exists
+bool check_release(const char productName[MAX_PRODUCT_NAME], const char version[MAX_NAME]) {
+    if (!releaseFile.is_open())
+    {
+        cerr << "Product database file is not open!" << endl;
+        return false;
+    }
+
+    Release temp_release("", "", "", "");
+    releaseFile.clear();
+    releaseFile.seekg(0, ios::beg);
+
+    // Read through the file
+    while (releaseFile.read(reinterpret_cast<char*>(&temp_release), sizeof(Release))) {
+        if ((strcmp(temp_release.get_productName(), productName) == 0) && (strcmp(temp_release.get_version(), version) == 0)) {
+            releaseFile.clear();
+            return true;
+        }
+    }
+   // cout << "product not found?" << endl;
+
+    // Reset the file pointer for future operations
+    releaseFile.clear(); // Clear the EOF flag
+    return false;
+}
+
+
+//-----------------------------------------------------------------------------
 // create a new product release and add to file
 bool create_product_release(const char productName[MAX_PRODUCT_NAME], const char version[MAX_NAME], 
 const char description[MAX_DESCRIPTION], const char date[MAX_DATE]){
@@ -225,5 +253,6 @@ const char description[MAX_DESCRIPTION], const char date[MAX_DATE]){
         sleep(2);
         return false;
     }
+    cout << "Product Release successfully created!" << endl;
     return true;
 }

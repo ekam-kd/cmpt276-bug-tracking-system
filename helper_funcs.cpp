@@ -170,11 +170,11 @@ bool create_change_request(){
         return true;
     }
     string temp_name;
-    string temp_prod_name;
+    string temp_prod_name, temp_release;
     string temp_description;
     string temp_date;
     char cus_name[MAX_NAME];
-    char prod_name[MAX_PRODUCT_NAME];
+    char prod_name[MAX_PRODUCT_NAME], release[MAX_NAME];
     char change_description[MAX_DESCRIPTION];
     char date[11];
     
@@ -200,7 +200,19 @@ bool create_change_request(){
         strcpy(prod_name, temp_prod_name.c_str());
     }
     //select_product(prod_name); HOLDUP i think select_product aint even necessary anymore
-    display_product_releases(prod_name);
+    if (!display_product_releases(prod_name)) {
+        sleep(2);
+        return false;
+    }
+    cout << "Based on the releases above, choose and enter a release [probably best to choose the latest possible date]: ";
+    getline(cin>>ws, temp_release);
+    strcpy(release, temp_release.c_str());
+    while (!check_release(prod_name, release)) {
+        cout << "Invalid release. Please try again: ";
+        getline(cin >> ws,temp_release);
+        strcpy(release, temp_release.c_str());
+    }
+    
 
 
     sleep(3);
@@ -418,6 +430,10 @@ bool send_new_product_release(){
     }
     cout << "What is the new release called: ";
     getline(cin>>ws, temp_version);
+    while (temp_version.length() >= 30) {
+        cout << "Release name is too long. Please try again: " << endl;
+        getline(cin >> ws,temp_version);
+    }
     strcpy(version, temp_version.c_str());
 
     cout << "Please describe the new release [in less than 280 characters]: ";
