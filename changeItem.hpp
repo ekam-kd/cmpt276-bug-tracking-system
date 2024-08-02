@@ -97,7 +97,7 @@ bool see_change_item(long int ch_id // id of the change item
                 );
 
 // modify a change item
-bool modify_change_item(const long int ch_id, const int selection
+bool modify_change_item(const long int ch_id
                     );
 
 // see all change items (pending AND completed) for a product

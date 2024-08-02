@@ -142,7 +142,7 @@ bool see_change_item(long int ch_id){
 
 //-----------------------------------------------------------------------------
 // need to test this function
-bool modify_change_item(const long int ch_id, const int selection){
+bool modify_change_item(const long int ch_id){
     // find index of change item
     // ChangeItem changeItem;
     // int i = 0;
@@ -182,20 +182,25 @@ bool modify_change_item(const long int ch_id, const int selection){
         changeItemFile.write(reinterpret_cast<const char *>(&temp2), sizeof(ChangeItem));
     }
     temp_itemFile.close();
+    temp_itemFile.open(TEMP_CHANGE_ITEM_FILE, ios::in | ios::out | ios::binary | ios::trunc);
+    temp_itemFile.close();
+
     changeItemFile.clear();
     changeItemFile.close();
     changeItemFile.open(CHANGE_ITEM_FILE, ios::in | ios::out | ios::binary);
 
-    // Now delete the temp file
-    if (remove(TEMP_CHANGE_ITEM_FILE) != 0) {
-        std::cerr << "Error: Could not delete temporary file." << std::endl;
-        return false;
-    }
-
-    ChangeItem temp3;
-
-    while (changeItemFile.read(reinterpret_cast<char*>(&temp3), sizeof(ChangeItem))) {
+    while (1) {
+        cout << "\nEnter the field you would like to modify: " << endl;
+        cout << "------------------------------------------" << endl;
+        cout << "0. Exit" << endl << "1. Anticipated Release" << endl << "2. Description" << endl << "3. Status" << endl;
+        cout << "4. Priority" << endl << "5. Number of Requests" << endl;
+        cout << "------------------------------------------" << endl;
+        cout << "Selection: ";
+        cin >> ws;
+        int selection;
+        cin >> selection;
         if (selection == 0) {
+            changeItemFile.write(reinterpret_cast<const char *>(&chosen_one), sizeof(ChangeItem));
             changeItemFile.clear();
             return true;
         } else if (selection == 1) {
@@ -216,15 +221,55 @@ bool modify_change_item(const long int ch_id, const int selection){
             }
             strcpy(date, temp_date.c_str());
             chosen_one.set_productReleaseID(release);
-            changeItemFile.clear();
             create_product_release(chosen_one.get_productName(), release, chosen_one.get_description(), date);
             cout << "Release successfully updated!" << endl;
-            break;
+            continue;
         } else if (selection == 2) {
-
+            string temp_descr;
+            char description[MAX_DESCRIPTION];
+            cout << "Enter the new description: ";
+            getline(cin>>ws, temp_descr);
+            while (temp_descr.length() >= MAX_DESCRIPTION) {
+                cout << "Description too long. Try again: ";
+                getline(cin>>ws, temp_descr);
+            }
+            strcpy(description, temp_descr.c_str());
+            chosen_one.set_description(description);
+            cout << "Description successfully updated!" << endl;
+            continue;
+        } else if (selection == 3) {
+            string temp_status;
+            char status[MAX_NAME];
+            cout << "Enter the new status [Unchecked, Assessed, Cancelled, In Progress, or Complete]: ";
+            getline(cin>>ws, temp_status);
+            while (temp_status.length() >= MAX_DESCRIPTION) {
+                cout << "Description too long. Try again: ";
+                getline(cin>>ws, temp_status);
+            }
+            strcpy(status, temp_status.c_str());
+            chosen_one.set_status(status);
+            cout << "Status successfully updated!" << endl;
+            continue;
+        } else if (selection == 4) {
+            int new_priority;
+            cout << "Enter the new priority: ";
+            cin >> ws >> new_priority;
+            chosen_one.set_priority(new_priority);
+            cout << "Priority successfully updated!" << endl;
+            continue;
+        } else if (selection == 5) {
+            int new_requests;
+            cout << "Enter the new number of requests: ";
+            cin >> ws >> new_requests;
+            chosen_one.set_requests(new_requests);
+            cout << "Requests successfully updated!" << endl;
+            continue;
+        } else {
+            cout << "Invalid selection. Please try again." << endl;
         }
     }
-    changeItemFile.write(reinterpret_cast<const char *>(&chosen_one), sizeof(ChangeItem));
+    //changeItemFile.write(reinterpret_cast<const char *>(&chosen_one), sizeof(ChangeItem));
+    cout << "\nThis better not get printed..." << endl;
     changeItemFile.clear();
     return false;
 
