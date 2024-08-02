@@ -115,15 +115,17 @@ bool see_change_item(long int ch_id){
     // Move the file pointer to the beginning of the file
     changeItemFile.seekg(0, ios::beg);
     
-    // displays list of products
+    // display change item information
     while (changeItemFile.read(reinterpret_cast<char*>(&temp_changeItem), sizeof(ChangeItem))) {
         if (temp_changeItem.get_id() == ch_id) {
             cout << "Change Item with ID " << temp_changeItem.get_id() << " contains following information: " << endl;
             cout << "    Product and release: " << temp_changeItem.get_productName() << " " << temp_changeItem.get_productReleaseID() << endl;
-            cout << "    Description: " << temp_changeItem.get_description() << endl;
+            cout << "    Description: {" << temp_changeItem.get_description() << "} " << endl;
             cout << "    Status: " << temp_changeItem.get_status() << endl;
             cout << "    Priority: " << temp_changeItem.get_priority() << endl;
             cout << "    Number of requests: " << temp_changeItem.get_requests() << endl;
+            changeItemFile.clear();
+            return true;
         }
     }
     changeItemFile.clear();

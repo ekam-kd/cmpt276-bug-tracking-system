@@ -298,11 +298,11 @@ bool check_change_item(){
     cout << "Choose a change item and enter it's id: ";
     cin >> ws;
     cin >> change_id;
-    // check_change_item
     while (!check_change_item(change_id, prod_name, release)) {
         cout << "Invalid id entered. Try again: ";
         cin >> ws >> change_id;
     }
+    see_change_item(change_id);
     
 
 
