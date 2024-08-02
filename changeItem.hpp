@@ -81,8 +81,7 @@ bool make_change_item(const long int id, const char productName[MAX_PRODUCT_NAME
 const char description[MAX_DESCRIPTION], const char status[MAX_NAME], const int priority, const int requests);
 
 // display to user all the pending change items for a product
-bool get_change_items(char* productName // name of the product
-                );
+bool display_change_items(const char prod_name[MAX_PRODUCT_NAME], const char release_name[MAX_NAME]);
 
 // search through changeItem file for a specific change item 
 // then print info to screen

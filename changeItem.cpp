@@ -58,45 +58,47 @@ const char description[MAX_DESCRIPTION], const char status[MAX_NAME], const int 
 
 //-----------------------------------------------------------------------------
 // need to test this function
-bool get_change_item(char* productName){
-    ChangeItem changeItem;
-    int i = 0;
-    bool found = false;
-    while(!found){
-        if(!read_change_item(i, changeItem)){
-            break;
-        }
-        char* name = changeItem.get_productName();
-        if(strcmp(name, productName) == 0){
-            found = true;
-            changeItem.print_change_item_info();
-            return true;
-        } else {
-            i++;
+bool display_change_items(const char prod_name[MAX_PRODUCT_NAME], const char release_name[MAX_NAME]){
+    ChangeItem temp_changeItem;
+    // Move the file pointer to the beginning of the file
+    changeItemFile.seekg(0, ios::beg);
+    int count = 1;
+    // displays list of products
+    while (changeItemFile.read(reinterpret_cast<char*>(&temp_changeItem), sizeof(ChangeItem))) {
+        if (strcmp(temp_changeItem.get_productName(), prod_name) == 0 
+        && strcmp(temp_changeItem.get_productReleaseID(), release_name) == 0) {
+            cout << count << ". " << "change ID - " << temp_changeItem.get_id() << " -" << endl;
+            cout << "    Description: {" << temp_changeItem.get_description() << "}" << endl;
+            count++;
         }
     }
-    return false;
+    changeItemFile.clear();
+    if (count == 1) {
+        cout << "No change items. Returning to main menu..." << endl;
+        return false;
+    } else {
+        return true;
+    }
 }
 
 //-----------------------------------------------------------------------------
-// need to test this function
 bool see_change_item(long int ch_id){
-    ChangeItem changeItem;
-    int i = 0;
-    bool found = false;
-    while(!found){
-        if(!read_change_item(i, changeItem)){
-            break;
-        }
-        long int id = changeItem.get_id();
-        if(id == ch_id){
-            found = true;
-            changeItem.print_change_item_info();
-            return true;
-        } else {
-            i++;
+    ChangeItem temp_changeItem;
+    // Move the file pointer to the beginning of the file
+    changeItemFile.seekg(0, ios::beg);
+    
+    // displays list of products
+    while (changeItemFile.read(reinterpret_cast<char*>(&temp_changeItem), sizeof(ChangeItem))) {
+        if (temp_changeItem.get_id() == ch_id) {
+            cout << "Change Item with ID " << temp_changeItem.get_id() << " contains following information: " << endl;
+            cout << "    Product and release: " << temp_changeItem.get_productName() << " " << temp_changeItem.get_productReleaseID() << endl;
+            cout << "    Description: " << temp_changeItem.get_description() << endl;
+            cout << "    Status: " << temp_changeItem.get_status() << endl;
+            cout << "    Priority: " << temp_changeItem.get_priority() << endl;
+            cout << "    Number of requests: " << temp_changeItem.get_requests() << endl;
         }
     }
+    changeItemFile.clear();
     return false;
 }
 

@@ -199,7 +199,6 @@ bool create_change_request(){
         getline(cin >> ws,temp_prod_name);
         strcpy(prod_name, temp_prod_name.c_str());
     }
-    //select_product(prod_name); HOLDUP i think select_product aint even necessary anymore
     if (!display_product_releases(prod_name)) {
         sleep(2);
         return false;
@@ -248,7 +247,7 @@ bool create_change_request(){
 
 //-----------------------------------------------------------------------------
 // check bug status
-// check_customer(), select_product(), select_product_release(), get_change_items(), select_change_item()
+// get_change_items(), select_change_item()
 bool check_change_item(){
     system("clear");
     cout << "-----------------------------------\n";
@@ -264,29 +263,36 @@ bool check_change_item(){
         sleep(2);
         return true;
     }
-    string temp_name;
-    char cus_name[MAX_NAME];
     long int change_id;
+    string temp_prod_name, temp_release;
+    char prod_name[MAX_PRODUCT_NAME], release[MAX_NAME];
     
-    cout << "Please enter your name: ";
-    getline(cin>>ws, temp_name);
-    strcpy(cus_name, temp_name.c_str());
-    while (check_customer(cus_name) || temp_name.length() >= 30) {
-        cout << "Invalid customer name. Please try again." << endl;
-        cout << "Name: " << endl;
-        getline(cin >> ws,temp_name);
-        strcpy(cus_name, temp_name.c_str());
+    if (!display_products()) {
+        sleep(2);
+        return false;
     }
-    cout << "Please select the product that the change item is for: " << endl;
-   // char *selected_product = select_product();
+    cout << "Based on the products above, enter the product that the report/request you wish to see is for: ";
+    getline(cin>>ws, temp_prod_name);
+    strcpy(prod_name, temp_prod_name.c_str());
+    while (!check_product(prod_name)) {
+        cout << "Invalid product name. Please try again: ";
+        getline(cin >> ws,temp_prod_name);
+        strcpy(prod_name, temp_prod_name.c_str());
+    }
+    if (!display_product_releases(prod_name)) {
+        sleep(2);
+        return false;
+    }
+    cout << "Based on the releases above, choose and enter a release: ";
+    getline(cin>>ws, temp_release);
+    strcpy(release, temp_release.c_str());
+    while (!check_release(prod_name, release)) {
+        cout << "Invalid release. Please try again: ";
+        getline(cin >> ws,temp_release);
+        strcpy(release, temp_release.c_str());
+    }
+    display_change_items(prod_name, release);
 
-    cout << "Select product release that the change item is for: ";
-    //char *selected_release = select_product_release(); //function in release.cpp that should display releases for a particular product and user picks one
-    // get_change_items(selected_release)
-    // cout << "Enter change id of the change item you wish to view" << endl;
-    // cin >> ws;
-    // cin >> change_id;
-    // select_change_item(change_id);
 
     cout << "Please enter (0) to return to Main Menu: ";
     string return_main;
