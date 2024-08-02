@@ -68,9 +68,9 @@ bool make_change_request(const long int id, const char customer_name[MAX_NAME],
         const char reported_release[MAX_NAME], const char request_date[MAX_DATE]
 );
 
-// takes a change item ID and generates a report for relevent users
-bool create_report(long int ch_id // id of the change item
-                    );
+// // takes a change item ID and generates a report for relevent users
+// bool create_report(long int ch_id // id of the change item
+//                     );
 
 // close change request database file
 bool close_change_request();

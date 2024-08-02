@@ -174,6 +174,8 @@ bool create_change_request(){
     char cus_name[MAX_NAME];
     char change_description[MAX_DESCRIPTION];
     char date[11];
+    string temp_product_name;
+    char product_name[MAX_PRODUCT_NAME];
     
     cout << "Please enter your name: ";
     getline(cin>>ws, temp_name);
@@ -185,36 +187,19 @@ bool create_change_request(){
         strcpy(cus_name, temp_name.c_str());
     }
     cout << "Valid customer." << endl;
-    char *selected_product = select_product();
+    cout << "Enter product name: ";
+    getline(cin >> ws,temp_product_name);
+    strcpy(product_name, temp_product_name.c_str());
+    select_product(product_name);
     //if no products even exist, simply return to main menu
-    if (strcmp(selected_product, "no products") == 0) {
-        cout << "No products are registered, can not create a change request" << endl;
+    if (!select_product(product_name)) {
         cout << "Returning to main menu: " << endl;
         sleep(2);
         return false;
     }
-    bool try_again = false;
-    //if user inputted invalid selection, keep retrying until it is valid
-    while (strcmp(selected_product,"Invalid product selection") == 0) {
-        cout << "Would you like to try again? (Y/N): ";
-        string try_again;
-        cin >> try_again;
-        if (try_again[0] == 'Y' || try_again[0] == 'y') {
-            char *selected_product = select_product();
-        } else if (try_again[0] == 'N' || try_again[0] == 'n') {
-            cout << "Returning to main menu: " << endl;
-            try_again = true;
-            break;
-        } else {
-            cout << "Invalid selection. Please try again." << endl;
-        }
-    }
-    if (try_again) {
-        sleep(1);
-    }
 
     cout << "Select product release that report/request is being made for: ";
-    char *selected_release = select_product_release(selected_product);
+    char *selected_release = select_product_release(product_name);
 
     cout << "\nPlease describe the bug report or feature request [in less than 280 characters]: ";
     getline(cin>>ws, temp_description);
@@ -236,7 +221,7 @@ bool create_change_request(){
     long int change_id = generate_id();
     cout << "Change id is: " << change_id << endl;
    // make_change_request(change_id, cus_name, selected_release, date);
-    make_change_item(change_id, selected_product, selected_release, change_description, "Unchecked", 0, 1);
+    //make_change_item(change_id, product_name, selected_release, change_description, "Unchecked", 0, 1);
     
     cout << "\nChange has been reported." << endl;
     cout << "Thank you for reporting the change! This change ID is " << change_id << endl;
@@ -281,11 +266,22 @@ bool check_change_item(){
         strcpy(cus_name, temp_name.c_str());
     }
     cout << "Please select the product that the change item is for: " << endl;
-    char *selected_product = select_product();
+    string temp_product_name;
+    char product_name[MAX_PRODUCT_NAME];
+    cout << "Enter product name: ";
+    getline(cin >> ws,temp_product_name);
+    strcpy(product_name, temp_product_name.c_str());
+    select_product(product_name);
+    //if no products even exist, simply return to main menu
+    if (!select_product(product_name)) {
+        cout << "Returning to main menu: " << endl;
+        sleep(2);
+        return false;
+    }
 
     cout << "Select product release that the change item is for: ";
-    char *selected_release = select_product_release(selected_product);
-    get_change_items(selected_product, selected_release);
+    char *selected_release = select_product_release(product_name);
+    get_change_items(product_name, selected_release);
     cout << "Enter change id of the change item you wish to view" << endl;
     cin >> ws;
     cin >> change_id;
@@ -374,11 +370,22 @@ bool edit_change_item(){
     }
     long int change_id;
     cout << "Please select the product that the change item is for: " << endl;
-    char *selected_product = select_product();
+    string temp_product_name;
+    char product_name[MAX_PRODUCT_NAME];
+    cout << "Enter product name: ";
+    getline(cin >> ws,temp_product_name);
+    strcpy(product_name, temp_product_name.c_str());
+    select_product(product_name);
+    //if no products even exist, simply return to main menu
+    if (!select_product(product_name)) {
+        cout << "Returning to main menu: " << endl;
+        sleep(2);
+        return false;
+    }
 
     cout << "Select product release that the change item is for: ";
-    char *selected_release = select_product_release(selected_product); //function in release.cpp that should display releases for a particular product and user picks one
-    get_change_items(selected_product, selected_release);
+    char *selected_release = select_product_release(product_name); //function in release.cpp that should display releases for a particular product and user picks one
+    get_change_items(product_name, selected_release);
     cout << "Enter change id of the change item you wish to view" << endl;
     cin >> ws;
     cin >> change_id;
@@ -406,9 +413,20 @@ bool send_new_product_release(){
         return true;
     }
     cout << "Please select the product that the change item is for: " << endl;
-    char *selected_product = select_product();
+    string temp_product_name;
+    char product_name[MAX_PRODUCT_NAME];
+    cout << "Enter product name: ";
+    getline(cin >> ws,temp_product_name);
+    strcpy(product_name, temp_product_name.c_str());
+    select_product(product_name);
+    //if no products even exist, simply return to main menu
+    if (!select_product(product_name)) {
+        cout << "Returning to main menu: " << endl;
+        sleep(2);
+        return false;
+    }
 
-    create_product_release(selected_product);
+    create_product_release(product_name);
 
     cout << "Please enter (0) to return to Main Menu: ";
     string return_main;
@@ -438,8 +456,19 @@ bool see_all_pending_change_items(){
         return true;
     }
     cout << "Please select the product that the change item is for: " << endl;
-    char *selected_product = select_product();
-    get_pending_change_items(selected_product);
+    string temp_product_name;
+    char product_name[MAX_PRODUCT_NAME];
+    cout << "Enter product name: ";
+    getline(cin >> ws,temp_product_name);
+    strcpy(product_name, temp_product_name.c_str());
+    select_product(product_name);
+    //if no products even exist, simply return to main menu
+    if (!select_product(product_name)) {
+        cout << "Returning to main menu: " << endl;
+        sleep(2);
+        return false;
+    }
+    get_pending_change_items(product_name);
 
     cout << "\n\nPlease enter (0) to return to Main Menu: ";
     string return_main;
@@ -469,8 +498,18 @@ bool send_report(){
         return true;
     }
     cout << "Please select the product that the change item is for: " << endl;
-    char *selected_product = select_product();
-    long int chosen_item = see_all_change_items(selected_product);
+    string temp_product_name;
+    char product_name[MAX_PRODUCT_NAME];
+    cout << "Enter product name: ";
+    getline(cin >> ws,temp_product_name);
+    strcpy(product_name, temp_product_name.c_str());
+    //if no products even exist, simply return to main menu
+    if (!select_product(product_name)) {
+        cout << "Returning to main menu: " << endl;
+        sleep(2);
+        return false;
+    }
+    long int chosen_item = see_all_change_items(product_name);
     create_report(chosen_item);
 
     cout << "\n\nPlease enter (0) to return to Main Menu: ";

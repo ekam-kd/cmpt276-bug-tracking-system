@@ -80,9 +80,9 @@ bool init_change_item();
 bool write_change_item(ChangeItem &changeItem);
 
 // create a new change item and add to file
-bool make_change_item(const long int id, const char prod_name[MAX_PRODUCT_NAME], const char prod_release[MAX_NAME], 
-const char description[MAX_DESCRIPTION], const char status[MAX_NAME], const int priority, const int requests);
-
+//bool make_change_item(const long int id, const char prod_name[MAX_PRODUCT_NAME], const char prod_release[MAX_NAME], 
+//const char description[MAX_DESCRIPTION], const char status[MAX_NAME], const int priority, const int requests);
+bool make_change_item(ChangeItem &ChangeItem);
 // display to user all the pending change items for a product
 bool get_change_items(char* prod_name, char* prod_release);
 
@@ -107,6 +107,7 @@ bool get_pending_change_items(char* prod_name);
 bool close_change_item();
 
 // file operations
+bool create_report(long int ch_id);
 bool read_change_item(int index, ChangeItem &changeItem);
 bool delete_change_item(int index);
 

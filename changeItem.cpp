@@ -152,15 +152,15 @@ bool init_change_item() {
     //if file opened successfully, return true
     if(changeItemFile.is_open()) {
         // read to last change item to get the id
-        // ChangeItem changeItem;
-        // int i = 0;
-        // while(1){
-        //     if(!read_change_item(i, changeItem)){
-        //         break;
-        //     }
-        //     i++;
-        // }
-        // crid_official = changeItem.get_id();
+        ChangeItem changeItem;
+        int i = 0;
+        while(1){
+            if(!read_change_item(i, changeItem)){
+                break;
+            }
+            i++;
+        }
+        crid_official = changeItem.get_id();
         return true;
     } else { //otherwise try opening/creating again
         changeItemFile.clear();
@@ -195,20 +195,20 @@ bool make_change_item(ChangeItem* changeItem) {
     return true;
 }
 
-bool make_change_item(const long int id, const char prod_name[MAX_PRODUCT_NAME], const char prod_release[MAX_NAME], 
-const char description[MAX_DESCRIPTION], const char status[MAX_NAME], const int priority, const int requests) {
-    ChangeItem new_changeItem(id, prod_name, prod_release, description, status, priority, requests);
-    changeItemFile.seekp(0, ios::end);
-    changeItemFile.write(reinterpret_cast<char*>(&new_changeItem), sizeof(ChangeItem));
-    changeItemFile.clear();
+// bool make_change_item(const long int id, const char prod_name[MAX_PRODUCT_NAME], const char prod_release[MAX_NAME], 
+// const char description[MAX_DESCRIPTION], const char status[MAX_NAME], const int priority, const int requests) {
+//     ChangeItem new_changeItem(id, prod_name, prod_release, description, status, priority, requests);
+//     changeItemFile.seekp(0, ios::end);
+//     changeItemFile.write(reinterpret_cast<char*>(&new_changeItem), sizeof(ChangeItem));
+//     changeItemFile.clear();
 
-    if (changeItemFile.fail()) {
-        cerr << "Error writing to the change item file." << endl;
-    }
-    //delete next line if unnecessary
-    //write_change_item(new_changeItem);
-    return true;
-}
+//     if (changeItemFile.fail()) {
+//         cerr << "Error writing to the change item file." << endl;
+//     }
+//     //delete next line if unnecessary
+//     //write_change_item(new_changeItem);
+//     return true;
+// }
 
 
 //-----------------------------------------------------------------------------
@@ -356,6 +356,39 @@ bool close_change_item() {
     }
     return false;
 }
+
+
+//-----------------------------------------------------------------------------
+bool create_report(long int ch_id){
+    // open changeRequest file + search fo matching ch_id
+    // if found, add customerName to a .txt file
+    ChangeRequest changeRequest;
+    int i = 0;
+    while(1){
+        if(!read_change_request(i, changeRequest)){
+            break;
+        }
+        long int id = changeRequest.get_id();
+        if(id == ch_id){
+            string customerName = changeRequest.get_customer_name();
+            // find customer name in customer file + get their email
+           // Customer customer = select_customer(customerName);
+           // string customerEmail = customer.get_email();
+
+            // write customer name and email to report.txt
+            ofstream reportFile;
+            reportFile.open("report.txt", ios::app);
+           // reportFile << customerName << ", "<< customerEmail << endl;
+            reportFile.close();
+            return true;
+        } else {
+            i++;
+        }
+    }
+
+    return true;
+}
+
 
 
 

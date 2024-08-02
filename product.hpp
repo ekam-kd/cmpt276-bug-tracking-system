@@ -47,7 +47,7 @@ bool check_product(const char prod_name[MAX_PRODUCT_NAME]);
 bool add_product(const char prod_name[MAX_PRODUCT_NAME]);
 
 // displays list of products, allows user to select one
-char* select_product();
+bool select_product(const char prod_name[MAX_PRODUCT_NAME]);
 
 bool read_product(int index, Product &product);
 

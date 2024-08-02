@@ -126,7 +126,7 @@ bool add_product(const char prod_name[MAX_PRODUCT_NAME])
 //-----------------------------------------------------------------------------
 // Displays list of products, allows user to select one
 // OOH it could return a struct, with
-char* select_product()
+bool select_product(const char prod_name[MAX_PRODUCT_NAME])
 {
     Product temp_product("");
 
@@ -141,29 +141,24 @@ char* select_product()
         cout << count << ". " << temp_product.get_name() << endl;
         count++;
     }
-    static char no_products[20] = "no products";
     if (count == 1) {
-        return no_products;
+        cout << "No products registered." << endl;
+        return false;
     }
-    string temp_choice;
-    static char choice[MAX_PRODUCT_NAME];
-    cout << "Enter product name: ";
-    getline(cin >> ws,temp_choice);
-    strcpy(choice, temp_choice.c_str());
 
     Product temp2("");
     productFile.seekg(0, ios::beg);
     while (productFile.read(reinterpret_cast<char*>(&temp2), sizeof(Product))) {
-        if (strcmp(temp2.get_name(), choice) == 0) {
+        if (strcmp(temp2.get_name(), prod_name) == 0) {
             productFile.clear(); // Clear the EOF flag
-            return choice;
+            return true;
         }
     }
     cout << "You entered a product that does not exist." << endl;
     // Reset the file pointer for future operations
     productFile.clear(); // Clear the EOF flag
-    static char temp[30] = "Invalid product selection";
-    return temp;
+    cout << "Invalid product selection" << endl;
+    return false;
 }
 
 //-----------------------------------------------------------------------------
@@ -182,62 +177,7 @@ bool read_product(int index, Product &product)
     productFile.read(reinterpret_cast<char *>(&product), sizeof(Product));
     return true;
 }
-//-----------------------------------------------------------------------------
-// // Delete product by index
-// bool delete_product(int index)
-// {
-//     // Open temporary file for writing
-//     ofstream tempFile("temp_product_db.txt", ios::out | ios::binary);
-//     if (!tempFile)
-//     {
-//         cerr << "Error opening temporary file!" << endl;
-//         return false;
-//     }
 
-//     // Open original file for reading
-//     ifstream infile(PRODUCT_FILE, ios::in | ios::binary);
-//     if (!infile)
-//     {
-//         cerr << "Error opening product database file!" << endl;
-//         return false;
-//     }
-
-//     Product product("");
-//     int currentIndex = 0;
-//     bool deleted = false;
-
-//     // Read each record and write to the temp file if it's not the one to be deleted
-//     while (infile.read(reinterpret_cast<char *>(&product), sizeof(Product)))
-//     {
-//         if (currentIndex != index)
-//         {
-//             tempFile.write(reinterpret_cast<char *>(&product), sizeof(Product));
-//         }
-//         else
-//         {
-//             deleted = true; // Record found and deleted
-//         }
-//         currentIndex++;
-//     }
-
-//     // Close files
-//     infile.close();
-//     tempFile.close();
-
-//     // Replace original file with temporary file if deletion was successful
-//     if (deleted)
-//     {
-//         remove(PRODUCT_FILE);                        // Delete original file
-//         rename("temp_product_db.txt", PRODUCT_FILE); // Rename temp file to original file name
-//     }
-//     else
-//     {
-//         remove("temp_product_db.txt"); // Delete temp file if deletion was not successful
-//     }
-
-//     return deleted;
-// }
-//-----------------------------------------------------------------------------
 // Close product database file
 bool close_product()
 {
