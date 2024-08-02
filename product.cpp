@@ -149,36 +149,36 @@ bool display_products() {
 
 }
 
-//-----------------------------------------------------------------------------
-// Displays list of products, allows user to select one
-bool select_product(const char prod_name[MAX_PRODUCT_NAME])
-{
+// //-----------------------------------------------------------------------------
+// // Function that
+// bool select_product(const char prod_name[MAX_PRODUCT_NAME])
+// {
     
-    string temp_choice;
-    static char choice[MAX_PRODUCT_NAME];
-    cout << "Enter product name: ";
-    getline(cin >> ws,temp_choice);
-    while (temp_choice.length() >= 30) {
-        cout << "Product name is too long. Please try again." << endl;
-        cout << "Product name: " << endl;
-        getline(cin >> ws,temp_choice); 
-    }
-    strcpy(choice, temp_choice.c_str());
+//     string temp_choice;
+//     static char choice[MAX_PRODUCT_NAME];
+//     cout << "Enter product name: ";
+//     getline(cin >> ws,temp_choice);
+//     while (temp_choice.length() >= 30) {
+//         cout << "Product name is too long. Please try again." << endl;
+//         cout << "Product name: " << endl;
+//         getline(cin >> ws,temp_choice); 
+//     }
+//     strcpy(choice, temp_choice.c_str());
 
-    Product temp2("");
-    productFile.seekg(0, ios::beg);
-    while (productFile.read(reinterpret_cast<char*>(&temp2), sizeof(Product))) {
-        if (temp2.get_name() == choice) {
-            productFile.clear(); // Clear the EOF flag
-            return choice;
-        }
-    }
-    cout << "You entered a product that does not exist. try again" << endl;
-    // Reset the file pointer for future operations
-    productFile.clear(); // Clear the EOF flag
-    static char temp[30] = "Invalid selection";
-    return temp;
-}
+//     Product temp2("");
+//     productFile.seekg(0, ios::beg);
+//     while (productFile.read(reinterpret_cast<char*>(&temp2), sizeof(Product))) {
+//         if (temp2.get_name() == choice) {
+//             productFile.clear(); // Clear the EOF flag
+//             return choice;
+//         }
+//     }
+//     cout << "You entered a product that does not exist. try again" << endl;
+//     // Reset the file pointer for future operations
+//     productFile.clear(); // Clear the EOF flag
+//     static char temp[30] = "Invalid selection";
+//     return temp;
+// }
 
 //-----------------------------------------------------------------------------
 // Read product from file

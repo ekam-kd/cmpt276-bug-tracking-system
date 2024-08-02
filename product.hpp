@@ -46,10 +46,10 @@ bool check_product(const char prod_name[MAX_PRODUCT_NAME]);
 // add product to file
 bool add_product(const char prod_name[MAX_PRODUCT_NAME]);
 
+// displays list of products
 bool display_products();
 
-// displays list of products, allows user to select one
-bool select_product(const char prod_name[MAX_PRODUCT_NAME]);
+//bool select_product(const char prod_name[MAX_PRODUCT_NAME]);
 
 bool read_product(int index, Product &product);
 

@@ -191,7 +191,7 @@ bool create_change_request(){
         sleep(2);
         return false;
     }
-    cout << "Based on the products listed above, enter the product that the report/request you wish to make is for: ";
+    cout << "Based on the products above, enter the product that the report/request you wish to make is for: ";
     getline(cin>>ws, temp_prod_name);
     strcpy(prod_name, temp_prod_name.c_str());
     while (!check_product(prod_name)) {
@@ -199,8 +199,11 @@ bool create_change_request(){
         getline(cin >> ws,temp_prod_name);
         strcpy(prod_name, temp_prod_name.c_str());
     }
+    //select_product(prod_name); HOLDUP i think select_product aint even necessary anymore
+    // select_product_release(prod_name);
 
-    sleep(5);
+
+    sleep(3);
     return true;
 
     //char *selected_product = select_product();
