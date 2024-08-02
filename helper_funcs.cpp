@@ -601,8 +601,6 @@ bool send_report(){
     cin >> ws >> change_id;
 
     create_report(change_id);
-    
-
 
     cout << "\n\nPlease enter (0) to return to Main Menu: ";
     string return_main;

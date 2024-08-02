@@ -338,6 +338,7 @@ bool create_report(const long int ch_id){
             strcpy(temp_name, temp_request.get_customer_name());
         }
     }
+    cout << "Report sending to..." << endl;
     Customer temp_customer("", "", "", "");
     while (customerFile2.read(reinterpret_cast<char*>(&temp_customer), sizeof(Customer))) {
         if (strcmp(temp_customer.get_name(), temp_name) == 0) {
