@@ -386,7 +386,6 @@ bool edit_change_item(){
 
 //-----------------------------------------------------------------------------
 // send out new product release
-// select_product(), create_product_release
 bool send_new_product_release(){
     system("clear");
     cout << "-----------------------------------\n";
@@ -402,10 +401,40 @@ bool send_new_product_release(){
         sleep(2);
         return true;
     }
-    cout << "Please select the product that the change item is for: " << endl;
-    //char *selected_product = select_product();
+    string temp_prod_name, temp_version, temp_description, temp_date;
+    char prod_name[MAX_PRODUCT_NAME], version[MAX_NAME], description[MAX_DESCRIPTION], date[MAX_DATE];
+    
+    if (!display_products()) {
+        sleep(2);
+        return false;
+    }
+    cout << "Based on the products above, enter the one you wish to create a release for: ";
+    getline(cin>>ws, temp_prod_name);
+    strcpy(prod_name, temp_prod_name.c_str());
+    while (!check_product(prod_name)) {
+        cout << "Invalid product name. Please try again: ";
+        getline(cin >> ws,temp_prod_name);
+        strcpy(prod_name, temp_prod_name.c_str());
+    }
+    cout << "What is the new release called: ";
+    getline(cin>>ws, temp_version);
+    strcpy(version, temp_version.c_str());
 
-    //create_product_release(selected_product);
+    cout << "Please describe the new release [in less than 280 characters]: ";
+    getline(cin>>ws, temp_description);
+    while (temp_description.length() >= MAX_DESCRIPTION) {
+        cout << "Description too long. Try again: ";
+        getline(cin>>ws, temp_description);
+    }
+    strcpy(description, temp_description.c_str());
+    cout << "Enter today's date with the format of 'mm/dd/yyy': ";
+    getline(cin>>ws, temp_date);
+    while (temp_date.length() != 10) {
+        cout << "Invalid date format. Try again: ";
+        getline(cin>>ws, temp_date);
+    }
+    strcpy(date, temp_date.c_str());
+    create_product_release(prod_name, version, description, date);
 
     cout << "Please enter (0) to return to Main Menu: ";
     string return_main;

@@ -46,7 +46,7 @@ bool close_product_release() {
 //-----------------------------------------------------------------------------
 // constructor
 Release::Release(const char productName[MAX_PRODUCT_NAME], const char version[MAX_NAME], 
-        const char description[MAX_DESCRIPTION], const char date[MAX_NAME]) {
+        const char description[MAX_DESCRIPTION], const char date[MAX_DATE]) {
     //initialize all member variables to empty strings
     set_productName(productName);
     set_version(version);
@@ -101,15 +101,15 @@ void Release::set_version(const char new_version[MAX_PRODUCT_NAME]) {
 //-----------------------------------------------------------------------------
 // set description
 void Release::set_description(const char new_description[MAX_DESCRIPTION]) {
-    strncpy(description, new_description, MAX_PRODUCT_NAME - 1);
-    description[MAX_PRODUCT_NAME - 1] = '\0'; // Ensure null-terminated
+    strncpy(description, new_description, MAX_DESCRIPTION - 1);
+    description[MAX_DESCRIPTION - 1] = '\0'; // Ensure null-terminated
 }
 
 //-----------------------------------------------------------------------------
 // set date
-void Release::set_date(const char new_date[MAX_NAME]) {
-    strncpy(date, new_date, MAX_PRODUCT_NAME - 1);
-    date[MAX_PRODUCT_NAME - 1] = '\0'; // Ensure null-terminated
+void Release::set_date(const char new_date[MAX_DATE]) {
+    strncpy(date, new_date, MAX_DATE - 1);
+    date[MAX_DATE - 1] = '\0'; // Ensure null-terminated
 }
 
 //-----------------------------------------------------------------------------
@@ -207,8 +207,23 @@ bool delete_release(int index) {
 
 //-----------------------------------------------------------------------------
 // create a new product release and add to file
-bool create_product_release(Release* release){
-    // write release to file
-    write_release(*release);
+bool create_product_release(const char productName[MAX_PRODUCT_NAME], const char version[MAX_NAME], 
+const char description[MAX_DESCRIPTION], const char date[MAX_DATE]){
+    if (!releaseFile.is_open())
+    {
+        cerr << "Release database file is not open!" << endl;
+        return false;
+    }
+    Release new_release(productName, version, description, date);
+    releaseFile.seekp(0, ios::end);
+    // Write product to file
+    releaseFile.write(reinterpret_cast<const char *>(&new_release), sizeof(Release));
+    releaseFile.clear();
+
+    if (releaseFile.fail()) {
+        cerr << "Error writing to the release file." << endl;
+        sleep(2);
+        return false;
+    }
     return true;
 }

@@ -24,11 +24,11 @@ class Release{
         char productName[MAX_PRODUCT_NAME];
         char version[MAX_NAME];
         char description[MAX_DESCRIPTION];
-        char date[MAX_NAME];
+        char date[MAX_DATE];
     public:
         // constructor
         Release(const char productName[MAX_PRODUCT_NAME], const char version[MAX_NAME], 
-        const char description[MAX_DESCRIPTION], const char date[MAX_NAME]);
+        const char description[MAX_DESCRIPTION], const char date[MAX_DATE]);
         // destructor
         ~Release();
         // get product name
@@ -46,7 +46,7 @@ class Release{
         // set description
         void set_description(const char description[MAX_DESCRIPTION]);
         // set date
-        void set_date(const char date[MAX_NAME]);
+        void set_date(const char date[MAX_DATE]);
         // print release info
         void print_release_info();
 };
@@ -59,8 +59,8 @@ bool init_release();
 bool display_product_releases(const char prod_name[MAX_PRODUCT_NAME]);
 
 // create a new product release and add to file
-bool create_product_release(Release* release // release to initialize
-                );
+bool create_product_release(const char productName[MAX_PRODUCT_NAME], const char version[MAX_NAME], 
+const char description[MAX_DESCRIPTION], const char date[MAX_DATE]);
 
 // close release database file
 bool close_product_release();
