@@ -154,7 +154,7 @@ char* select_product()
     Product temp2("");
     productFile.seekg(0, ios::beg);
     while (productFile.read(reinterpret_cast<char*>(&temp2), sizeof(Product))) {
-        if (temp2.get_name() == choice) {
+        if (strcmp(temp2.get_name(), choice) == 0) {
             productFile.clear(); // Clear the EOF flag
             return choice;
         }

@@ -190,7 +190,7 @@ bool create_change_request(){
     if (strcmp(selected_product, "no products") == 0) {
         cout << "No products are registered, can not create a change request" << endl;
         cout << "Returning to main menu: " << endl;
-        sleep(3);
+        sleep(2);
         return false;
     }
     bool try_again = false;
