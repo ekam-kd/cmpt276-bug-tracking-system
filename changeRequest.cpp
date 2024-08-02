@@ -9,7 +9,6 @@
 
 //global filestream for change request file so it stays open for program duration
 fstream changeRequestFile;
-fstream changeIdFile;
 long int id_official;
 //-----------------------------------------------------------------------------
 // constructor
@@ -117,48 +116,14 @@ bool init_change_request() {
     if(changeRequestFile.is_open()) {
         return true;
     } else { //otherwise return false
-        changeRequestFile.clear();
-        changeRequestFile.open(PRODUCT_FILE, ios::out | ios::binary);
-        if (changeRequestFile.is_open()) {
-            changeRequestFile.close();
-            changeRequestFile.open(PRODUCT_FILE, ios::in | ios::out | ios::binary);
-            return true;
-        }
-        //and if it doesn't work, return false
         return false;
     }
 
 }
-//-----------------------------------------------------------------------------
-//generates change id
-long int generate_id() {
-    changeIdFile.open(CHANGE_ID_FILE, ios::in | ios::out);
-    long change_id = 1;
 
-    // Check if the file exists and can be opened for reading and writing
-    if (changeIdFile) {
-        // Read the current change_id from the file
-        changeIdFile >> change_id;
-
-        // Move the file pointer to the beginning for writing the new value
-        changeIdFile.seekp(0, std::ios::beg);
-    } else {
-        // If the file doesn't exist, create it and set change_id to 1
-        changeIdFile.open(CHANGE_ID_FILE, std::ios::out);
-    }
-
-    long old_value = change_id;
-
-    // Increment the change_id
-    change_id++;
-
-    // Write the new change_id back to the file
-    changeIdFile << change_id;
-    changeIdFile.close();
-
-    // Return the old value (before the increment)
-    return old_value;
-}
+// long int generate_id() {
+    
+// }
 
 //-----------------------------------------------------------------------------
 // add change request to file
@@ -175,25 +140,11 @@ const char reported_release[MAX_NAME], const char request_date[MAX_DATE]) {
 bool close_change_request() {
     if (changeRequestFile.is_open()) {
         changeRequestFile.close();
-        //return true;
+        return true;
     }
-    return true;
+    return false;
 }
 
-// //-----------------------------------------------------------------------------
-// bool create_report(long int ch_id){
-//     // if found, add customerName to a .txt file
-//     ChangeRequest temp_changerequest;
-//     changeRequestFile.seekg(0, ios::beg);
-//     while (changeRequestFile.read((char*)&temp_changerequest, sizeof(ChangeRequest))) {
-//         if (temp_changerequest.get_id() == ch_id) { 
-//             cout << "Name: " << temp_changerequest.get_customer_name() << endl;
-//         }
-//     }
-//     changeRequestFile.clear();
-//     return false;
-
-// }
 
 //-----------------------------------------------------------------------------
 // write change request to file

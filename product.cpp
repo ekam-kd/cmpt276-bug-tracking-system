@@ -125,40 +125,46 @@ bool add_product(const char prod_name[MAX_PRODUCT_NAME])
 
 //-----------------------------------------------------------------------------
 // Displays list of products, allows user to select one
-// OOH it could return a struct, with
-bool select_product(const char prod_name[MAX_PRODUCT_NAME])
+char* select_product()
 {
+    //open product file, then read through it and print each product, customer will have to enter
+    //its name. then we have to read through the file again and get the name. then we return the product.
     Product temp_product("");
 
     // Move the file pointer to the beginning of the file
     productFile.seekg(0, ios::beg);
 
-    int count = 1;
+    int count = 0;
 
-    // print out all the products for user to see
-    cout << "List of products: " << endl;
+    // Read through the file
     while (productFile.read(reinterpret_cast<char*>(&temp_product), sizeof(Product))) {
         cout << count << ". " << temp_product.get_name() << endl;
         count++;
     }
-    if (count == 1) {
-        cout << "No products registered." << endl;
-        return false;
+    string temp_choice;
+    static char choice[MAX_PRODUCT_NAME];
+    cout << "Enter product name: ";
+    getline(cin >> ws,temp_choice);
+    while (temp_choice.length() >= 30) {
+        cout << "Product name is too long. Please try again." << endl;
+        cout << "Product name: " << endl;
+        getline(cin >> ws,temp_choice); 
     }
+    strcpy(choice, temp_choice.c_str());
 
     Product temp2("");
     productFile.seekg(0, ios::beg);
-    while (productFile.read(reinterpret_cast<char*>(&temp2), sizeof(Product))) {
-        if (strcmp(temp2.get_name(), prod_name) == 0) {
+    while (productFile.read(reinterpret_cast<char*>(&temp_product), sizeof(Product))) {
+        if (temp2.get_name() == choice) {
             productFile.clear(); // Clear the EOF flag
-            return true;
+            return choice;
         }
     }
-    cout << "You entered a product that does not exist." << endl;
+    cout << "You entered a product that does not exist. try again" << endl;
     // Reset the file pointer for future operations
     productFile.clear(); // Clear the EOF flag
-    cout << "Invalid product selection" << endl;
-    return false;
+    static char temp[30] = "Invalid selection";
+    return temp;
 }
 
 //-----------------------------------------------------------------------------
@@ -177,7 +183,62 @@ bool read_product(int index, Product &product)
     productFile.read(reinterpret_cast<char *>(&product), sizeof(Product));
     return true;
 }
+//-----------------------------------------------------------------------------
+// // Delete product by index
+// bool delete_product(int index)
+// {
+//     // Open temporary file for writing
+//     ofstream tempFile("temp_product_db.txt", ios::out | ios::binary);
+//     if (!tempFile)
+//     {
+//         cerr << "Error opening temporary file!" << endl;
+//         return false;
+//     }
 
+//     // Open original file for reading
+//     ifstream infile(PRODUCT_FILE, ios::in | ios::binary);
+//     if (!infile)
+//     {
+//         cerr << "Error opening product database file!" << endl;
+//         return false;
+//     }
+
+//     Product product("");
+//     int currentIndex = 0;
+//     bool deleted = false;
+
+//     // Read each record and write to the temp file if it's not the one to be deleted
+//     while (infile.read(reinterpret_cast<char *>(&product), sizeof(Product)))
+//     {
+//         if (currentIndex != index)
+//         {
+//             tempFile.write(reinterpret_cast<char *>(&product), sizeof(Product));
+//         }
+//         else
+//         {
+//             deleted = true; // Record found and deleted
+//         }
+//         currentIndex++;
+//     }
+
+//     // Close files
+//     infile.close();
+//     tempFile.close();
+
+//     // Replace original file with temporary file if deletion was successful
+//     if (deleted)
+//     {
+//         remove(PRODUCT_FILE);                        // Delete original file
+//         rename("temp_product_db.txt", PRODUCT_FILE); // Rename temp file to original file name
+//     }
+//     else
+//     {
+//         remove("temp_product_db.txt"); // Delete temp file if deletion was not successful
+//     }
+
+//     return deleted;
+// }
+//-----------------------------------------------------------------------------
 // Close product database file
 bool close_product()
 {

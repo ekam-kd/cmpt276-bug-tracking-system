@@ -6,6 +6,7 @@
  * Purpose: Class implementation for Customer class
  */
 
+#include "customer.hpp"
 using namespace std;
 #include <cstring> // For strcpy, strncpy
 #include <fstream> // For file operations
@@ -125,7 +126,7 @@ bool check_customer(const char name[MAX_NAME])
     while (customerFile.read(reinterpret_cast<char*>(&temp_customer), sizeof(Customer))) {
         //cout << "Checking customer: " << temp_customer.get_name() << endl;
         if (strcmp(temp_customer.get_name(),name) == 0) {
-            // cout << "Oh no! A customer with this name already exists. Please try again with a different name" << endl;
+            cout << "Oh no! A customer with this name already exists. Please try again with a different name" << endl;
             return true;
         }
     }

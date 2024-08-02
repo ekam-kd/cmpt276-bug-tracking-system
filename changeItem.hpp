@@ -25,18 +25,15 @@ using namespace std;
 class ChangeItem{
     private:
         long int id;
-        char productName[MAX_PRODUCT_NAME];
+        char productName[MAX_NAME];
         char productReleaseID[MAX_NAME];
         char description[MAX_DESCRIPTION];
         char status[MAX_NAME];
         int priority;
         int requests;
     public:
-        // default constructor
+        // constructor
         ChangeItem();
-        //constructor
-        ChangeItem(const long int id, const char prod_name[MAX_PRODUCT_NAME], const char prod_release[MAX_NAME], 
-        const char description[MAX_DESCRIPTION], const char status[MAX_NAME], const int priority, const int requests);
         // destructor
         ~ChangeItem();
         // get id
@@ -54,19 +51,19 @@ class ChangeItem{
         // get requests
         int get_requests();
         // set id
-        void set_id(const long int id);
+        void set_id(long int id);
         // set product name
-        void set_productName(const char* productName);
+        void set_productName(string productName);
         // set product release ID
-        void set_productReleaseID(const char* productReleaseID);
+        void set_productReleaseID(string productReleaseID);
         // set description
-        void set_description(const char* description);
+        void set_description(string description);
         // set status
-        void set_status(const char* status);
+        void set_status(string status);
         // set priority
-        void set_priority(const int priority);
+        void set_priority(int priority);
         // set requests
-        void set_requests(const int requests);
+        void set_requests(int requests);
         // print change item info
         void print_change_item_info();
 };
@@ -76,15 +73,13 @@ class ChangeItem{
 // initialize change item database
 bool init_change_item();
 
-// writes change item to file MIGHT DELETE L8ER
-bool write_change_item(ChangeItem &changeItem);
-
 // create a new change item and add to file
-//bool make_change_item(const long int id, const char prod_name[MAX_PRODUCT_NAME], const char prod_release[MAX_NAME], 
-//const char description[MAX_DESCRIPTION], const char status[MAX_NAME], const int priority, const int requests);
-bool make_change_item(ChangeItem &ChangeItem);
+bool make_change_item(ChangeItem* changeItem // change item to initialize
+                );
+
 // display to user all the pending change items for a product
-bool get_change_items(char* prod_name, char* prod_release);
+bool get_change_items(char* productName // name of the product
+                );
 
 // search through changeItem file for a specific change item 
 // then print info to screen
@@ -99,16 +94,15 @@ bool modify_change_item(long int ch_id // id of the change item
 bool see_all_change_items(char* productName // name of the product
                     );
 
-
-// takes product name and lists all pending change items for a product
-bool get_pending_change_items(char* prod_name);
+// takes a change item ID and generates a report for relevent users
+bool create_report(long int ch_id // id of the change item
+                    );
 
 // close change item database file
 bool close_change_item();
 
 // file operations
-bool create_report(long int ch_id);
+bool write_change_item(ChangeItem &changeItem);
 bool read_change_item(int index, ChangeItem &changeItem);
 bool delete_change_item(int index);
-
 #endif

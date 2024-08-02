@@ -20,14 +20,6 @@ bool init_release() {
     if(releaseFile.is_open()) {
         return true;
     } else { //otherwise return false
-        releaseFile.clear();
-        releaseFile.open(PRODUCT_FILE, ios::out | ios::binary);
-        if (releaseFile.is_open()) {
-            releaseFile.close();
-            releaseFile.open(PRODUCT_FILE, ios::in | ios::out | ios::binary);
-            return true;
-        }
-        //and if it doesn't work, return false
         return false;
     }
 
@@ -38,9 +30,9 @@ bool init_release() {
 bool close_product_release() {
     if (releaseFile.is_open()) {
         releaseFile.close();
-        //return true;
+        return true;
     }
-    return true;
+    return false;
 }
 
 //-----------------------------------------------------------------------------
@@ -51,14 +43,6 @@ Release::Release() {
     strcpy(version, "");
     strcpy(description, "");
     strcpy(date, "");
-}
-
-Release::Release(const char productName[MAX_NAME], const char version[MAX_NAME], 
-const char description[MAX_DESCRIPTION], const char date[MAX_NAME]) {
-    set_productName(productName);
-    set_version(version);
-    set_description(description);
-    set_date(date);
 }
 
 //-----------------------------------------------------------------------------
@@ -124,38 +108,6 @@ void Release::print_release_info() {
     cout << "Date: " << date << endl;
 }
 
-char* select_product_release(char product_name[MAX_PRODUCT_NAME]) {
-    if (!releaseFile.is_open())
-    {
-        cerr << "Error opening customer database file!" << endl;
-    }
-    Release temp_release("", "", "", "");
-    releaseFile.seekg(0, ios::beg);
-
-    while (releaseFile.read(reinterpret_cast<char*>(&temp_release), sizeof(Release))) {
-        if (strcmp(temp_release.get_productName(),product_name) == 0) {
-            cout << "Release: " << temp_release.get_version() << endl;
-        }
-    }
-    string temp_choice;
-    static char choice[MAX_PRODUCT_NAME];
-    cout << "Enter version: ";
-    getline(cin >> ws,temp_choice);
-    strcpy(choice, temp_choice.c_str());
-    //loop again to make sure the version entered by user exists
-    while (releaseFile.read(reinterpret_cast<char*>(&temp_release), sizeof(Release))) {
-        if ((strcmp(temp_release.get_productName(),product_name) == 0) && (strcmp(temp_release.get_version(), choice) == 0)) {
-            cout << "Version exists!" << endl;
-            releaseFile.clear();
-            return choice;
-        }
-    }
-    releaseFile.clear();
-    static char temp[30] = "Invalid version entered";
-    return temp;
-
-}
-
 //-----------------------------------------------------------------------------
 // write release to file
 bool write_release(Release &release) {
@@ -178,64 +130,48 @@ bool read_release(int index, Release &release) {
     return true;
 }
 
-// //-----------------------------------------------------------------------------
-// // delete release from file
-// bool delete_release(int index) {
-//     fstream tempFile("temp_release.dat", ios::out | ios::binary);
+//-----------------------------------------------------------------------------
+// delete release from file
+bool delete_release(int index) {
+    fstream tempFile("temp_release.dat", ios::out | ios::binary);
 
-//     // Seek to the start of the file
-//     releaseFile.seekg(0, std::ios::beg);
+    // Seek to the start of the file
+    releaseFile.seekg(0, std::ios::beg);
 
-//     // Read all releases into memory except the one to be deleted
-//     Release tempRelease;
-//     int currentIndex = 0;
-//     while (releaseFile.read(reinterpret_cast<char*>(&tempRelease), sizeof(Release))) {
-//         if (currentIndex != index) {
-//             tempFile.write(reinterpret_cast<const char*>(&tempRelease), sizeof(Release));
-//         }
-//         currentIndex++;
-//     }
+    // Read all releases into memory except the one to be deleted
+    Release tempRelease;
+    int currentIndex = 0;
+    while (releaseFile.read(reinterpret_cast<char*>(&tempRelease), sizeof(Release))) {
+        if (currentIndex != index) {
+            tempFile.write(reinterpret_cast<const char*>(&tempRelease), sizeof(Release));
+        }
+        currentIndex++;
+    }
 
-//     // Clear the file (truncate to 0 and seek to the beginning)
-//     releaseFile.close();
-//     releaseFile.open(RELEASE_FILE, ios::out | ios::trunc);
-//     releaseFile.close();
-//     releaseFile.open(RELEASE_FILE, ios::in | ios::out | ios::binary);
+    // Clear the file (truncate to 0 and seek to the beginning)
+    releaseFile.close();
+    releaseFile.open(RELEASE_FILE, ios::out | ios::trunc);
+    releaseFile.close();
+    releaseFile.open(RELEASE_FILE, ios::in | ios::out | ios::binary);
 
-//     // Copy the temp file back to the original file
-//     tempFile.seekg(0, std::ios::beg);
-//     while (tempFile.read(reinterpret_cast<char*>(&tempRelease), sizeof(Release))) {
-//         releaseFile.write(reinterpret_cast<const char*>(&tempRelease), sizeof(Release));
-//     }
+    // Copy the temp file back to the original file
+    tempFile.seekg(0, std::ios::beg);
+    while (tempFile.read(reinterpret_cast<char*>(&tempRelease), sizeof(Release))) {
+        releaseFile.write(reinterpret_cast<const char*>(&tempRelease), sizeof(Release));
+    }
 
-//     // Close the temp file
-//     tempFile.close();
-//     tempFile.open("temp_release.dat", std::ios::out | std::ios::trunc);
-//     tempFile.close();
+    // Close the temp file
+    tempFile.close();
+    tempFile.open("temp_release.dat", std::ios::out | std::ios::trunc);
+    tempFile.close();
 
-//     return true;
-// }
+    return true;
+}
 
 //-----------------------------------------------------------------------------
 // create a new product release and add to file
-bool create_product_release(char* prod_name){
+bool create_product_release(Release* release){
     // write release to file
-    string temp_version, temp_description, temp_date;
-    char version[MAX_NAME], description[MAX_DESCRIPTION], date[MAX_NAME];
-
-    std::cout << "Enter the new version: ";
-    getline(cin >> ws,temp_version);
-    strcpy(version, temp_version.c_str());
-
-    std::cout << "Enter the description: ";
-    getline(cin >> ws,temp_description);
-    strcpy(description, temp_description.c_str());
-
-    std::cout << "Enter the date [format: mm/dd/yyyy]: ";
-    getline(cin >> ws,temp_date);
-    strcpy(date, temp_date.c_str());
-
-    Release temp_release(prod_name, version, description, date);
-    write_release(temp_release);
+    write_release(*release);
     return true;
 }
