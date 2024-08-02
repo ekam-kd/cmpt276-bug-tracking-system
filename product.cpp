@@ -136,6 +136,7 @@ char* select_product()
     int count = 1;
 
     // print out all the products for user to see
+    cout << "List of products: " << endl;
     while (productFile.read(reinterpret_cast<char*>(&temp_product), sizeof(Product))) {
         cout << count << ". " << temp_product.get_name() << endl;
         count++;

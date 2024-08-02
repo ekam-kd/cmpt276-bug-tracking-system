@@ -175,9 +175,9 @@ const char reported_release[MAX_NAME], const char request_date[MAX_DATE]) {
 bool close_change_request() {
     if (changeRequestFile.is_open()) {
         changeRequestFile.close();
-        return true;
+        //return true;
     }
-    return false;
+    return true;
 }
 
 //-----------------------------------------------------------------------------

@@ -11,193 +11,7 @@ fstream changeItemFile;
 
 long int crid_official;
 
-//-----------------------------------------------------------------------------
-bool init_change_item() {
-    //open file for reading/writing and create it if it doesn't exist
-    changeItemFile.open(CHANGE_ITEM_FILE, ios::in | ios::out | ios::binary);
-    
-    //if file opened successfully, return true
-    if(changeItemFile.is_open()) {
-        // read to last change item to get the id
-        // ChangeItem changeItem;
-        // int i = 0;
-        // while(1){
-        //     if(!read_change_item(i, changeItem)){
-        //         break;
-        //     }
-        //     i++;
-        // }
-        // crid_official = changeItem.get_id();
-        return true;
-    } else { //otherwise try opening/creating again
-        changeItemFile.clear();
-        changeItemFile.open(PRODUCT_FILE, ios::out | ios::binary);
-        if (changeItemFile.is_open()) {
-            changeItemFile.close();
-            changeItemFile.open(PRODUCT_FILE, ios::in | ios::out | ios::binary);
-            return true;
-        }
-        //and if it doesn't work, return false
-        return false;
-    }
-
-}
-
-//-----------------------------------------------------------------------------
-bool make_change_item(ChangeItem* changeItem) {
-    //write change item to file
-    write_change_item(*changeItem);
-    return true;
-}
-bool make_change_item(const long int id, const char prod_name[MAX_PRODUCT_NAME], const char prod_release[MAX_NAME], 
-const char description[MAX_DESCRIPTION], const char status[MAX_NAME], const int priority, const int requests) {
-    ChangeItem temp_changeItem(id, prod_name, prod_release, description, status, priority, requests);
-    write_change_item(temp_changeItem);
-    return true;
-}
-
-
-//-----------------------------------------------------------------------------
-// need to test this function
-bool get_change_items(char* prod_name, char* prod_release){
-    //
-    ChangeItem temp_changeItem;
-    changeItemFile.seekg(0, ios::beg);
-    while (changeItemFile.read((char*)&temp_changeItem, sizeof(ChangeItem))) {
-        if (strcmp(temp_changeItem.get_productName(), prod_name) == 0 && 
-        strcmp(temp_changeItem.get_productReleaseID(), prod_release) == 0) {
-            cout << "Change Id: " << temp_changeItem.get_id() << ". Description: " << temp_changeItem.get_description() << "." << endl;
-            changeItemFile.clear();
-            return true;
-        }
-    }
-    changeItemFile.clear();
-    return false;
-}
-
-//-----------------------------------------------------------------------------
-// need to test this function
-bool see_change_item(long int ch_id){
-    ChangeItem temp_changeItem;
-    changeItemFile.seekg(0, ios::beg);
-    while (changeItemFile.read((char*)&temp_changeItem, sizeof(ChangeItem))) {
-        if (temp_changeItem.get_id() == ch_id) {
-            cout << "Change Id: " << temp_changeItem.get_id() << ". Description: " << temp_changeItem.get_description() << "." << endl;
-            cout << "Status: " << temp_changeItem.get_status() << ". Number of Requests: " << temp_changeItem.get_requests() << "." << endl;
-            changeItemFile.clear();
-            return true;
-        }
-    }
-    changeItemFile.clear();
-    return false;
-}
-
-//-----------------------------------------------------------------------------
-// need to test this function
-bool modify_change_item(long int ch_id){
-    // find index of change item
-    ChangeItem changeItem;
-    int i = 0;
-    bool found = false;
-    while(!found){
-        if(!read_change_item(i, changeItem)){
-            return false;
-        }
-        long int id = changeItem.get_id();
-        if(id == ch_id){
-            found = true;
-            break;
-        } else {
-            i++;
-        }
-    }
-    
-    // print change item info
-    changeItem.print_change_item_info();
-    // prompt user for changes
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    cout << "Enter new product name: ";
-    string productName;
-    cin >> productName;
-    changeItem.set_productName(productName);
-    cout << "Enter new product release ID: ";
-    string productReleaseID;
-    cin >> productReleaseID;
-    changeItem.set_productReleaseID(productReleaseID);
-    cout << "Enter new description: ";
-    string description;
-    cin >> description;
-    changeItem.set_description(description);
-    cout << "Enter new status: ";
-    string status;
-    cin >> status;
-    changeItem.set_status(status);
-    cout << "Enter new priority: ";
-    int priority;
-    cin >> priority;
-    changeItem.set_priority(priority);
-    cout << "Enter new # of requests: ";
-    int requests;
-    cin >> requests;
-    changeItem.set_requests(requests);
-    // modify change item by creating new change item and adding to file
-    make_change_item(&changeItem);
-
-    // delete change item
-    delete_change_item(i);
-    return true;
-}
-
-//-----------------------------------------------------------------------------
-// need to test this function
-bool see_all_change_items(char* productName){
-    ChangeItem changeItem;
-    int i = 0;
-    while(1){
-        if(!read_change_item(i, changeItem)){
-            break;
-        }
-        char* name = changeItem.get_productName();
-        if(strcmp(name, productName) == 0){
-            changeItem.print_change_item_info();
-            i++;
-        } else {
-            i++;
-        }
-    }
-    return true;
-}
-
-//-----------------------------------------------------------------------------
-bool get_pending_change_items(char* prod_name) {
-    ChangeItem temp_changeItem;
-    changeItemFile.seekg(0, ios::beg);
-    while (changeItemFile.read((char*)&temp_changeItem, sizeof(ChangeItem))) {
-
-        if ((strcmp(temp_changeItem.get_productName(), prod_name) == 0) && 
-        ((strcmp(temp_changeItem.get_status(), "Assessed") == 0) || 
-        (strcmp(temp_changeItem.get_status(), "In Progress") == 0))) {
-            cout << "Change Id: " << temp_changeItem.get_id() << ". Description: " << temp_changeItem.get_description() << "." << endl;
-            changeItemFile.clear();
-            return true;
-        }
-    }
-    changeItemFile.clear();
-    return false;
-}
-
-
-
-//-----------------------------------------------------------------------------
-//close change item file
-bool close_change_item() {
-    if (changeItemFile.is_open()) {
-        changeItemFile.close();
-        return true;
-    }
-    return false;
-}
-
+// MEMBER FUNCTIONS
 //-----------------------------------------------------------------------------
 // default constructor
 ChangeItem::ChangeItem() {
@@ -273,43 +87,47 @@ int ChangeItem::get_requests() {
 
 //-----------------------------------------------------------------------------
 // set id
-void ChangeItem::set_id(long int id) {
+void ChangeItem::set_id(const long int id) {
     this->id = id;
 }
 
 //-----------------------------------------------------------------------------
 // set product name
-void ChangeItem::set_productName(string productName) {
-    strcpy(this->productName, productName.c_str());
+void ChangeItem::set_productName(const char* new_productName) {
+    strncpy(productName, new_productName, MAX_PRODUCT_NAME-1);
+    productName[MAX_PRODUCT_NAME - 1] = '\0'; // Ensure null-terminated
 }
 
 //-----------------------------------------------------------------------------
 // set product release ID
-void ChangeItem::set_productReleaseID(string productReleaseID) {
-    strcpy(this->productReleaseID, productReleaseID.c_str());
+void ChangeItem::set_productReleaseID(const char* new_productReleaseID) {
+    strncpy(productReleaseID, new_productReleaseID, MAX_NAME-1);
+    productReleaseID[MAX_NAME - 1] = '\0'; // Ensure null-terminated
 }
 
 //-----------------------------------------------------------------------------
 // set description
-void ChangeItem::set_description(string description) {
-    strcpy(this->description, description.c_str());
+void ChangeItem::set_description(const char* new_description) {
+    strncpy(description, new_description, MAX_NAME-1);
+    description[MAX_NAME - 1] = '\0'; // Ensure null-terminated
 }
 
 //-----------------------------------------------------------------------------
 // set status
-void ChangeItem::set_status(string status) {
-    strcpy(this->status, status.c_str());
+void ChangeItem::set_status(const char* new_status) {
+    strncpy(status, new_status, MAX_NAME-1);
+    status[MAX_NAME - 1] = '\0'; // Ensure null-terminated
 }
 
 //-----------------------------------------------------------------------------
 // set priority
-void ChangeItem::set_priority(int priority) {
+void ChangeItem::set_priority(const int priority) {
     this->priority = priority;
 }
 
 //-----------------------------------------------------------------------------
 // set requests
-void ChangeItem::set_requests(int requests) {
+void ChangeItem::set_requests(const int requests) {
     this->requests = requests;
 }
 
@@ -325,6 +143,38 @@ void ChangeItem::print_change_item_info() {
     cout << "Requests: " << requests << endl;
 }
 
+// NON-MEMBER FUNCTIONS
+//-----------------------------------------------------------------------------
+bool init_change_item() {
+    //open file for reading/writing and create it if it doesn't exist
+    changeItemFile.open(CHANGE_ITEM_FILE, ios::in | ios::out | ios::binary);
+    
+    //if file opened successfully, return true
+    if(changeItemFile.is_open()) {
+        // read to last change item to get the id
+        // ChangeItem changeItem;
+        // int i = 0;
+        // while(1){
+        //     if(!read_change_item(i, changeItem)){
+        //         break;
+        //     }
+        //     i++;
+        // }
+        // crid_official = changeItem.get_id();
+        return true;
+    } else { //otherwise try opening/creating again
+        changeItemFile.clear();
+        changeItemFile.open(PRODUCT_FILE, ios::out | ios::binary);
+        if (changeItemFile.is_open()) {
+            changeItemFile.close();
+            changeItemFile.open(PRODUCT_FILE, ios::in | ios::out | ios::binary);
+            return true;
+        }
+        //and if it doesn't work, return false
+        return false;
+    }
+
+}
 //-----------------------------------------------------------------------------
 // write change item to file
 bool write_change_item(ChangeItem &changeItem) {
@@ -336,6 +186,178 @@ bool write_change_item(ChangeItem &changeItem) {
     changeItemFile.clear();
     return true;
 }
+
+//-----------------------------------------------------------------------------
+//PROBABLY GONNA DELETE THIS ONE AND ACCEP THE NEXT ONE
+bool make_change_item(ChangeItem* changeItem) {
+    //write change item to file
+    write_change_item(*changeItem);
+    return true;
+}
+
+bool make_change_item(const long int id, const char prod_name[MAX_PRODUCT_NAME], const char prod_release[MAX_NAME], 
+const char description[MAX_DESCRIPTION], const char status[MAX_NAME], const int priority, const int requests) {
+    ChangeItem new_changeItem(id, prod_name, prod_release, description, status, priority, requests);
+    changeItemFile.seekp(0, ios::end);
+    changeItemFile.write(reinterpret_cast<char*>(&new_changeItem), sizeof(ChangeItem));
+    changeItemFile.clear();
+
+    if (changeItemFile.fail()) {
+        cerr << "Error writing to the change item file." << endl;
+    }
+    //delete next line if unnecessary
+    //write_change_item(new_changeItem);
+    return true;
+}
+
+
+//-----------------------------------------------------------------------------
+// need to test this function
+bool get_change_items(char* prod_name, char* prod_release){
+    //
+    ChangeItem temp_changeItem;
+    changeItemFile.seekg(0, ios::beg);
+    while (changeItemFile.read((char*)&temp_changeItem, sizeof(ChangeItem))) {
+        if (strcmp(temp_changeItem.get_productName(), prod_name) == 0 && 
+        strcmp(temp_changeItem.get_productReleaseID(), prod_release) == 0) {
+            cout << "Change Id: " << temp_changeItem.get_id() << ". Description: " << temp_changeItem.get_description() << "." << endl;
+            changeItemFile.clear();
+            return true;
+        }
+    }
+    changeItemFile.clear();
+    return false;
+}
+
+//-----------------------------------------------------------------------------
+// need to test this function
+bool see_change_item(long int ch_id){
+    ChangeItem temp_changeItem;
+    changeItemFile.seekg(0, ios::beg);
+    while (changeItemFile.read((char*)&temp_changeItem, sizeof(ChangeItem))) {
+        if (temp_changeItem.get_id() == ch_id) {
+            cout << "Change Id: " << temp_changeItem.get_id() << ". Description: " << temp_changeItem.get_description() << "." << endl;
+            cout << "Status: " << temp_changeItem.get_status() << ". Number of Requests: " << temp_changeItem.get_requests() << "." << endl;
+            changeItemFile.clear();
+            return true;
+        }
+    }
+    changeItemFile.clear();
+    return false;
+}
+
+//-----------------------------------------------------------------------------
+// need to test this function
+bool modify_change_item(long int ch_id){
+    // find index of change item
+    ChangeItem changeItem;
+    int i = 0;
+    bool found = false;
+    while(!found){
+        if(!read_change_item(i, changeItem)){
+            return false;
+        }
+        long int id = changeItem.get_id();
+        if(id == ch_id){
+            found = true;
+            break;
+        } else {
+            i++;
+        }
+    }
+    char tempname[MAX_NAME], temprelease[MAX_NAME], tempdescription[MAX_DESCRIPTION], temp_status[MAX_NAME];
+    
+    // print change item info
+    changeItem.print_change_item_info();
+    // prompt user for changes
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    cout << "Enter new product name: ";
+    string productName;
+    cin >> productName;
+    strcpy(tempname, productName.c_str());
+    changeItem.set_productName(tempname);
+    cout << "Enter new product release ID: ";
+    string productReleaseID;
+    cin >> productReleaseID;
+    strcpy(temprelease, productReleaseID.c_str());
+    changeItem.set_productReleaseID(temprelease);
+    cout << "Enter new description: ";
+    string description;
+    cin >> description;
+    strcpy(tempdescription, description.c_str());
+    changeItem.set_description(tempdescription);
+    cout << "Enter new status: ";
+    string status;
+    cin >> status;
+    strcpy(temp_status, status.c_str());
+    changeItem.set_status(temp_status);
+    cout << "Enter new priority: ";
+    int priority;
+    cin >> priority;
+    changeItem.set_priority(priority);
+    cout << "Enter new # of requests: ";
+    int requests;
+    cin >> requests;
+    changeItem.set_requests(requests);
+    // modify change item by creating new change item and adding to file
+    make_change_item(&changeItem);
+
+    // delete change item
+    delete_change_item(i);
+    return true;
+}
+
+//-----------------------------------------------------------------------------
+// need to test this function
+bool see_all_change_items(char* productName){
+    ChangeItem changeItem;
+    int i = 0;
+    while(1){
+        if(!read_change_item(i, changeItem)){
+            break;
+        }
+        char* name = changeItem.get_productName();
+        if(strcmp(name, productName) == 0){
+            changeItem.print_change_item_info();
+            i++;
+        } else {
+            i++;
+        }
+    }
+    return true;
+}
+
+//-----------------------------------------------------------------------------
+bool get_pending_change_items(char* prod_name) {
+    ChangeItem temp_changeItem;
+    changeItemFile.seekg(0, ios::beg);
+    while (changeItemFile.read((char*)&temp_changeItem, sizeof(ChangeItem))) {
+
+        if ((strcmp(temp_changeItem.get_productName(), prod_name) == 0) && 
+        ((strcmp(temp_changeItem.get_status(), "Assessed") == 0) || 
+        (strcmp(temp_changeItem.get_status(), "In Progress") == 0))) {
+            cout << "Change Id: " << temp_changeItem.get_id() << ". Description: " << temp_changeItem.get_description() << "." << endl;
+            changeItemFile.clear();
+            return true;
+        }
+    }
+    changeItemFile.clear();
+    return false;
+}
+
+
+
+//-----------------------------------------------------------------------------
+//close change item file
+bool close_change_item() {
+    if (changeItemFile.is_open()) {
+        changeItemFile.close();
+        return true;
+    }
+    return false;
+}
+
+
 
 //-----------------------------------------------------------------------------
 // read change item from file

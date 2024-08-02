@@ -25,14 +25,14 @@ using namespace std;
 class ChangeItem{
     private:
         long int id;
-        char productName[MAX_NAME];
+        char productName[MAX_PRODUCT_NAME];
         char productReleaseID[MAX_NAME];
         char description[MAX_DESCRIPTION];
         char status[MAX_NAME];
         int priority;
         int requests;
     public:
-        // constructor
+        // default constructor
         ChangeItem();
         //constructor
         ChangeItem(const long int id, const char prod_name[MAX_PRODUCT_NAME], const char prod_release[MAX_NAME], 
@@ -54,19 +54,19 @@ class ChangeItem{
         // get requests
         int get_requests();
         // set id
-        void set_id(long int id);
+        void set_id(const long int id);
         // set product name
-        void set_productName(string productName);
+        void set_productName(const char* productName);
         // set product release ID
-        void set_productReleaseID(string productReleaseID);
+        void set_productReleaseID(const char* productReleaseID);
         // set description
-        void set_description(string description);
+        void set_description(const char* description);
         // set status
-        void set_status(string status);
+        void set_status(const char* status);
         // set priority
-        void set_priority(int priority);
+        void set_priority(const int priority);
         // set requests
-        void set_requests(int requests);
+        void set_requests(const int requests);
         // print change item info
         void print_change_item_info();
 };
@@ -75,6 +75,9 @@ class ChangeItem{
 
 // initialize change item database
 bool init_change_item();
+
+// writes change item to file MIGHT DELETE L8ER
+bool write_change_item(ChangeItem &changeItem);
 
 // create a new change item and add to file
 bool make_change_item(const long int id, const char prod_name[MAX_PRODUCT_NAME], const char prod_release[MAX_NAME], 
@@ -104,7 +107,6 @@ bool get_pending_change_items(char* prod_name);
 bool close_change_item();
 
 // file operations
-bool write_change_item(ChangeItem &changeItem);
 bool read_change_item(int index, ChangeItem &changeItem);
 bool delete_change_item(int index);
 

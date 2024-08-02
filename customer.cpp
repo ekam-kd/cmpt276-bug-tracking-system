@@ -6,7 +6,6 @@
  * Purpose: Class implementation for Customer class
  */
 
-#include "customer.hpp"
 using namespace std;
 #include <cstring> // For strcpy, strncpy
 #include <fstream> // For file operations

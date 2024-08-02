@@ -38,9 +38,9 @@ bool init_release() {
 bool close_product_release() {
     if (releaseFile.is_open()) {
         releaseFile.close();
-        return true;
+        //return true;
     }
-    return false;
+    return true;
 }
 
 //-----------------------------------------------------------------------------

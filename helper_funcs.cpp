@@ -184,6 +184,7 @@ bool create_change_request(){
         getline(cin >> ws,temp_name);
         strcpy(cus_name, temp_name.c_str());
     }
+    cout << "Valid customer." << endl;
     char *selected_product = select_product();
     //if no products even exist, simply return to main menu
     if (strcmp(selected_product, "no products") == 0) {
@@ -192,6 +193,7 @@ bool create_change_request(){
         sleep(3);
         return false;
     }
+    bool try_again = false;
     //if user inputted invalid selection, keep retrying until it is valid
     while (strcmp(selected_product,"Invalid product selection") == 0) {
         cout << "Would you like to try again? (Y/N): ";
@@ -201,16 +203,18 @@ bool create_change_request(){
             char *selected_product = select_product();
         } else if (try_again[0] == 'N' || try_again[0] == 'n') {
             cout << "Returning to main menu: " << endl;
-            sleep(1);
+            try_again = true;
+            break;
         } else {
             cout << "Invalid selection. Please try again." << endl;
         }
-        
+    }
+    if (try_again) {
+        sleep(1);
     }
 
     cout << "Select product release that report/request is being made for: ";
     char *selected_release = select_product_release(selected_product);
-
 
     cout << "\nPlease describe the bug report or feature request [in less than 280 characters]: ";
     getline(cin>>ws, temp_description);
@@ -231,11 +235,11 @@ bool create_change_request(){
 
     long int change_id = generate_id();
     cout << "Change id is: " << change_id << endl;
-    make_change_request(change_id, cus_name, selected_release, date);
+   // make_change_request(change_id, cus_name, selected_release, date);
     make_change_item(change_id, selected_product, selected_release, change_description, "Unchecked", 0, 1);
     
     cout << "\nChange has been reported." << endl;
-    cout << "Thank you for reporting the change! This change ID is " << change_id << endl;  
+    cout << "Thank you for reporting the change! This change ID is " << change_id << endl;
     cout << "Please enter (0) to return to Main Menu: ";
     string return_main;
     cin >> return_main;
@@ -305,10 +309,6 @@ bool register_product(){
     cout << "Register Product Menu:" << endl;
     string temp_product;
     char product_name[MAX_PRODUCT_NAME];
-    cout << "\nEnter Product Name: ";
-    getline(cin >> ws, temp_product);
-    strcpy(product_name, temp_product.c_str());
-    add_product(product_name);
 
     
     cout << "Please enter (0) to return to Main Menu, or (1) to Continue: ";
@@ -322,6 +322,10 @@ bool register_product(){
         sleep(2);
         return true;
     }
+    cout << "\nEnter Product Name: ";
+    getline(cin >> ws, temp_product);
+    strcpy(product_name, temp_product.c_str());
+    add_product(product_name);
     cout << "\n\nPlease confirm the following information:" << endl;
     cout << "Product Name: " << product_name << endl;
     cout << "\nIs this information correct? (Y/N): ";
@@ -329,9 +333,6 @@ bool register_product(){
     cin >> confirm;
     if(confirm == 'Y' || confirm == 'y'){
         cout << "\nThank you for registering the new product!" << endl;
-        if(add_product(product_name)){
-            cout << "Product " << product_name << " has been added to the system." << endl;
-        }
         cout << "Please enter (0) to return to Main Menu: ";
         string return_main;
         cin >> return_main;
