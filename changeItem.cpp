@@ -8,21 +8,29 @@
 #include "changeItem.hpp"
 //global filestream for change item file so it stays open for program duration
 fstream changeItemFile;
+fstream temp_itemFile;
 
 //-----------------------------------------------------------------------------
 bool init_change_item() {
     //open file for reading/writing and create it if it doesn't exist
     changeItemFile.open(CHANGE_ITEM_FILE, ios::in | ios::out | ios::binary);
-    
+    temp_itemFile.open(TEMP_CHANGE_ITEM_FILE, ios::in | ios::out | ios::binary);
+
     //if file opened successfully, return true
-    if(changeItemFile.is_open()) {
+    if(changeItemFile.is_open() && temp_itemFile.is_open()) {
         return true;
-    } else { //otherwise return false
+    } else { //otherwise try opening again
         changeItemFile.clear();
+        temp_itemFile.clear();
         changeItemFile.open(CHANGE_ITEM_FILE, ios::out | ios::binary);
+        temp_itemFile.open(TEMP_CHANGE_ITEM_FILE, ios::out | ios::binary);
         if (changeItemFile.is_open()) {
             changeItemFile.close();
             changeItemFile.open(CHANGE_ITEM_FILE, ios::in | ios::out | ios::binary);
+        }
+        if (temp_itemFile.is_open()) {
+            temp_itemFile.close();
+            temp_itemFile.open(TEMP_CHANGE_ITEM_FILE, ios::in | ios::out | ios::binary);
             return true;
         }
         //and if it doesn't work, return false
@@ -134,66 +142,74 @@ bool see_change_item(long int ch_id){
 
 //-----------------------------------------------------------------------------
 // need to test this function
-bool modify_change_item(long int ch_id){
+bool modify_change_item(const long int ch_id, const int selection){
     // find index of change item
-    ChangeItem changeItem;
-    int i = 0;
-    bool found = false;
-    while(!found){
-        if(!read_change_item(i, changeItem)){
-            return false;
-        }
-        long int id = changeItem.get_id();
-        if(id == ch_id){
-            found = true;
-            break;
-        } else {
-            i++;
+    // ChangeItem changeItem;
+    // int i = 0;
+
+    ChangeItem temp1;
+    // Move the file pointer to the beginning of the files
+    changeItemFile.seekg(0, ios::beg);
+    temp_itemFile.clear();
+    temp_itemFile.seekg(0, ios::beg);
+    
+    // copy change items except the one being edited to a temporary file
+    while (changeItemFile.read(reinterpret_cast<char*>(&temp1), sizeof(ChangeItem))) {
+        if (temp1.get_id() != ch_id) {
+            temp_itemFile.write(reinterpret_cast<const char *>(&temp1), sizeof(ChangeItem));
         }
     }
-    
-    // print change item info
-    changeItem.print_change_item_info();
-    // prompt user for changes
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    cout << "Enter new product name: ";
-    string productName;
-    char prod_name[MAX_PRODUCT_NAME];
-    cin >> productName;
-    strcpy(prod_name, productName.c_str());
-    changeItem.set_productName(prod_name);
-    cout << "Enter new product release ID: ";
-    string productReleaseID;
-    char release[MAX_NAME];
-    cin >> productReleaseID;
-    strcpy(release, productReleaseID.c_str());
-    changeItem.set_productReleaseID(release);
-    cout << "Enter new description: ";
-    string description;
-    char descr[MAX_DESCRIPTION];
-    cin >> description;
-    strcpy(descr, description.c_str());
-    changeItem.set_description(descr);
-    cout << "Enter new status: ";
-    string status;
-    char official_status[MAX_NAME];
-    cin >> status;
-    strcpy(official_status, status.c_str());
-    changeItem.set_status(official_status);
-    cout << "Enter new priority: ";
-    int priority;
-    cin >> priority;
-    changeItem.set_priority(priority);
-    cout << "Enter new # of requests: ";
-    int requests;
-    cin >> requests;
-    changeItem.set_requests(requests);
-    // modify change item by creating new change item and adding to file
-    make_change_item(ch_id, prod_name, release, descr, official_status, priority, requests);
+    changeItemFile.close();
+    temp_itemFile.close();
+    changeItemFile.open(CHANGE_ITEM_FILE, ios::out | ios:: binary | ios::trunc);
+    temp_itemFile.open(TEMP_CHANGE_ITEM_FILE, std::ios::in | std::ios::binary);
+    if (!changeItemFile.is_open() || !temp_itemFile.is_open()) {
+        std::cerr << "Error: Could not reopen files." << std::endl;
+        return false;
+    }
+    ChangeItem temp2;
+    //rewrite the contents back, now excluding the change item to be edited
+    while (temp_itemFile.read(reinterpret_cast<char*>(&temp2), sizeof(ChangeItem))) {
+        changeItemFile.write(reinterpret_cast<const char *>(&temp2), sizeof(ChangeItem));
+    }
+    temp_itemFile.close();
+    changeItemFile.clear();
+    changeItemFile.close();
+    changeItemFile.open(CHANGE_ITEM_FILE, ios::in | ios::out | ios::binary);
 
-    // delete change item
-    delete_change_item(i);
+
+    // Now delete the temp file
+    if (remove(TEMP_CHANGE_ITEM_FILE) != 0) {
+        std::cerr << "Error: Could not delete temporary file." << std::endl;
+        return false;
+    }
     return true;
+
+    while (changeItemFile.read(reinterpret_cast<char*>(&temp1), sizeof(ChangeItem))) {
+        if (selection == 0) {
+            changeItemFile.clear();
+            return true;
+        } else if (selection == 1) {
+            string temp_release;
+            char release[MAX_NAME];
+            cout << "Enter the new release: ";
+            getline(cin>>ws, temp_release);
+            while (temp_release.length() >= MAX_NAME) {
+                cout << "Release name too long. Try again: ";
+                getline(cin>>ws, temp_release);
+            }
+            strcpy(release, temp_release.c_str());
+            temp1.set_productReleaseID(release);
+            changeItemFile.clear();
+            return true;
+        } else if (selection == 2) {
+
+        }
+    }
+    changeItemFile.clear();
+    return false;
+
+
 }
 
 //-----------------------------------------------------------------------------
@@ -250,6 +266,9 @@ bool create_report(long int ch_id){
 //-----------------------------------------------------------------------------
 //close change item file
 bool close_change_item() {
+    if (temp_itemFile.is_open()) {
+        remove(TEMP_CHANGE_ITEM_FILE);
+    }
     if (changeItemFile.is_open()) {
         changeItemFile.close();
         return true;

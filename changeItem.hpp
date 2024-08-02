@@ -87,15 +87,17 @@ const char description[MAX_DESCRIPTION], const char status[MAX_NAME], const int 
 bool display_change_items(const char prod_name[MAX_PRODUCT_NAME], const char release_name[MAX_NAME]);
 
 // checks to see if change item with given id, product name, and releaseid actually exists
+// APPROVED
 bool check_change_item(const long int id, const char productName[MAX_PRODUCT_NAME], const char productReleaseID[MAX_NAME]);
 
 // search through changeItem file for a specific change item 
 // then print info to screen
+// APPROVED
 bool see_change_item(long int ch_id // id of the change item
                 );
 
 // modify a change item
-bool modify_change_item(long int ch_id // id of the change item
+bool modify_change_item(const long int ch_id, const int selection
                     );
 
 // see all change items (pending AND completed) for a product

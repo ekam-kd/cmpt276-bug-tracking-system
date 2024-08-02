@@ -246,8 +246,7 @@ bool create_change_request(){
 }
 
 //-----------------------------------------------------------------------------
-// check bug status
-// get_change_items(), select_change_item()
+// check change item information
 bool check_change_item(){
     system("clear");
     cout << "-----------------------------------\n";
@@ -304,9 +303,6 @@ bool check_change_item(){
     }
     see_change_item(change_id);
     
-
-
-
     cout << "Please enter (0) to return to Main Menu: ";
     string return_main;
     cin >> return_main;
@@ -389,18 +385,59 @@ bool edit_change_item(){
         sleep(2);
         return true;
     }
-    cout << "Please select the product that the change item is for: " << endl;
-    //char *selected_product = select_product();
-
-    cout << "Select product release that the change item is for: ";
-    //char *selected_release = select_product_release(); //function in release.cpp that should display releases for a particular product and user picks one
-    // get_change_items(selected_release)
-    // cout << "Enter change id of the change item you wish to view" << endl;
-    // cin >> ws;
-    // cin >> change_id;
-    // modify_change_item(change_id);
-
+    long int change_id;
+    string temp_prod_name, temp_release;
+    char prod_name[MAX_PRODUCT_NAME], release[MAX_NAME];
     
+    if (!display_products()) {
+        sleep(2);
+        return false;
+    }
+    cout << "Based on the products above, enter the product that the report/request you wish to edit is for: ";
+    getline(cin>>ws, temp_prod_name);
+    strcpy(prod_name, temp_prod_name.c_str());
+    while (!check_product(prod_name)) {
+        cout << "Invalid product name. Please try again: ";
+        getline(cin >> ws,temp_prod_name);
+        strcpy(prod_name, temp_prod_name.c_str());
+    }
+    if (!display_product_releases(prod_name)) {
+        sleep(2);
+        return false;
+    }
+    cout << "Based on the releases above, choose and enter a release: ";
+    getline(cin>>ws, temp_release);
+    strcpy(release, temp_release.c_str());
+    while (!check_release(prod_name, release)) {
+        cout << "Invalid release. Please try again: ";
+        getline(cin >> ws,temp_release);
+        strcpy(release, temp_release.c_str());
+    }
+    if (!display_change_items(prod_name, release)) {
+        sleep(2);
+        return false;
+    }
+    cout << "Choose a change item and enter it's id: ";
+    cin >> ws;
+    cin >> change_id;
+    while (!check_change_item(change_id, prod_name, release)) {
+        cout << "Invalid id entered. Try again: ";
+        cin >> ws >> change_id;
+    }
+    see_change_item(change_id);
+    cout << "Enter the field you would like to modify: " << endl;
+    cout << "------------------------------------------" << endl;
+    cout << "0. Exit" << endl << "1. Anticipated Release" << endl << "2. Description" << endl << "3. Status" << endl;
+    cout << "4. Priority" << endl << "5. Number of Requests" << endl;
+    cout << "------------------------------------------" << endl;
+    cout << "Selection: ";
+    cin >> ws;
+    int selection;
+    cin >> selection;
+    modify_change_item(change_id, selection);
+    see_change_item(change_id);
+
+    sleep(10);
     return true;
 }
 
