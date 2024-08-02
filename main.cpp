@@ -17,7 +17,6 @@ int main()
     start_up(); // initialize the system and database files
     string selection_one; // intialize selection variable
     bool sys_run = true; // boolean to keep the system running
-
     // main menu loop
     while(sys_run){ 
         system("clear"); // clear the screen
