@@ -61,8 +61,6 @@ class ChangeRequest{
 // initialize change request database
 bool init_change_request();
 
-long int generate_id ();
-
 // add change request to file
 bool make_change_request(const long int id, const char customer_name[MAX_NAME], 
         const char reported_release[MAX_NAME], const char request_date[MAX_DATE]

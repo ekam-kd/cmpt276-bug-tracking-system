@@ -231,6 +231,7 @@ bool create_change_request(){
     
     long int temp_changeid = generate_changeId();
     cout << "Change id is: " << temp_changeid << endl;
+    make_change_request(temp_changeid, cus_name, release, date);
 
 
     sleep(3);
@@ -240,8 +241,6 @@ bool create_change_request(){
 
 
 
-    //long int change_id = generate_id(); //generate_id is function in changeItem.cpp that generates a random/pseudo random number
-    //make_change_request(change_id, cus_name, selected_release, date);
     //make_change_item(change_id, selected_product, selected_release, change_description, "Unchecked", 0, 1);
     
     cout << "\n\nChange has been reported." << endl;

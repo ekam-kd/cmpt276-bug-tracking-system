@@ -9,7 +9,7 @@
 
 //global filestream for change request file so it stays open for program duration
 fstream changeRequestFile;
-long int id_official;
+
 //-----------------------------------------------------------------------------
 // constructor
 ChangeRequest::ChangeRequest(const long int new_id, const char new_name[MAX_NAME], 
@@ -115,20 +115,25 @@ void ChangeRequest::register_change_request() {
 //initialize change request database
 bool init_change_request() {
     //open file for reading/writing and create it if it doesn't exist
-    changeRequestFile.open(CHANGE_ITEM_FILE, ios::in | ios::out | ios::binary);
+    changeRequestFile.open(CHANGE_REQUEST_FILE, ios::in | ios::out | ios::binary);
     
     //if file opened successfully, return true
     if(changeRequestFile.is_open()) {
         return true;
     } else { //otherwise return false
+        changeRequestFile.clear();
+        changeRequestFile.open(CHANGE_REQUEST_FILE, ios::out | ios::binary);
+        if (changeRequestFile.is_open()) {
+            changeRequestFile.close();
+            changeRequestFile.open(CHANGE_REQUEST_FILE, ios::in | ios::out | ios::binary);
+            return true;
+        }
+        //and if it doesn't work, return false
         return false;
     }
 
 }
 
-// long int generate_id() {
-    
-// }
 
 //-----------------------------------------------------------------------------
 // add change request to file
@@ -150,6 +155,8 @@ const char reported_release[MAX_NAME], const char request_date[MAX_DATE]) {
         sleep(2);
         return false;
     }
+    cout << "Id is: " << temp_request.get_id() << " and name is: " << temp_request.get_customer_name();
+    cout << " and release is: " << temp_request.get_reported_release() << " and date is: " << temp_request.get_request_date() << endl;
     cout << "Change Request successfully created!" << endl;
     return true;
 }
