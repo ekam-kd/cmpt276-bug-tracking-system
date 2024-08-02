@@ -87,13 +87,13 @@ bool check_product(const char prod_name[MAX_PRODUCT_NAME]) {
 
     // Read through the file
     while (productFile.read(reinterpret_cast<char*>(&temp_product), sizeof(Product))) {
-        cout << "product with this name: " << temp_product.get_name() << " exists." << endl;
+        //cout << "product with this name: " << temp_product.get_name() << " exists." << endl;
         if (strcmp(temp_product.get_name(), prod_name) == 0) {
-            cout << "product: " << temp_product.get_name() << " found." << endl;
+            //cout << "product: " << temp_product.get_name() << " found." << endl;
             return true;
         }
     }
-    cout << "product not found?" << endl;
+   // cout << "product not found?" << endl;
 
     // Reset the file pointer for future operations
     productFile.clear(); // Clear the EOF flag

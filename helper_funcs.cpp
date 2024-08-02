@@ -165,7 +165,7 @@ bool create_change_request(){
         sleep(1);
         return true;
     } else if(return_m[0] != '1'){
-        cout << "Invalid selection, please try again" << endl;
+        cout << "Invalid selection. Returning to main menu..." << endl;
         sleep(2);
         return true;
     }
@@ -191,15 +191,13 @@ bool create_change_request(){
         sleep(2);
         return false;
     }
-    cout << "Based on the products listed above, " << endl;
-    cout << "enter the product that the report/request you wish to make is for: ";
+    cout << "Based on the products listed above, enter the product that the report/request you wish to make is for: ";
     getline(cin>>ws, temp_prod_name);
     strcpy(prod_name, temp_prod_name.c_str());
-    if (!check_product(prod_name)) {
-        cout << "Invalid product name. Please try again." << endl;
-        // cout << "Name: " << endl;
-        // getline(cin >> ws,temp_prod_name);
-        // strcpy(prod_name, temp_prod_name.c_str());
+    while (!check_product(prod_name)) {
+        cout << "Invalid product name. Please try again: ";
+        getline(cin >> ws,temp_prod_name);
+        strcpy(prod_name, temp_prod_name.c_str());
     }
 
     sleep(5);
