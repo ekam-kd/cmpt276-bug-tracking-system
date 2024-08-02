@@ -335,7 +335,10 @@ bool register_product(){
     cout << "\nEnter Product Name: ";
     getline(cin >> ws, temp_product);
     strcpy(product_name, temp_product.c_str());
-    add_product(product_name);
+    if (!add_product(product_name)) {
+        sleep(2);
+        return false;
+    }
 
     cout << "\n\nPlease confirm the following information:" << endl;
     cout << "Product Name: " << product_name << endl;
