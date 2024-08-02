@@ -82,7 +82,7 @@ bool init_change_item();
 bool make_change_item(const long int id, const char productName[MAX_PRODUCT_NAME], const char productReleaseID[MAX_NAME], 
 const char description[MAX_DESCRIPTION], const char status[MAX_NAME], const int priority, const int requests);
 
-// display to user all the pending change items for a product
+// display to user all the change items for a product
 // APPROVED
 bool display_change_items(const char prod_name[MAX_PRODUCT_NAME], const char release_name[MAX_NAME]);
 
@@ -97,12 +97,13 @@ bool see_change_item(long int ch_id // id of the change item
                 );
 
 // modify a change item
+// APPROVED
 bool modify_change_item(const long int ch_id
                     );
 
-// see all change items (pending AND completed) for a product
-// SHOULD PROLLY DELETE CUS display_change_items DOES SAME THING
-bool see_all_change_items(char* productName // name of the product
+// see pending change items for a product
+// APPROVED
+bool see_pending_change_items(const char prod_name[MAX_PRODUCT_NAME]
                     );
 
 // takes a change item ID and generates a report for relevent users

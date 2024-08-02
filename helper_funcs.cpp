@@ -429,7 +429,13 @@ bool edit_change_item(){
     cout << "New results: " << endl;
     see_change_item(change_id);
 
-    sleep(10);
+    cout << "Please enter (0) to return to Main Menu: ";
+    string return_main;
+    cin >> return_main;
+    if(return_main[0] == '0'){
+        sleep(1);
+        return true;
+    }
     return true;
 }
 
@@ -500,7 +506,7 @@ bool send_new_product_release(){
 }
 
 //-----------------------------------------------------------------------------
-//select_product(), get_change_items()
+// see all pending change items for a particular product release
 bool see_all_pending_change_items(){
     system("clear");
     cout << "-----------------------------------\n";
@@ -516,9 +522,23 @@ bool see_all_pending_change_items(){
         sleep(2);
         return true;
     }
-    cout << "Please select the product that the change item is for: " << endl;
-    //char *selected_product = select_product();
-    //get_pending_change_items(selected_product);
+    long int change_id;
+    string temp_prod_name;
+    char prod_name[MAX_PRODUCT_NAME];
+    
+    if (!display_products()) {
+        sleep(2);
+        return false;
+    }
+    cout << "Based on the products above, enter the product that the report/request you wish to see is for: ";
+    getline(cin>>ws, temp_prod_name);
+    strcpy(prod_name, temp_prod_name.c_str());
+    while (!check_product(prod_name)) {
+        cout << "Invalid product name. Please try again: ";
+        getline(cin >> ws,temp_prod_name);
+        strcpy(prod_name, temp_prod_name.c_str());
+    }
+    see_pending_change_items(prod_name);
 
     cout << "\n\nPlease enter (0) to return to Main Menu: ";
     string return_main;

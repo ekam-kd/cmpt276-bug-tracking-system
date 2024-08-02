@@ -277,23 +277,30 @@ bool modify_change_item(const long int ch_id){
 }
 
 //-----------------------------------------------------------------------------
-// need to test this function
-bool see_all_change_items(char* productName){
-    ChangeItem changeItem;
-    int i = 0;
-    while(1){
-        if(!read_change_item(i, changeItem)){
-            break;
-        }
-        char* name = changeItem.get_productName();
-        if(strcmp(name, productName) == 0){
-            changeItem.print_change_item_info();
-            i++;
-        } else {
-            i++;
+// displays all pending change items for a specific product release
+bool see_pending_change_items(const char prod_name[MAX_PRODUCT_NAME]) {
+    ChangeItem temp_changeItem;
+    // Move the file pointer to the beginning of the file
+    changeItemFile.seekg(0, ios::beg);
+    int count = 1;
+    // displays list of products
+    while (changeItemFile.read(reinterpret_cast<char*>(&temp_changeItem), sizeof(ChangeItem))) {
+        if (strcmp(temp_changeItem.get_productName(), prod_name) == 0 
+        && (strcmp(temp_changeItem.get_status(), "Unchecked") == 0
+        || strcmp(temp_changeItem.get_status(), "Assessed") == 0
+        || strcmp(temp_changeItem.get_status(), "In Progress") == 0)) {
+            cout << count << ". " << "change ID - " << temp_changeItem.get_id() << " -" << endl;
+            cout << "    Description: {" << temp_changeItem.get_description() << "}" << endl;
+            count++;
         }
     }
-    return true;
+    changeItemFile.clear();
+    if (count == 1) {
+        cout << "No change items. Returning to main menu..." << endl;
+        return false;
+    } else {
+        return true;
+    }
 }
 
 //-----------------------------------------------------------------------------
