@@ -114,7 +114,6 @@ bool register_customer(){
     } else {
         strcpy(emp_department, "");
     }
-    cout << "Thanks, your name is: " << cus_name << "!" << endl;
 
     cout << "\n\nPlease confirm the following information:" << endl;
     cout << "\nName: " << cus_name << endl;
@@ -250,7 +249,7 @@ bool create_change_request(){
 bool check_change_item(){
     system("clear");
     cout << "-----------------------------------\n";
-    cout << "Change Item Status Mernu:" << endl;
+    cout << "Check Change Item Mernu:" << endl;
     cout << "Please enter (0) to return to Main Menu, or (1) to Continue: ";
     string return_m;
     cin >> return_m;
@@ -424,9 +423,10 @@ bool edit_change_item(){
         cout << "Invalid id entered. Try again: ";
         cin >> ws >> change_id;
     }
+    cout << endl;
     see_change_item(change_id);
     modify_change_item(change_id);
-    cout << "New results: " << endl;
+    cout << "\nNew results: " << endl;
     see_change_item(change_id);
 
     cout << "Please enter (0) to return to Main Menu: ";
@@ -530,7 +530,7 @@ bool see_all_pending_change_items(){
         sleep(2);
         return false;
     }
-    cout << "Based on the products above, enter the product that the report/request you wish to see is for: ";
+    cout << "Based on the products above, enter the product that the change items you wish to see is for: ";
     getline(cin>>ws, temp_prod_name);
     strcpy(prod_name, temp_prod_name.c_str());
     while (!check_product(prod_name)) {
@@ -538,6 +538,7 @@ bool see_all_pending_change_items(){
         getline(cin >> ws,temp_prod_name);
         strcpy(prod_name, temp_prod_name.c_str());
     }
+    cout << endl;
     see_pending_change_items(prod_name);
 
     cout << "\n\nPlease enter (0) to return to Main Menu: ";
@@ -555,7 +556,7 @@ bool see_all_pending_change_items(){
 bool send_report(){
     system("clear");
     cout << "-----------------------------------\n";
-    cout << "Search Change Items Menu:" << endl;
+    cout << "Send Report Menu:" << endl;
     cout << "Please enter (0) to return to Main Menu, or (1) to Continue: ";
     string return_m;
     cin >> return_m;
@@ -595,7 +596,10 @@ bool send_report(){
         getline(cin >> ws,temp_release);
         strcpy(release, temp_release.c_str());
     }
-    display_change_items(prod_name, release);
+    if (!display_change_items(prod_name, release)) {
+        sleep(2);
+        return false;
+    }
 
     cout << "Please enter the change item that the report is for: ";
     cin >> ws >> change_id;
