@@ -59,6 +59,8 @@ bool shut_down();
 // used to check phone number attribute for customer class
 bool is_digits(string &str);
 
+long int generate_changeId();
+
 /* Note: Iterator functions seekToBeginningOfFile() and getRecord() can be included in the 
    corresponding header files once the file access functions are being implemented. As this
    has not yet been started, the iterator functions have not been included in any hpp file */

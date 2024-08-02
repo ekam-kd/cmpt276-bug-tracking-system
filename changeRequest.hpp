@@ -44,11 +44,11 @@ class ChangeRequest{
         // set id
         void set_id(long int id);
         // set customer name
-        void set_customer_name(string customer_name);
+        void set_customer_name(const char customer_name[MAX_NAME]);
         // set reported release
-        void set_reported_release(string reported_release);
+        void set_reported_release(const char reported_release[MAX_NAME]);
         // set request date
-        void set_request_date(string request_date);
+        void set_request_date(const char request_date[MAX_DATE]);
         // print change request info
         void print_change_request_info();
         // register new change request

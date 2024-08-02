@@ -212,19 +212,7 @@ bool create_change_request(){
         getline(cin >> ws,temp_release);
         strcpy(release, temp_release.c_str());
     }
-    
-
-
-    sleep(3);
-    return true;
-
-    //char *selected_product = select_product();
-
-    cout << "Select product release that report/request is being made for: ";
-    //char *selected_release = select_product_release(); //function in release.cpp that should display releases for a particular product and user picks one
-
-
-    cout << "\nPlease describe the bug report or feature request [in less than 280 characters]: ";
+    cout << "Please describe the bug report or feature request [in less than 280 characters]: ";
     getline(cin>>ws, temp_description);
     while (temp_description.length() >= MAX_DESCRIPTION) {
         cout << "Description too long. Try again." << endl;
@@ -240,6 +228,17 @@ bool create_change_request(){
         getline(cin>>ws, temp_date);
     }
     strcpy(date, temp_date.c_str());
+    
+    long int temp_changeid = generate_changeId();
+    cout << "Change id is: " << temp_changeid << endl;
+
+
+    sleep(3);
+    return true;
+
+
+
+
 
     //long int change_id = generate_id(); //generate_id is function in changeItem.cpp that generates a random/pseudo random number
     //make_change_request(change_id, cus_name, selected_release, date);
@@ -579,6 +578,42 @@ bool shut_down() {
     close_change_item();
     return true;
 }
+
+
+long int generate_changeId() {
+    fstream change_id_file(CHANGE_ID_FILE, ios::in | ios::out);
+    // If the file does not exist or could not be opened
+    if (!change_id_file.is_open()) {
+        // Create the file and initialize the ID to 1
+        std::ofstream create_file(CHANGE_ID_FILE);
+        if (create_file.is_open()) {
+            create_file << 1;
+            create_file.close();
+            return 1;
+        } else {
+            cout << "Error: Could not create the file." << endl;
+            return -1; // Indicate failure
+        }
+    }
+    long int temp_id = 0;
+
+    // Read the current ID from the file
+    change_id_file >> temp_id;
+
+    // Increment the ID
+    temp_id++;
+
+    // Move the file pointer to the beginning and overwrite with the new ID
+    change_id_file.clear(); // Clear any errors from reading
+    change_id_file.seekp(0, std::ios::beg);
+    change_id_file << temp_id;
+
+    // Close the file
+    change_id_file.close();
+
+    return temp_id;
+}
+
 
 bool is_digits(string &str) {
     for (char ch : str) {

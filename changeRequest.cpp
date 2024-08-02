@@ -62,20 +62,19 @@ void ChangeRequest::set_id(long int id) {
 
 //-----------------------------------------------------------------------------
 // set customer name
-void ChangeRequest::set_customer_name(string customer_name) {
-    strcpy(this->customer_name, customer_name.c_str());
+void ChangeRequest::set_customer_name(const char new_name[MAX_NAME]) {
+    strncpy(customer_name, new_name, MAX_NAME - 1);
+    customer_name[MAX_NAME - 1] = '\0'; // Ensure null-terminated
 }
-
-//-----------------------------------------------------------------------------
 // set reported release
-void ChangeRequest::set_reported_release(string reported_release) {
-    strcpy(this->reported_release, reported_release.c_str());
+void ChangeRequest::set_reported_release(const char new_release[MAX_NAME]) {
+    strncpy(reported_release, new_release, MAX_NAME - 1);
+    reported_release[MAX_NAME - 1] = '\0'; // Ensure null-terminated
 }
-
-//-----------------------------------------------------------------------------
 // set request date
-void ChangeRequest::set_request_date(string request_date) {
-    strcpy(this->request_date, request_date.c_str());
+void ChangeRequest::set_request_date(const char new_date[MAX_DATE]) {
+    strncpy(request_date, new_date, MAX_DATE - 1);
+    request_date[MAX_DATE - 1] = '\0'; // Ensure null-terminated
 }
 
 //-----------------------------------------------------------------------------
@@ -92,19 +91,25 @@ void ChangeRequest::register_change_request() {
     //prompt user for change request information
     cout << "Enter Customer Name: ";
     string customer_name;
+    char name[MAX_NAME];
     cin.ignore();
     getline(cin, customer_name);
-    set_customer_name(customer_name);
+    strcpy(name, customer_name.c_str());
+    set_customer_name(name);
 
     cout << "Enter Reported Release: ";
     string reported_release;
+    char release[MAX_NAME];
     cin >> reported_release;
-    set_reported_release(reported_release);
+    strcpy(release, reported_release.c_str());
+    set_reported_release(release);
 
     cout << "Enter Request Date (YYYY-MM-DD): ";
     string request_date;
+    char date[MAX_DATE];
     cin >> request_date;
-    set_request_date(request_date);
+    strcpy(date, request_date.c_str());
+    set_request_date(date);
 }
 //-----------------------------------------------------------------------------
 //initialize change request database
@@ -129,9 +134,23 @@ bool init_change_request() {
 // add change request to file
 bool make_change_request(const long int id, const char customer_name[MAX_NAME], 
 const char reported_release[MAX_NAME], const char request_date[MAX_DATE]) {
+    if (!changeRequestFile.is_open())
+    {
+        cerr << "Release database file is not open!" << endl;
+        return false;
+    }
     ChangeRequest temp_request(id, customer_name, reported_release, request_date);
-    //write change request to file
-    write_change_request(temp_request);
+    changeRequestFile.seekp(0, ios::end);
+    // Write product to file
+    changeRequestFile.write(reinterpret_cast<const char *>(&temp_request), sizeof(ChangeRequest));
+    changeRequestFile.clear();
+
+    if (changeRequestFile.fail()) {
+        cerr << "Error writing to the release file." << endl;
+        sleep(2);
+        return false;
+    }
+    cout << "Change Request successfully created!" << endl;
     return true;
 }
 
