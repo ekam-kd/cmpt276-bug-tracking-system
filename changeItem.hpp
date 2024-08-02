@@ -25,15 +25,18 @@ using namespace std;
 class ChangeItem{
     private:
         long int id;
-        char productName[MAX_NAME];
+        char productName[MAX_PRODUCT_NAME];
         char productReleaseID[MAX_NAME];
         char description[MAX_DESCRIPTION];
         char status[MAX_NAME];
         int priority;
         int requests;
     public:
-        // constructor
+        // default constructor
         ChangeItem();
+        // another constructor
+        ChangeItem(const long int id, const char productName[MAX_PRODUCT_NAME], const char productReleaseID[MAX_NAME], 
+        const char description[MAX_DESCRIPTION], const char status[MAX_NAME], const int priority, const int requests);
         // destructor
         ~ChangeItem();
         // get id
@@ -53,17 +56,17 @@ class ChangeItem{
         // set id
         void set_id(long int id);
         // set product name
-        void set_productName(string productName);
+        void set_productName(const char productName[MAX_PRODUCT_NAME]);
         // set product release ID
-        void set_productReleaseID(string productReleaseID);
+        void set_productReleaseID(const char productReleaseID[MAX_NAME]);
         // set description
-        void set_description(string description);
+        void set_description(const char description[MAX_DESCRIPTION]);
         // set status
-        void set_status(string status);
+        void set_status(const char status[MAX_NAME]);
         // set priority
-        void set_priority(int priority);
+        void set_priority(const int priority);
         // set requests
-        void set_requests(int requests);
+        void set_requests(const int requests);
         // print change item info
         void print_change_item_info();
 };
@@ -74,8 +77,8 @@ class ChangeItem{
 bool init_change_item();
 
 // create a new change item and add to file
-bool make_change_item(ChangeItem* changeItem // change item to initialize
-                );
+bool make_change_item(const long int id, const char productName[MAX_PRODUCT_NAME], const char productReleaseID[MAX_NAME], 
+const char description[MAX_DESCRIPTION], const char status[MAX_NAME], const int priority, const int requests);
 
 // display to user all the pending change items for a product
 bool get_change_items(char* productName // name of the product

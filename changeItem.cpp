@@ -18,15 +18,41 @@ bool init_change_item() {
     if(changeItemFile.is_open()) {
         return true;
     } else { //otherwise return false
+        changeItemFile.clear();
+        changeItemFile.open(CHANGE_ITEM_FILE, ios::out | ios::binary);
+        if (changeItemFile.is_open()) {
+            changeItemFile.close();
+            changeItemFile.open(CHANGE_ITEM_FILE, ios::in | ios::out | ios::binary);
+            return true;
+        }
+        //and if it doesn't work, return false
         return false;
     }
 
 }
 
 //-----------------------------------------------------------------------------
-bool make_change_item(ChangeItem* changeItem) {
-    //write change item to file
-    write_change_item(*changeItem);
+bool make_change_item(const long int id, const char productName[MAX_PRODUCT_NAME], const char productReleaseID[MAX_NAME], 
+const char description[MAX_DESCRIPTION], const char status[MAX_NAME], const int priority, const int requests) {
+    if (!changeItemFile.is_open())
+    {
+        cerr << "Change Item database file is not open!" << endl;
+        return false;
+    }
+    ChangeItem temp_item(id, productName, productReleaseID, description, status, priority, requests);
+    changeItemFile.seekp(0, ios::end);
+    // Write product to file
+    changeItemFile.write(reinterpret_cast<const char *>(&temp_item), sizeof(ChangeItem));
+    changeItemFile.clear();
+
+    if (changeItemFile.fail()) {
+        cerr << "Error writing to the change item file." << endl;
+        sleep(2);
+        return false;
+    }
+    cout << "Id is: " << temp_item.get_id() << " and product name is: " << temp_item.get_productName();
+    cout << " and release is: " << temp_item.get_productReleaseID() << " and priority is: " << temp_item.get_priority() << endl;
+    cout << "Change Item successfully created!" << endl;
     return true;
 }
 
@@ -100,20 +126,28 @@ bool modify_change_item(long int ch_id){
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
     cout << "Enter new product name: ";
     string productName;
+    char prod_name[MAX_PRODUCT_NAME];
     cin >> productName;
-    changeItem.set_productName(productName);
+    strcpy(prod_name, productName.c_str());
+    changeItem.set_productName(prod_name);
     cout << "Enter new product release ID: ";
     string productReleaseID;
+    char release[MAX_NAME];
     cin >> productReleaseID;
-    changeItem.set_productReleaseID(productReleaseID);
+    strcpy(release, productReleaseID.c_str());
+    changeItem.set_productReleaseID(release);
     cout << "Enter new description: ";
     string description;
+    char descr[MAX_DESCRIPTION];
     cin >> description;
-    changeItem.set_description(description);
+    strcpy(descr, description.c_str());
+    changeItem.set_description(descr);
     cout << "Enter new status: ";
     string status;
+    char official_status[MAX_NAME];
     cin >> status;
-    changeItem.set_status(status);
+    strcpy(official_status, status.c_str());
+    changeItem.set_status(official_status);
     cout << "Enter new priority: ";
     int priority;
     cin >> priority;
@@ -123,7 +157,7 @@ bool modify_change_item(long int ch_id){
     cin >> requests;
     changeItem.set_requests(requests);
     // modify change item by creating new change item and adding to file
-    make_change_item(&changeItem);
+    make_change_item(ch_id, prod_name, release, descr, official_status, priority, requests);
 
     // delete change item
     delete_change_item(i);
@@ -203,6 +237,16 @@ ChangeItem::ChangeItem() {
     requests = 0;
     id = 0;
 }
+ChangeItem::ChangeItem(const long int id, const char productName[MAX_PRODUCT_NAME], const char productReleaseID[MAX_NAME], 
+const char description[MAX_DESCRIPTION], const char status[MAX_NAME], const int priority, const int requests) {
+    set_id(id);
+    set_productName(productName);
+    set_productReleaseID(productReleaseID);
+    set_description(description);
+    set_status(status);
+    set_priority(priority);
+    set_requests(requests);
+}
 
 //-----------------------------------------------------------------------------
 // destructor
@@ -259,39 +303,32 @@ void ChangeItem::set_id(long int id) {
 }
 
 //-----------------------------------------------------------------------------
-// set product name
-void ChangeItem::set_productName(string productName) {
-    strcpy(this->productName, productName.c_str());
+void ChangeItem::set_productName(const char new_prod_name[MAX_PRODUCT_NAME]) {
+    strncpy(productName, new_prod_name, MAX_PRODUCT_NAME - 1);
+    productName[MAX_PRODUCT_NAME - 1] = '\0'; // Ensure null-terminated
 }
-
-//-----------------------------------------------------------------------------
 // set product release ID
-void ChangeItem::set_productReleaseID(string productReleaseID) {
-    strcpy(this->productReleaseID, productReleaseID.c_str());
+void ChangeItem::set_productReleaseID(const char new_release[MAX_NAME]) {
+    strncpy(productReleaseID, new_release, MAX_NAME - 1);
+    productReleaseID[MAX_NAME - 1] = '\0'; // Ensure null-terminated
 }
-
-//-----------------------------------------------------------------------------
 // set description
-void ChangeItem::set_description(string description) {
-    strcpy(this->description, description.c_str());
+void ChangeItem::set_description(const char new_descr[MAX_DESCRIPTION]) {
+    strncpy(description, new_descr, MAX_DESCRIPTION - 1);
+    description[MAX_DESCRIPTION - 1] = '\0'; // Ensure null-terminated
 }
-
-//-----------------------------------------------------------------------------
 // set status
-void ChangeItem::set_status(string status) {
-    strcpy(this->status, status.c_str());
+void ChangeItem::set_status(const char new_status[MAX_NAME]) {
+    strncpy(status, new_status, MAX_NAME - 1);
+    status[MAX_NAME - 1] = '\0'; // Ensure null-terminated
 }
-
-//-----------------------------------------------------------------------------
 // set priority
-void ChangeItem::set_priority(int priority) {
-    this->priority = priority;
+void ChangeItem::set_priority(const int new_priority) {
+    this->priority = new_priority;
 }
-
-//-----------------------------------------------------------------------------
 // set requests
-void ChangeItem::set_requests(int requests) {
-    this->requests = requests;
+void ChangeItem::set_requests(const int new_requests) {
+    this->requests = new_requests;
 }
 
 //-----------------------------------------------------------------------------

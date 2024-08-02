@@ -232,9 +232,10 @@ bool create_change_request(){
     long int temp_changeid = generate_changeId();
     cout << "Change id is: " << temp_changeid << endl;
     make_change_request(temp_changeid, cus_name, release, date);
+    make_change_item(temp_changeid, prod_name, release, change_description, "Unchecked", 1, 1);
 
 
-    sleep(3);
+    sleep(5);
     return true;
 
 

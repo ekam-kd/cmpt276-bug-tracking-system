@@ -141,7 +141,7 @@ bool make_change_request(const long int id, const char customer_name[MAX_NAME],
 const char reported_release[MAX_NAME], const char request_date[MAX_DATE]) {
     if (!changeRequestFile.is_open())
     {
-        cerr << "Release database file is not open!" << endl;
+        cerr << "Change Request database file is not open!" << endl;
         return false;
     }
     ChangeRequest temp_request(id, customer_name, reported_release, request_date);
@@ -151,7 +151,7 @@ const char reported_release[MAX_NAME], const char request_date[MAX_DATE]) {
     changeRequestFile.clear();
 
     if (changeRequestFile.fail()) {
-        cerr << "Error writing to the release file." << endl;
+        cerr << "Error writing to the change request file." << endl;
         sleep(2);
         return false;
     }
