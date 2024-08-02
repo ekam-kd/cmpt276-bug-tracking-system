@@ -170,23 +170,42 @@ bool create_change_request(){
         return true;
     }
     string temp_name;
+    string temp_prod_name;
     string temp_description;
     string temp_date;
     char cus_name[MAX_NAME];
+    char prod_name[MAX_PRODUCT_NAME];
     char change_description[MAX_DESCRIPTION];
     char date[11];
     
     cout << "Please enter your name: ";
     getline(cin>>ws, temp_name);
     strcpy(cus_name, temp_name.c_str());
-    while (check_customer(cus_name) || temp_name.length() >= 30) {
+    while (!check_customer(cus_name) || temp_name.length() >= MAX_NAME) {
         cout << "Invalid customer name. Please try again." << endl;
         cout << "Name: " << endl;
         getline(cin >> ws,temp_name);
         strcpy(cus_name, temp_name.c_str());
     }
-    cout << "Please select the product for the report or request you wish to make: " << endl;
-    char *selected_product = select_product();
+    if (!display_products()) {
+        sleep(2);
+        return false;
+    }
+    cout << "Based on the products listed above, " << endl;
+    cout << "enter the product that the report/request you wish to make is for: ";
+    getline(cin>>ws, temp_prod_name);
+    strcpy(prod_name, temp_prod_name.c_str());
+    if (!check_product(prod_name)) {
+        cout << "Invalid product name. Please try again." << endl;
+        // cout << "Name: " << endl;
+        // getline(cin >> ws,temp_prod_name);
+        // strcpy(prod_name, temp_prod_name.c_str());
+    }
+
+    sleep(5);
+    return true;
+
+    //char *selected_product = select_product();
 
     cout << "Select product release that report/request is being made for: ";
     //char *selected_release = select_product_release(); //function in release.cpp that should display releases for a particular product and user picks one
@@ -209,7 +228,7 @@ bool create_change_request(){
     }
     strcpy(date, temp_date.c_str());
 
-    //long int change_id = generate_id(); //generate_id is function in changeRequest.cpp that generates a random/pseudo random number
+    //long int change_id = generate_id(); //generate_id is function in changeItem.cpp that generates a random/pseudo random number
     //make_change_request(change_id, cus_name, selected_release, date);
     //make_change_item(change_id, selected_product, selected_release, change_description, "Unchecked", 0, 1);
     
@@ -257,7 +276,7 @@ bool check_change_item(){
         strcpy(cus_name, temp_name.c_str());
     }
     cout << "Please select the product that the change item is for: " << endl;
-    char *selected_product = select_product();
+   // char *selected_product = select_product();
 
     cout << "Select product release that the change item is for: ";
     //char *selected_release = select_product_release(); //function in release.cpp that should display releases for a particular product and user picks one
@@ -284,14 +303,6 @@ bool register_product(){
     system("clear"); //clears the screen
     cout << "-----------------------------------\n";
     cout << "Register Product Menu:" << endl;
-    string temp_product;
-    char product_name[MAX_PRODUCT_NAME];
-    cout << "\nEnter Product Name: ";
-    getline(cin >> ws, temp_product);
-    strcpy(product_name, temp_product.c_str());
-    add_product(product_name);
-
-    
     cout << "Please enter (0) to return to Main Menu, or (1) to Continue: ";
     string return_m;
     cin >> return_m;
@@ -303,6 +314,13 @@ bool register_product(){
         sleep(2);
         return true;
     }
+    string temp_product;
+    char product_name[MAX_PRODUCT_NAME];
+    cout << "\nEnter Product Name: ";
+    getline(cin >> ws, temp_product);
+    strcpy(product_name, temp_product.c_str());
+    add_product(product_name);
+
     cout << "\n\nPlease confirm the following information:" << endl;
     cout << "Product Name: " << product_name << endl;
     cout << "\nIs this information correct? (Y/N): ";
@@ -310,9 +328,6 @@ bool register_product(){
     cin >> confirm;
     if(confirm == 'Y' || confirm == 'y'){
         cout << "\nThank you for registering the new product!" << endl;
-        if(add_product(product_name)){
-            cout << "Product " << product_name << " has been added to the system." << endl;
-        }
         cout << "Please enter (0) to return to Main Menu: ";
         string return_main;
         cin >> return_main;
@@ -354,7 +369,7 @@ bool edit_change_item(){
         return true;
     }
     cout << "Please select the product that the change item is for: " << endl;
-    char *selected_product = select_product();
+    //char *selected_product = select_product();
 
     cout << "Select product release that the change item is for: ";
     //char *selected_release = select_product_release(); //function in release.cpp that should display releases for a particular product and user picks one
@@ -387,7 +402,7 @@ bool send_new_product_release(){
         return true;
     }
     cout << "Please select the product that the change item is for: " << endl;
-    char *selected_product = select_product();
+    //char *selected_product = select_product();
 
     //create_product_release(selected_product);
 
@@ -419,7 +434,7 @@ bool see_all_pending_change_items(){
         return true;
     }
     cout << "Please select the product that the change item is for: " << endl;
-    char *selected_product = select_product();
+    //char *selected_product = select_product();
     //get_pending_change_items(selected_product);
 
     cout << "\n\nPlease enter (0) to return to Main Menu: ";
@@ -450,7 +465,7 @@ bool send_report(){
         return true;
     }
     cout << "Please select the product that the change item is for: " << endl;
-    char *selected_product = select_product();
+    //char *selected_product = select_product();
     //long int chosen_item = see_all_pending_change_items(selected_product);
     //create_report(chosen_item);
     

@@ -72,6 +72,7 @@ bool init_product()
 
 //-----------------------------------------------------------------------------
 // Checks to ensure product name is unique; used in add_product
+// Also used to check if a product exists in general
 bool check_product(const char prod_name[MAX_PRODUCT_NAME]) {
     //check to make sure productFile is open
     if (!productFile.is_open())
@@ -79,16 +80,20 @@ bool check_product(const char prod_name[MAX_PRODUCT_NAME]) {
         cerr << "Product database file is not open!" << endl;
         return false;
     }
+
     Product temp_product("");
+    productFile.clear();
     productFile.seekg(0, ios::beg);
 
     // Read through the file
     while (productFile.read(reinterpret_cast<char*>(&temp_product), sizeof(Product))) {
-        if (strcmp(temp_product.get_name(),prod_name) == 0) {
-            cout << "A product with this name already exists." << endl;
+        cout << "product with this name: " << temp_product.get_name() << " exists." << endl;
+        if (strcmp(temp_product.get_name(), prod_name) == 0) {
+            cout << "product: " << temp_product.get_name() << " found." << endl;
             return true;
         }
     }
+    cout << "product not found?" << endl;
 
     // Reset the file pointer for future operations
     productFile.clear(); // Clear the EOF flag
@@ -107,6 +112,7 @@ bool add_product(const char prod_name[MAX_PRODUCT_NAME])
     }
     //if a product with the name provided already exists, return false
     if (check_product(prod_name)) {
+        cout << "A product with this name already exists." << endl;
         return false;
     }
     
@@ -118,29 +124,36 @@ bool add_product(const char prod_name[MAX_PRODUCT_NAME])
 
     if (productFile.fail()) {
         cerr << "Error writing to the product file." << endl;
+        sleep(2);
         return false;
     }
     return true;
 }
 
-//-----------------------------------------------------------------------------
-// Displays list of products, allows user to select one
-char* select_product()
-{
-    //open product file, then read through it and print each product, customer will have to enter
-    //its name. then we have to read through the file again and get the name. then we return the product.
+bool display_products() {
     Product temp_product("");
-
     // Move the file pointer to the beginning of the file
     productFile.seekg(0, ios::beg);
-
-    int count = 0;
-
-    // Read through the file
+    int count = 1;
+    // displays list of products
     while (productFile.read(reinterpret_cast<char*>(&temp_product), sizeof(Product))) {
         cout << count << ". " << temp_product.get_name() << endl;
         count++;
     }
+    if (count == 1) {
+        cout << "No products registered. Returning to main menu..." << endl;
+        return false;
+    } else {
+        return true;
+    }
+
+}
+
+//-----------------------------------------------------------------------------
+// Displays list of products, allows user to select one
+bool select_product(const char prod_name[MAX_PRODUCT_NAME])
+{
+    
     string temp_choice;
     static char choice[MAX_PRODUCT_NAME];
     cout << "Enter product name: ";
@@ -154,7 +167,7 @@ char* select_product()
 
     Product temp2("");
     productFile.seekg(0, ios::beg);
-    while (productFile.read(reinterpret_cast<char*>(&temp_product), sizeof(Product))) {
+    while (productFile.read(reinterpret_cast<char*>(&temp2), sizeof(Product))) {
         if (temp2.get_name() == choice) {
             productFile.clear(); // Clear the EOF flag
             return choice;
