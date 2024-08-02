@@ -20,6 +20,14 @@ bool init_release() {
     if(releaseFile.is_open()) {
         return true;
     } else { //otherwise return false
+        releaseFile.clear();
+        releaseFile.open(RELEASE_FILE, ios::out | ios::binary);
+        if (releaseFile.is_open()) {
+            releaseFile.close();
+            releaseFile.open(RELEASE_FILE, ios::in | ios::out | ios::binary);
+            return true;
+        }
+        //and if it doesn't work, return false
         return false;
     }
 
@@ -37,12 +45,13 @@ bool close_product_release() {
 
 //-----------------------------------------------------------------------------
 // constructor
-Release::Release() {
+Release::Release(const char productName[MAX_PRODUCT_NAME], const char version[MAX_NAME], 
+        const char description[MAX_DESCRIPTION], const char date[MAX_NAME]) {
     //initialize all member variables to empty strings
-    strcpy(productName, "");
-    strcpy(version, "");
-    strcpy(description, "");
-    strcpy(date, "");
+    set_productName(productName);
+    set_version(version);
+    set_description(description);
+    set_date(date);
 }
 
 //-----------------------------------------------------------------------------
@@ -77,26 +86,30 @@ char* Release::get_date() {
 
 //-----------------------------------------------------------------------------
 // set product name
-void Release::set_productName(string productName) {
-    strcpy(this->productName, productName.c_str());
+void Release::set_productName(const char newName[MAX_PRODUCT_NAME]) {
+    strncpy(productName, newName, MAX_PRODUCT_NAME - 1);
+    productName[MAX_PRODUCT_NAME - 1] = '\0'; // Ensure null-terminated
 }
 
 //-----------------------------------------------------------------------------
 // set version
-void Release::set_version(string version) {
-    strcpy(this->version, version.c_str());
+void Release::set_version(const char new_version[MAX_PRODUCT_NAME]) {
+    strncpy(version, new_version, MAX_PRODUCT_NAME - 1);
+    version[MAX_PRODUCT_NAME - 1] = '\0'; // Ensure null-terminated
 }
 
 //-----------------------------------------------------------------------------
 // set description
-void Release::set_description(string description) {
-    strcpy(this->description, description.c_str());
+void Release::set_description(const char new_description[MAX_DESCRIPTION]) {
+    strncpy(description, new_description, MAX_PRODUCT_NAME - 1);
+    description[MAX_PRODUCT_NAME - 1] = '\0'; // Ensure null-terminated
 }
 
 //-----------------------------------------------------------------------------
 // set date
-void Release::set_date(string date) {
-    strcpy(this->date, date.c_str());
+void Release::set_date(const char new_date[MAX_NAME]) {
+    strncpy(date, new_date, MAX_PRODUCT_NAME - 1);
+    date[MAX_PRODUCT_NAME - 1] = '\0'; // Ensure null-terminated
 }
 
 //-----------------------------------------------------------------------------
@@ -106,6 +119,30 @@ void Release::print_release_info() {
     cout << "Version: " << version << endl;
     cout << "Description: " << description << endl;
     cout << "Date: " << date << endl;
+}
+
+//-----------------------------------------------------------------------------
+// displays product releases of a particular product
+bool display_product_releases(const char prod_name[MAX_PRODUCT_NAME]) {
+    Release temp_release("", "", "", "");
+    // Move the file pointer to the beginning of the file
+    releaseFile.seekg(0, ios::beg);
+    int count = 1;
+    // displays list of products
+    while (releaseFile.read(reinterpret_cast<char*>(&temp_release), sizeof(Release))) {
+        if (strcmp(temp_release.get_productName(), prod_name) == 0) {
+            cout << count << ". " << temp_release.get_productName() << ", release: " << temp_release.get_version() << endl;
+            count++;
+        }
+    }
+    if (count == 1) {
+        cout << "No versions. Returning to main menu..." << endl;
+        releaseFile.clear();
+        return false;
+    } else {
+        releaseFile.clear();
+        return true;
+    }
 }
 
 //-----------------------------------------------------------------------------
@@ -139,7 +176,7 @@ bool delete_release(int index) {
     releaseFile.seekg(0, std::ios::beg);
 
     // Read all releases into memory except the one to be deleted
-    Release tempRelease;
+    Release tempRelease("", "", "", "");
     int currentIndex = 0;
     while (releaseFile.read(reinterpret_cast<char*>(&tempRelease), sizeof(Release))) {
         if (currentIndex != index) {

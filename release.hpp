@@ -21,13 +21,14 @@ using namespace std;
 
 class Release{
     private:
-        char productName[MAX_NAME];
+        char productName[MAX_PRODUCT_NAME];
         char version[MAX_NAME];
         char description[MAX_DESCRIPTION];
         char date[MAX_NAME];
     public:
         // constructor
-        Release();
+        Release(const char productName[MAX_PRODUCT_NAME], const char version[MAX_NAME], 
+        const char description[MAX_DESCRIPTION], const char date[MAX_NAME]);
         // destructor
         ~Release();
         // get product name
@@ -39,13 +40,13 @@ class Release{
         // get date
         char* get_date();
         // set product name
-        void set_productName(string productName);
+        void set_productName(const char productName[MAX_PRODUCT_NAME]);
         // set version
-        void set_version(string version);
+        void set_version(const char version[MAX_NAME]);
         // set description
-        void set_description(string description);
+        void set_description(const char description[MAX_DESCRIPTION]);
         // set date
-        void set_date(string date);
+        void set_date(const char date[MAX_NAME]);
         // print release info
         void print_release_info();
 };
@@ -54,6 +55,8 @@ class Release{
 
 // initialize release database
 bool init_release();
+
+bool display_product_releases(const char prod_name[MAX_PRODUCT_NAME]);
 
 // create a new product release and add to file
 bool create_product_release(Release* release // release to initialize

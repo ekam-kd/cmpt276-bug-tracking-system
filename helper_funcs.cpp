@@ -200,7 +200,7 @@ bool create_change_request(){
         strcpy(prod_name, temp_prod_name.c_str());
     }
     //select_product(prod_name); HOLDUP i think select_product aint even necessary anymore
-    // select_product_release(prod_name);
+    display_product_releases(prod_name);
 
 
     sleep(3);

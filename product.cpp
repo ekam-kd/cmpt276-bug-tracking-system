@@ -142,8 +142,10 @@ bool display_products() {
     }
     if (count == 1) {
         cout << "No products registered. Returning to main menu..." << endl;
+        productFile.clear();
         return false;
     } else {
+        productFile.clear();
         return true;
     }
 
