@@ -326,7 +326,7 @@ bool register_product(){
         sleep(1);
         return true;
     } else if(return_m[0] != '1'){
-        cout << "Invalid selection, please try again" << endl;
+        cout << "Invalid selection. Returning to main..." << endl;
         sleep(2);
         return true;
     }
@@ -336,6 +336,7 @@ bool register_product(){
     getline(cin >> ws, temp_product);
     strcpy(product_name, temp_product.c_str());
     if (!add_product(product_name)) {
+        cout << "Returning to main menu...";
         sleep(2);
         return false;
     }
