@@ -49,11 +49,6 @@ class ChangeRequest{
         void set_reported_release(const char reported_release[MAX_NAME]);
         // set request date
         void set_request_date(const char request_date[MAX_DATE]);
-        // print change request info
-        void print_change_request_info();
-        // register new change request
-        void register_change_request();
-
 };
 
 // helper functions
@@ -66,24 +61,8 @@ bool make_change_request(const long int id, const char customer_name[MAX_NAME],
         const char reported_release[MAX_NAME], const char request_date[MAX_DATE]
 );
 
-
-
 // close change request database file
 bool close_change_request();
-
-// file operations
-
-// write change request to file
-bool write_change_request(ChangeRequest &changeRequest // change request to write
-                        );
-
-// read change request from file
-bool read_change_request(int index, ChangeRequest &changeRequest // index of change request to read
-                        );
-
-// delete change request from file
-// bool delete_change_request(int index // index of change request to delete
-//                         );
 
 
 #endif

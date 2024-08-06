@@ -84,7 +84,6 @@ const char description[MAX_DESCRIPTION], const char status[MAX_NAME], const int 
 // APPROVED
 bool display_change_items(const char prod_name[MAX_PRODUCT_NAME], const char release_name[MAX_NAME]);
 
-
 // checks to see if change item with given id, product name, and releaseid actually exists
 // APPROVED
 bool check_change_item(const long int id, const char productName[MAX_PRODUCT_NAME], const char productReleaseID[MAX_NAME]);

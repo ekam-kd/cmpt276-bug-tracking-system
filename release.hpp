@@ -47,8 +47,6 @@ class Release{
         void set_description(const char description[MAX_DESCRIPTION]);
         // set date
         void set_date(const char date[MAX_DATE]);
-        // print release info
-        void print_release_info();
 };
 
 // helper functions
@@ -66,10 +64,5 @@ const char description[MAX_DESCRIPTION], const char date[MAX_DATE]);
 
 // close release database file
 bool close_product_release();
-
-// file operations
-bool write_release(Release &release);
-bool read_release(int index ,Release &release);
-bool delete_release(int index);
 
 #endif

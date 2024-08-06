@@ -48,12 +48,6 @@ public:
     void set_phone(const char *new_phone);
     // set department
     void set_department(const char *new_department);
-    // print customer info
-    // print customer info
-    void print_customer_info();
-    // register new customer
-    //void register_customer();
-    
 };
 
 // helper functions
@@ -72,14 +66,6 @@ bool check_employee(const char name[MAX_NAME]);
 // bool write_customer(Customer &customer // customer to initialize
 // );
 void create_customer(const char name[MAX_NAME], const char email[MAX_EMAIL], const char phone_num[MAX_PHONE], const char department[MAX_DEPARTMENT]);
-
-// read customer from file
-//bool read_customer(int index, Customer &customer);
-
-//bool delete_customer(int index);
-
-// select customer
-Customer select_customer(const char* name);
 
 // closes customer database file
 bool close_customer();

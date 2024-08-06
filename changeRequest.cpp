@@ -78,40 +78,6 @@ void ChangeRequest::set_request_date(const char new_date[MAX_DATE]) {
 }
 
 //-----------------------------------------------------------------------------
-// print change request info
-void ChangeRequest::print_change_request_info() {
-    cout << "Change Request ID: " << id << endl;
-    cout << "Customer Name: " << customer_name << endl;
-    cout << "Reported Release: " << reported_release << endl;
-    cout << "Request Date: " << request_date << endl;
-}
-//-----------------------------------------------------------------------------
-// register new change request
-void ChangeRequest::register_change_request() {
-    //prompt user for change request information
-    cout << "Enter Customer Name: ";
-    string customer_name;
-    char name[MAX_NAME];
-    cin.ignore();
-    getline(cin, customer_name);
-    strcpy(name, customer_name.c_str());
-    set_customer_name(name);
-
-    cout << "Enter Reported Release: ";
-    string reported_release;
-    char release[MAX_NAME];
-    cin >> reported_release;
-    strcpy(release, reported_release.c_str());
-    set_reported_release(release);
-
-    cout << "Enter Request Date (YYYY-MM-DD): ";
-    string request_date;
-    char date[MAX_DATE];
-    cin >> request_date;
-    strcpy(date, request_date.c_str());
-    set_request_date(date);
-}
-//-----------------------------------------------------------------------------
 //initialize change request database
 bool init_change_request() {
     //open file for reading/writing and create it if it doesn't exist
@@ -133,7 +99,6 @@ bool init_change_request() {
     }
 
 }
-
 
 //-----------------------------------------------------------------------------
 // add change request to file
@@ -172,64 +137,3 @@ bool close_change_request() {
     }
     return false;
 }
-
-
-//-----------------------------------------------------------------------------
-// write change request to file
-bool write_change_request(ChangeRequest &changeRequest){
-    changeRequestFile.seekp(0, ios::end); 
-    changeRequestFile.write((char*)&changeRequest, sizeof(ChangeRequest));
-    changeRequestFile.clear();
-    if (changeRequestFile.fail()) {
-        cout << "Error writing to change request file." << endl;
-        return false;
-    }
-    return true;
-}
-
-//-----------------------------------------------------------------------------
-// read change request from file
-bool read_change_request(int index, ChangeRequest &changeRequest){
-    changeRequestFile.seekg(index * sizeof(ChangeRequest), ios::beg);
-    changeRequestFile.read((char*)&changeRequest, sizeof(ChangeRequest));
-    return true;
-}
-
-// //-----------------------------------------------------------------------------
-// // delete change request from file
-// bool delete_change_request(int index){
-//     fstream tempFile("temp_changereq.dat", ios::out | ios::binary);
-//     // seek to start of file
-
-//     changeRequestFile.seekg(0, ios::beg);
-
-//     // copy all records except the one to be deleted
-//     ChangeRequest tempChangeRequest;
-//     int i = 0;
-//     while (changeRequestFile.read((char*)&tempChangeRequest, sizeof(ChangeRequest))) {
-//         if (i != index) {
-//             tempFile.write((char*)&tempChangeRequest, sizeof(ChangeRequest));
-//         }
-//         i++;
-//     }
-
-//     // Clear the file (truncate to 0 and seek to the beginning)
-//     changeRequestFile.close();
-//     changeRequestFile.open(CHANGE_ITEM_FILE, ios::out | ios::trunc);
-//     changeRequestFile.close();
-//     changeRequestFile.open(CHANGE_ITEM_FILE, ios::in | ios::out | ios::binary);
-
-//     // copy all records back
-//     tempFile.seekg(0, ios::beg);
-//     while (tempFile.read((char*)&tempChangeRequest, sizeof(ChangeRequest))) {
-//         changeRequestFile.write((char*)&tempChangeRequest, sizeof(ChangeRequest));
-//     }
-
-//     // clear and close temp file
-//     tempFile.close();
-//     tempFile.open("temp_changereq.dat", ios::out | ios::trunc);
-//     tempFile.close();
-
-//     return true;
-// }
-    

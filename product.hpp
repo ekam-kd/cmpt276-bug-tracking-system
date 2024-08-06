@@ -32,8 +32,6 @@ public:
     char* get_name();
     // set name
     void set_name(const char name[MAX_PRODUCT_NAME]);
-    // print product info
-    void print_product_info() const;
 };
 
 // helper functions
@@ -48,12 +46,6 @@ bool add_product(const char prod_name[MAX_PRODUCT_NAME]);
 
 // displays list of products
 bool display_products();
-
-//bool select_product(const char prod_name[MAX_PRODUCT_NAME]);
-
-bool read_product(int index, Product &product);
-
-//bool delete_product(int index);
 
 // close product database file
 bool close_product();

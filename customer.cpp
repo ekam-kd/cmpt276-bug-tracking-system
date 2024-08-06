@@ -69,18 +69,6 @@ void Customer::set_department(const char *new_department)
     department[MAX_NAME - 1] = '\0'; // Ensure null-terminated
 }
 
-//-----------------------------------------------------------------------------
-// Print customer info
-//THIS FUNCTION SHOULD TAKE IN NAME AS PARAMETER THEN CALL SEARCH_CUSTOMER OR SMTHN TO FIND THE CUSTOMER AND THEN PRINT THE
-//ATTRIBUTES
-void Customer::print_customer_info()
-{
-    cout << "Customer name: " << name << endl;
-    cout << "Customer email: " << email << endl;
-    cout << "Customer phone: " << phone << endl;
-    cout << "Customer department: " << department << endl;
-}
-
 // Function that opens/creates the customer file for reading and writing
 //-----------------------------------------------------------------------------
 bool init_customer()
@@ -184,78 +172,6 @@ const char phone_num[MAX_PHONE], const char department[MAX_DEPARTMENT])
     }
 }
 
-
-
-//-----------------------------------------------------------------------------
-// bool read_customer(int index, Customer &customer)
-// {
-//     // assume file is open
-//     // seek to the correct position in the file
-//     customerFile.seekg(index * sizeof(Customer), ios::beg);
-//     // read the change item from the file
-//     customerFile.read((char *)&customer, sizeof(Customer));
-//     return true;
-// }
-
-//-----------------------------------------------------------------------------
-// bool delete_customer(int index)
-// {
-//     fstream tempFile("temp_Customer.dat", ios::out | ios::binary);
-
-//     // Seek to the start of the file
-//     customerFile.seekg(0, std::ios::beg);
-
-//     // Read all Customers into memory except the one to be deleted
-//     Customer tempCustomer;
-//     int currentIndex = 0;
-//     while (customerFile.read(reinterpret_cast<string >(&tempCustomer), sizeof(Customer)))
-//     {
-//         if (currentIndex != index)
-//         {
-//             tempFile.write(reinterpret_cast<const string >(&tempCustomer), sizeof(Customer));
-//         }
-//         currentIndex++;
-//     }
-
-//     // Clear the file (truncate to 0 and seek to the beginning)
-//     customerFile.close();
-//     customerFile.open(CUSTOMER_FILE, std::ios::out | std::ios::trunc);
-//     customerFile.close();
-//     customerFile.open(CUSTOMER_FILE, std::ios::in | std::ios::out | std::ios::binary);
-
-//     // Copy the temp file back to the original file
-//     tempFile.seekg(0, std::ios::beg);
-//     while (tempFile.read(reinterpret_cast<string >(&tempCustomer), sizeof(Customer)))
-//     {
-//         customerFile.write(reinterpret_cast<const string >(&tempCustomer), sizeof(Customer));
-//     }
-
-//     // Close the temp file
-//     tempFile.close();
-//     tempFile.open("temp_Customer.dat", std::ios::out | std::ios::trunc);
-//     tempFile.close();
-
-//     return true;
-// }
-
-//-----------------------------------------------------------------------------
-Customer select_customer(const char name[MAX_NAME])
-{
-    ifstream customerFile(CUSTOMER_FILE, ios::in | ios::binary);
-    if (!customerFile)
-    {
-        cerr << "Error opening customer database file!" << endl;
-        return Customer("", "", "", ""); // Return a default-constructed Customer object
-    }
-
-    Customer temp_customer("", "", "", "");
-    while (customerFile.read(reinterpret_cast<char*>(&temp_customer), sizeof(Customer))) {
-        if (temp_customer.get_name() == name) {
-            return temp_customer;
-        }
-    }
-    return Customer("", "", "", ""); // Return a default-constructed Customer object
-}
 //-----------------------------------------------------------------------------
 // Close customer file
 bool close_customer()

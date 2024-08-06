@@ -13,6 +13,112 @@ fstream changeRequestFile2;
 fstream customerFile2;
 
 //-----------------------------------------------------------------------------
+// constructor
+ChangeItem::ChangeItem() {
+    //initialize all member variables to empty strings
+    strcpy(productName, "");
+    strcpy(productReleaseID, "");
+    strcpy(description, "");
+    strcpy(status, "");
+    priority = 0;
+    requests = 0;
+    id = 0;
+}
+ChangeItem::ChangeItem(const long int id, const char productName[MAX_PRODUCT_NAME], const char productReleaseID[MAX_NAME], 
+const char description[MAX_DESCRIPTION], const char status[MAX_NAME], const int priority, const int requests) {
+    set_id(id);
+    set_productName(productName);
+    set_productReleaseID(productReleaseID);
+    set_description(description);
+    set_status(status);
+    set_priority(priority);
+    set_requests(requests);
+}
+
+//-----------------------------------------------------------------------------
+// destructor
+ChangeItem::~ChangeItem() {
+    //nothing to do here
+}
+
+//-----------------------------------------------------------------------------
+// get id
+long int ChangeItem::get_id() {
+    return id;
+}
+
+//-----------------------------------------------------------------------------
+// get product name
+char* ChangeItem::get_productName() {
+    return productName;
+}
+
+//-----------------------------------------------------------------------------
+// get product release ID
+char* ChangeItem::get_productReleaseID() {
+    return productReleaseID;
+}
+
+//-----------------------------------------------------------------------------
+// get description
+char* ChangeItem::get_description() {
+    return description;
+}
+
+//-----------------------------------------------------------------------------
+// get status
+char* ChangeItem::get_status() {
+    return status;
+}
+
+//-----------------------------------------------------------------------------
+// get priority
+int ChangeItem::get_priority() {
+    return priority;
+}   
+
+//-----------------------------------------------------------------------------
+// get requests
+int ChangeItem::get_requests() {
+    return requests;
+}
+
+//-----------------------------------------------------------------------------
+// set id
+void ChangeItem::set_id(long int id) {
+    this->id = id;
+}
+
+//-----------------------------------------------------------------------------
+void ChangeItem::set_productName(const char new_prod_name[MAX_PRODUCT_NAME]) {
+    strncpy(productName, new_prod_name, MAX_PRODUCT_NAME - 1);
+    productName[MAX_PRODUCT_NAME - 1] = '\0'; // Ensure null-terminated
+}
+// set product release ID
+void ChangeItem::set_productReleaseID(const char new_release[MAX_NAME]) {
+    strncpy(productReleaseID, new_release, MAX_NAME - 1);
+    productReleaseID[MAX_NAME - 1] = '\0'; // Ensure null-terminated
+}
+// set description
+void ChangeItem::set_description(const char new_descr[MAX_DESCRIPTION]) {
+    strncpy(description, new_descr, MAX_DESCRIPTION - 1);
+    description[MAX_DESCRIPTION - 1] = '\0'; // Ensure null-terminated
+}
+// set status
+void ChangeItem::set_status(const char new_status[MAX_NAME]) {
+    strncpy(status, new_status, MAX_NAME - 1);
+    status[MAX_NAME - 1] = '\0'; // Ensure null-terminated
+}
+// set priority
+void ChangeItem::set_priority(const int new_priority) {
+    this->priority = new_priority;
+}
+// set requests
+void ChangeItem::set_requests(const int new_requests) {
+    this->requests = new_requests;
+}
+
+//-----------------------------------------------------------------------------
 bool init_change_item() {
     //open file for reading/writing and create it if it doesn't exist
     changeItemFile.open(CHANGE_ITEM_FILE, ios::in | ios::out | ios::binary);
@@ -362,110 +468,4 @@ bool close_change_item() {
         return true;
     }
     return false;
-}
-
-//-----------------------------------------------------------------------------
-// constructor
-ChangeItem::ChangeItem() {
-    //initialize all member variables to empty strings
-    strcpy(productName, "");
-    strcpy(productReleaseID, "");
-    strcpy(description, "");
-    strcpy(status, "");
-    priority = 0;
-    requests = 0;
-    id = 0;
-}
-ChangeItem::ChangeItem(const long int id, const char productName[MAX_PRODUCT_NAME], const char productReleaseID[MAX_NAME], 
-const char description[MAX_DESCRIPTION], const char status[MAX_NAME], const int priority, const int requests) {
-    set_id(id);
-    set_productName(productName);
-    set_productReleaseID(productReleaseID);
-    set_description(description);
-    set_status(status);
-    set_priority(priority);
-    set_requests(requests);
-}
-
-//-----------------------------------------------------------------------------
-// destructor
-ChangeItem::~ChangeItem() {
-    //nothing to do here
-}
-
-//-----------------------------------------------------------------------------
-// get id
-long int ChangeItem::get_id() {
-    return id;
-}
-
-//-----------------------------------------------------------------------------
-// get product name
-char* ChangeItem::get_productName() {
-    return productName;
-}
-
-//-----------------------------------------------------------------------------
-// get product release ID
-char* ChangeItem::get_productReleaseID() {
-    return productReleaseID;
-}
-
-//-----------------------------------------------------------------------------
-// get description
-char* ChangeItem::get_description() {
-    return description;
-}
-
-//-----------------------------------------------------------------------------
-// get status
-char* ChangeItem::get_status() {
-    return status;
-}
-
-//-----------------------------------------------------------------------------
-// get priority
-int ChangeItem::get_priority() {
-    return priority;
-}   
-
-//-----------------------------------------------------------------------------
-// get requests
-int ChangeItem::get_requests() {
-    return requests;
-}
-
-//-----------------------------------------------------------------------------
-// set id
-void ChangeItem::set_id(long int id) {
-    this->id = id;
-}
-
-//-----------------------------------------------------------------------------
-void ChangeItem::set_productName(const char new_prod_name[MAX_PRODUCT_NAME]) {
-    strncpy(productName, new_prod_name, MAX_PRODUCT_NAME - 1);
-    productName[MAX_PRODUCT_NAME - 1] = '\0'; // Ensure null-terminated
-}
-// set product release ID
-void ChangeItem::set_productReleaseID(const char new_release[MAX_NAME]) {
-    strncpy(productReleaseID, new_release, MAX_NAME - 1);
-    productReleaseID[MAX_NAME - 1] = '\0'; // Ensure null-terminated
-}
-// set description
-void ChangeItem::set_description(const char new_descr[MAX_DESCRIPTION]) {
-    strncpy(description, new_descr, MAX_DESCRIPTION - 1);
-    description[MAX_DESCRIPTION - 1] = '\0'; // Ensure null-terminated
-}
-// set status
-void ChangeItem::set_status(const char new_status[MAX_NAME]) {
-    strncpy(status, new_status, MAX_NAME - 1);
-    status[MAX_NAME - 1] = '\0'; // Ensure null-terminated
-}
-// set priority
-void ChangeItem::set_priority(const int new_priority) {
-    this->priority = new_priority;
-}
-// set requests
-void ChangeItem::set_requests(const int new_requests) {
-    this->requests = new_requests;
 }

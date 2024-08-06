@@ -11,39 +11,6 @@
 fstream releaseFile;
 
 //-----------------------------------------------------------------------------
-//initialize product release database
-bool init_release() {
-    //open file for reading/writing and create it if it doesn't exist
-    releaseFile.open(RELEASE_FILE, ios::in | ios::out | ios::binary);
-    
-    //if file opened successfully, return true
-    if(releaseFile.is_open()) {
-        return true;
-    } else { //otherwise return false
-        releaseFile.clear();
-        releaseFile.open(RELEASE_FILE, ios::out | ios::binary);
-        if (releaseFile.is_open()) {
-            releaseFile.close();
-            releaseFile.open(RELEASE_FILE, ios::in | ios::out | ios::binary);
-            return true;
-        }
-        //and if it doesn't work, return false
-        return false;
-    }
-
-}
-
-//-----------------------------------------------------------------------------
-//close product release file
-bool close_product_release() {
-    if (releaseFile.is_open()) {
-        releaseFile.close();
-        return true;
-    }
-    return false;
-}
-
-//-----------------------------------------------------------------------------
 // constructor
 Release::Release(const char productName[MAX_PRODUCT_NAME], const char version[MAX_NAME], 
         const char description[MAX_DESCRIPTION], const char date[MAX_DATE]) {
@@ -113,12 +80,26 @@ void Release::set_date(const char new_date[MAX_DATE]) {
 }
 
 //-----------------------------------------------------------------------------
-// print release info
-void Release::print_release_info() {
-    cout << "Product Name: " << productName << endl;
-    cout << "Version: " << version << endl;
-    cout << "Description: " << description << endl;
-    cout << "Date: " << date << endl;
+//initialize product release database
+bool init_release() {
+    //open file for reading/writing and create it if it doesn't exist
+    releaseFile.open(RELEASE_FILE, ios::in | ios::out | ios::binary);
+    
+    //if file opened successfully, return true
+    if(releaseFile.is_open()) {
+        return true;
+    } else { //otherwise return false
+        releaseFile.clear();
+        releaseFile.open(RELEASE_FILE, ios::out | ios::binary);
+        if (releaseFile.is_open()) {
+            releaseFile.close();
+            releaseFile.open(RELEASE_FILE, ios::in | ios::out | ios::binary);
+            return true;
+        }
+        //and if it doesn't work, return false
+        return false;
+    }
+
 }
 
 //-----------------------------------------------------------------------------
@@ -143,66 +124,6 @@ bool display_product_releases(const char prod_name[MAX_PRODUCT_NAME]) {
         releaseFile.clear();
         return true;
     }
-}
-
-//-----------------------------------------------------------------------------
-// write release to file
-bool write_release(Release &release) {
-    // assume file is open
-    // seek to the end of the file
-    releaseFile.seekp(0, ios::end);
-    // write release to file
-    releaseFile.write((char*)&release, sizeof(Release));
-    return true;
-}
-
-//-----------------------------------------------------------------------------
-// read release from file
-bool read_release(int index, Release &release) {
-    // assume file is open
-    // seek to the correct position in the file
-    releaseFile.seekg(index * sizeof(Release), ios::beg);
-    // read release from file
-    releaseFile.read((char*)&release, sizeof(Release));
-    return true;
-}
-
-//-----------------------------------------------------------------------------
-// delete release from file
-bool delete_release(int index) {
-    fstream tempFile("temp_release.dat", ios::out | ios::binary);
-
-    // Seek to the start of the file
-    releaseFile.seekg(0, std::ios::beg);
-
-    // Read all releases into memory except the one to be deleted
-    Release tempRelease("", "", "", "");
-    int currentIndex = 0;
-    while (releaseFile.read(reinterpret_cast<char*>(&tempRelease), sizeof(Release))) {
-        if (currentIndex != index) {
-            tempFile.write(reinterpret_cast<const char*>(&tempRelease), sizeof(Release));
-        }
-        currentIndex++;
-    }
-
-    // Clear the file (truncate to 0 and seek to the beginning)
-    releaseFile.close();
-    releaseFile.open(RELEASE_FILE, ios::out | ios::trunc);
-    releaseFile.close();
-    releaseFile.open(RELEASE_FILE, ios::in | ios::out | ios::binary);
-
-    // Copy the temp file back to the original file
-    tempFile.seekg(0, std::ios::beg);
-    while (tempFile.read(reinterpret_cast<char*>(&tempRelease), sizeof(Release))) {
-        releaseFile.write(reinterpret_cast<const char*>(&tempRelease), sizeof(Release));
-    }
-
-    // Close the temp file
-    tempFile.close();
-    tempFile.open("temp_release.dat", std::ios::out | std::ios::trunc);
-    tempFile.close();
-
-    return true;
 }
 
 //-----------------------------------------------------------------------------
@@ -255,4 +176,14 @@ const char description[MAX_DESCRIPTION], const char date[MAX_DATE]){
     }
     cout << "Product Release successfully created!" << endl;
     return true;
+}
+
+//-----------------------------------------------------------------------------
+//close product release file
+bool close_product_release() {
+    if (releaseFile.is_open()) {
+        releaseFile.close();
+        return true;
+    }
+    return false;
 }

@@ -39,12 +39,6 @@ void Product::set_name(const char* newName)
     strncpy(product_name, newName, MAX_PRODUCT_NAME - 1);
     product_name[MAX_PRODUCT_NAME - 1] = '\0'; // Ensure null-terminated
 }
-//-----------------------------------------------------------------------------
-// Print product info
-void Product::print_product_info() const
-{
-    std::cout << "Product Name: " << product_name << std::endl;
-}
 
 //-----------------------------------------------------------------------------
 bool init_product()
@@ -152,108 +146,6 @@ bool display_products() {
 
 }
 
-// //-----------------------------------------------------------------------------
-// // Function that
-// bool select_product(const char prod_name[MAX_PRODUCT_NAME])
-// {
-    
-//     string temp_choice;
-//     static char choice[MAX_PRODUCT_NAME];
-//     cout << "Enter product name: ";
-//     getline(cin >> ws,temp_choice);
-//     while (temp_choice.length() >= 30) {
-//         cout << "Product name is too long. Please try again." << endl;
-//         cout << "Product name: " << endl;
-//         getline(cin >> ws,temp_choice); 
-//     }
-//     strcpy(choice, temp_choice.c_str());
-
-//     Product temp2("");
-//     productFile.seekg(0, ios::beg);
-//     while (productFile.read(reinterpret_cast<char*>(&temp2), sizeof(Product))) {
-//         if (temp2.get_name() == choice) {
-//             productFile.clear(); // Clear the EOF flag
-//             return choice;
-//         }
-//     }
-//     cout << "You entered a product that does not exist. try again" << endl;
-//     // Reset the file pointer for future operations
-//     productFile.clear(); // Clear the EOF flag
-//     static char temp[30] = "Invalid selection";
-//     return temp;
-// }
-
-//-----------------------------------------------------------------------------
-// Read product from file
-bool read_product(int index, Product &product)
-{
-    if (!productFile.is_open())
-    {
-        cerr << "Product database file is not open!" << endl;
-        return false;
-    }
-
-    // Seek to the correct position in the file
-    productFile.seekg(index * sizeof(Product), ios::beg);
-    // Read product from file
-    productFile.read(reinterpret_cast<char *>(&product), sizeof(Product));
-    return true;
-}
-//-----------------------------------------------------------------------------
-// // Delete product by index
-// bool delete_product(int index)
-// {
-//     // Open temporary file for writing
-//     ofstream tempFile("temp_product_db.txt", ios::out | ios::binary);
-//     if (!tempFile)
-//     {
-//         cerr << "Error opening temporary file!" << endl;
-//         return false;
-//     }
-
-//     // Open original file for reading
-//     ifstream infile(PRODUCT_FILE, ios::in | ios::binary);
-//     if (!infile)
-//     {
-//         cerr << "Error opening product database file!" << endl;
-//         return false;
-//     }
-
-//     Product product("");
-//     int currentIndex = 0;
-//     bool deleted = false;
-
-//     // Read each record and write to the temp file if it's not the one to be deleted
-//     while (infile.read(reinterpret_cast<char *>(&product), sizeof(Product)))
-//     {
-//         if (currentIndex != index)
-//         {
-//             tempFile.write(reinterpret_cast<char *>(&product), sizeof(Product));
-//         }
-//         else
-//         {
-//             deleted = true; // Record found and deleted
-//         }
-//         currentIndex++;
-//     }
-
-//     // Close files
-//     infile.close();
-//     tempFile.close();
-
-//     // Replace original file with temporary file if deletion was successful
-//     if (deleted)
-//     {
-//         remove(PRODUCT_FILE);                        // Delete original file
-//         rename("temp_product_db.txt", PRODUCT_FILE); // Rename temp file to original file name
-//     }
-//     else
-//     {
-//         remove("temp_product_db.txt"); // Delete temp file if deletion was not successful
-//     }
-
-//     return deleted;
-// }
 //-----------------------------------------------------------------------------
 // Close product database file
 bool close_product()
